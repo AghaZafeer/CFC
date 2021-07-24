@@ -38,15 +38,16 @@ public class VaccineManagementServiceImpl implements VaccineManagementService {
 			
 		List<VaccineMaster> vaccineMasters = vaccineMasterRepository.findAll();
 		
-		System.out.println("Inside getListOfVaccines of VaccineManagementServiceImpl >>>>>>> vaccineMasters.size >>> " + vaccineMasters.size());
+		logger.debug("Inside getListOfVaccines of VaccineManagementServiceImpl >>>>>>> vaccineMasters.size >>> " + vaccineMasters.size());
 		
 		for(VaccineMaster vaccineMaster : vaccineMasters) {
-			VacccineMasterOut vacccineMasterOut = new VacccineMasterOut();
-			System.out.println("Inside getListOfVaccines of VaccineManagementServiceImpl >>>>>>> vaccineMaster.getVaccineId() >>>> " + vaccineMaster.getVaccineId());
+			VacccineMasterOut vaccineMasterOut = new VacccineMasterOut();
+			logger.debug("Inside getListOfVaccines of VaccineManagementServiceImpl >>>>>>> vaccineMaster.getVaccineId() >>>> " + vaccineMaster.getVaccineId());
 			
-			vacccineMasterOut.setVaccineID(vaccineMaster.getVaccineId());
-			vacccineMasterOut.setVaccineName(vaccineMaster.getVaccineName());
-			vacccineMasterOut.setVaccineManufacturer(vaccineMaster.getVaccineManufacturer());
+			vaccineMasterOut.setVaccineID(vaccineMaster.getVaccineId());
+			vaccineMasterOut.setVaccineName(vaccineMaster.getVaccineName());
+			vaccineMasterOut.setVaccineManufacturer(vaccineMaster.getVaccineManufacturer());
+			vaccineMasterOut.setVaccineIsActive((vaccineMaster.getVaccineIsactive() > 0) ? true : false);
 			
 			List <VaccineDoseMasterOut> vaccineDoseMasterOuts = new ArrayList<VaccineDoseMasterOut>();
 			
@@ -63,13 +64,13 @@ public class VaccineManagementServiceImpl implements VaccineManagementService {
 								
 				}
 				
-				vacccineMasterOut.setVaccineDoses(vaccineDoseMasterOuts);
+				vaccineMasterOut.setVaccineDoses(vaccineDoseMasterOuts);
 				
 			}
-			returnObject.add(vacccineMasterOut);
-			vacccineMasterOut = null;
+			returnObject.add(vaccineMasterOut);
+			vaccineMasterOut = null;
 			
-			System.out.println("Inside getListOfVaccines of VaccineManagementServiceImpl >>>>>>> returnObject.size >>> " + returnObject.size());
+			logger.debug("Inside getListOfVaccines of VaccineManagementServiceImpl >>>>>>> returnObject.size >>> " + returnObject.size());
 		}
 		return returnObject;
 		
