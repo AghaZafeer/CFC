@@ -37,8 +37,8 @@ public class AdverseEventManagementServiceImpl implements AdverseEventManagement
 	@Autowired
 	AdverseEventMasterRepository adverseEventMasterRepository; 
 	
-	@Override
-	public List<AdverseEventMasterOut> getParentAdverseEvents(){
+
+		public List<AdverseEventMasterOut> getParentAdverseEvents(){
 		// TODO Auto-generated method stub
 		logger.debug("Inside getParentAdverseEvents of AdverseEventManagementServiceImpl >>>>>>> ");
 		

@@ -32,7 +32,7 @@ public class IllnessManagementServiceImpl implements IllnessManagementService {
 	@Autowired
 	IllnessMasterRepository illnessMasterRepository; 
 	
-	@Override
+	
 	public List<IllnessMasterOut> getListOfIllness(){
 		// TODO Auto-generated method stub
 		logger.debug("Inside getListOfIllness of IllnessManagementServiceImpl >>>>>>> ");

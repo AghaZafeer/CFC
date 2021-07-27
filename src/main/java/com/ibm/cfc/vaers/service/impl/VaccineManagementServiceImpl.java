@@ -28,7 +28,7 @@ public class VaccineManagementServiceImpl implements VaccineManagementService {
 	@Autowired
 	VaccineMasterRepository vaccineMasterRepository; 
 	
-	@Override
+	
 	public List<VacccineMasterOut> getListOfVaccines(){
 		// TODO Auto-generated method stub
 		logger.debug("Inside getListOfVaccines of VaccineManagementServiceImpl >>>>>>> ");
