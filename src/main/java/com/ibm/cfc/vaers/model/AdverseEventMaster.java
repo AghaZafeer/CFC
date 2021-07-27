@@ -18,13 +18,13 @@ public class AdverseEventMaster implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="ADEV_ID")
-	private String adevId;
+	private long adevId;
 
 	@Column(name="ADEV_IS_PARENT_ELEMENT")
-	private byte adevIsParentElement;
+	private boolean adevIsParentElement;
 
 	@Column(name="ADEV_ISACTIVE")
-	private byte adevIsactive;
+	private boolean adevIsactive;
 
 	@Column(name="ADEV_NAME")
 	private String adevName;
@@ -45,27 +45,27 @@ public class AdverseEventMaster implements Serializable {
 	public AdverseEventMaster() {
 	}
 
-	public String getAdevId() {
+	public long getAdevId() {
 		return this.adevId;
 	}
 
-	public void setAdevId(String adevId) {
+	public void setAdevId(long adevId) {
 		this.adevId = adevId;
 	}
 
-	public byte getAdevIsParentElement() {
-		return this.adevIsParentElement;
+	public boolean isAdevIsParentElement() {
+		return adevIsParentElement;
 	}
 
-	public void setAdevIsParentElement(byte adevIsParentElement) {
+	public void setAdevIsParentElement(boolean adevIsParentElement) {
 		this.adevIsParentElement = adevIsParentElement;
 	}
 
-	public byte getAdevIsactive() {
-		return this.adevIsactive;
+	public boolean isAdevIsactive() {
+		return adevIsactive;
 	}
 
-	public void setAdevIsactive(byte adevIsactive) {
+	public void setAdevIsactive(boolean adevIsactive) {
 		this.adevIsactive = adevIsactive;
 	}
 

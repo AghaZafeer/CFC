@@ -47,7 +47,7 @@ public class VaccineManagementServiceImpl implements VaccineManagementService {
 			vaccineMasterOut.setVaccineID(vaccineMaster.getVaccineId());
 			vaccineMasterOut.setVaccineName(vaccineMaster.getVaccineName());
 			vaccineMasterOut.setVaccineManufacturer(vaccineMaster.getVaccineManufacturer());
-			vaccineMasterOut.setVaccineIsActive((vaccineMaster.getVaccineIsactive() > 0) ? true : false);
+			vaccineMasterOut.setVaccineIsActive(vaccineMaster.isVaccineIsactive());
 			
 			List <VaccineDoseMasterOut> vaccineDoseMasterOuts = new ArrayList<VaccineDoseMasterOut>();
 			

@@ -33,7 +33,7 @@ public class VaccineDoseMaster implements Serializable {
 	private String vaccineDoseDetail;
 
 	@Column(name="VACCINE_DOSE_ISACTIVE", nullable=false)
-	private byte vaccineDoseIsactive;
+	private boolean vaccineDoseIsactive;
 
 	@Column(name="VACCINE_DOSE_NAME", nullable=false, length=100)
 	private String vaccineDoseName;
@@ -82,11 +82,11 @@ public class VaccineDoseMaster implements Serializable {
 		this.vaccineDoseDetail = vaccineDoseDetail;
 	}
 
-	public byte getVaccineDoseIsactive() {
-		return this.vaccineDoseIsactive;
+	public boolean isVaccineDoseIsactive() {
+		return vaccineDoseIsactive;
 	}
 
-	public void setVaccineDoseIsactive(byte vaccineDoseIsactive) {
+	public void setVaccineDoseIsactive(boolean vaccineDoseIsactive) {
 		this.vaccineDoseIsactive = vaccineDoseIsactive;
 	}
 

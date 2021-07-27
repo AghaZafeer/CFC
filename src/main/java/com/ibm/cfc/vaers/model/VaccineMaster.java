@@ -30,7 +30,7 @@ public class VaccineMaster implements Serializable {
 	private Date dateModified;
 
 	@Column(name="VACCINE_ISACTIVE", nullable=false)
-	private byte vaccineIsactive;
+	private boolean vaccineIsactive;
 
 	@Column(name="VACCINE_MANUFACTURER", length=100)
 	private String vaccineManufacturer;
@@ -73,11 +73,11 @@ public class VaccineMaster implements Serializable {
 		this.dateModified = dateModified;
 	}
 
-	public byte getVaccineIsactive() {
-		return this.vaccineIsactive;
+	public boolean isVaccineIsactive() {
+		return vaccineIsactive;
 	}
 
-	public void setVaccineIsactive(byte vaccineIsactive) {
+	public void setVaccineIsactive(boolean vaccineIsactive) {
 		this.vaccineIsactive = vaccineIsactive;
 	}
 

@@ -19,7 +19,7 @@ public class SeverityMaster implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="SEV_ID")
-	private String sevId;
+	private long sevId;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="DATE_CREATED")
@@ -30,7 +30,7 @@ public class SeverityMaster implements Serializable {
 	private Date dateMofified;
 
 	@Column(name="SEV_ISACTIVE")
-	private byte sevIsactive;
+	private boolean sevIsactive;
 
 	@Column(name="SEV_NAME")
 	private String sevName;
@@ -42,11 +42,11 @@ public class SeverityMaster implements Serializable {
 	public SeverityMaster() {
 	}
 
-	public String getSevId() {
+	public long getSevId() {
 		return this.sevId;
 	}
 
-	public void setSevId(String sevId) {
+	public void setSevId(long sevId) {
 		this.sevId = sevId;
 	}
 
@@ -66,11 +66,11 @@ public class SeverityMaster implements Serializable {
 		this.dateMofified = dateMofified;
 	}
 
-	public byte getSevIsactive() {
-		return this.sevIsactive;
+	public boolean isSevIsactive() {
+		return sevIsactive;
 	}
 
-	public void setSevIsactive(byte sevIsactive) {
+	public void setSevIsactive(boolean sevIsactive) {
 		this.sevIsactive = sevIsactive;
 	}
 

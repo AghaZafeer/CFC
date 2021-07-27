@@ -22,7 +22,7 @@ public class AllergicConditionsMaster implements Serializable {
 	private long allgcondId;
 
 	@Column(name="ALLGCOND_ISACTIVE", nullable=false)
-	private byte allgcondIsactive;
+	private boolean allgcondIsactive;
 
 	@Column(name="ALLGCOND_NAME", nullable=false, length=100)
 	private String allgcondName;
@@ -50,11 +50,11 @@ public class AllergicConditionsMaster implements Serializable {
 		this.allgcondId = allgcondId;
 	}
 
-	public byte getAllgcondIsactive() {
-		return this.allgcondIsactive;
+	public boolean isAllgcondIsactive() {
+		return allgcondIsactive;
 	}
 
-	public void setAllgcondIsactive(byte allgcondIsactive) {
+	public void setAllgcondIsactive(boolean allgcondIsactive) {
 		this.allgcondIsactive = allgcondIsactive;
 	}
 

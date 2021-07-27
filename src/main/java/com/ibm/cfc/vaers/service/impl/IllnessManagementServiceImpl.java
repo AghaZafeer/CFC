@@ -50,9 +50,9 @@ public class IllnessManagementServiceImpl implements IllnessManagementService {
 			
 			illnessMasterOut.setIllnessId(illnessMaster.getIllnessId());
 			illnessMasterOut.setIllnessName(illnessMaster.getIllnessName());
-			illnessMasterOut.setIllnessIsactive((illnessMaster.getIllnessIsactive() > 0) ? true : false);
-			illnessMasterOut.setIllnessIschronic((illnessMaster.getIllnessIschronic() > 0) ? true : false);
-			illnessMasterOut.setIllnessIsother((illnessMaster.getIllnessIsother() > 0) ? true : false);
+			illnessMasterOut.setIllnessIsactive(illnessMaster.isIllnessIsactive());
+			illnessMasterOut.setIllnessIschronic(illnessMaster.isIllnessIschronic());
+			illnessMasterOut.setIllnessIsother(illnessMaster.isIllnessIsother());
 			
 			returnObject.add(illnessMasterOut);
 			illnessMasterOut = null;

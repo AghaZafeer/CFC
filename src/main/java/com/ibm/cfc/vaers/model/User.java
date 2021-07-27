@@ -58,7 +58,7 @@ public class User implements Serializable {
 	private byte userIsPregnant;
 
 	@Column(name="USER_ISACTIVE", nullable=false)
-	private byte userIsactive;
+	private boolean userIsactive;
 
 	@Column(name="USER_LAST_NAME", length=100)
 	private String userLastName;
@@ -211,11 +211,11 @@ public class User implements Serializable {
 		this.userIsPregnant = userIsPregnant;
 	}
 
-	public byte getUserIsactive() {
-		return this.userIsactive;
+	public boolean isUserIsactive() {
+		return userIsactive;
 	}
 
-	public void setUserIsactive(byte userIsactive) {
+	public void setUserIsactive(boolean userIsactive) {
 		this.userIsactive = userIsactive;
 	}
 

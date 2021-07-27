@@ -30,7 +30,7 @@ public class UserTitleMaster implements Serializable {
 	private Date dateModified;
 
 	@Column(name="USER_TITLE_ISACTIVE", nullable=false)
-	private byte userTitleIsactive;
+	private boolean userTitleIsactive;
 
 	@Column(name="USER_TITLE_NAME", nullable=false, length=100)
 	private String userTitleName;
@@ -70,11 +70,11 @@ public class UserTitleMaster implements Serializable {
 		this.dateModified = dateModified;
 	}
 
-	public byte getUserTitleIsactive() {
-		return this.userTitleIsactive;
+	public boolean isUserTitleIsactive() {
+		return userTitleIsactive;
 	}
 
-	public void setUserTitleIsactive(byte userTitleIsactive) {
+	public void setUserTitleIsactive(boolean userTitleIsactive) {
 		this.userTitleIsactive = userTitleIsactive;
 	}
 

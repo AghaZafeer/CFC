@@ -30,13 +30,13 @@ public class IllnessMaster implements Serializable {
 	private Date dateModified;
 
 	@Column(name="ILLNESS_ISACTIVE", nullable=false)
-	private byte illnessIsactive;
+	private boolean illnessIsactive;
 
 	@Column(name="ILLNESS_ISCHRONIC", nullable=false)
-	private byte illnessIschronic;
+	private boolean illnessIschronic;
 
 	@Column(name="ILLNESS_ISOTHER", nullable=false)
-	private byte illnessIsother;
+	private boolean illnessIsother;
 
 	@Column(name="ILLNESS_NAME", nullable=false, length=100)
 	private String illnessName;
@@ -72,27 +72,27 @@ public class IllnessMaster implements Serializable {
 		this.dateModified = dateModified;
 	}
 
-	public byte getIllnessIsactive() {
-		return this.illnessIsactive;
+	public boolean isIllnessIsactive() {
+		return illnessIsactive;
 	}
 
-	public void setIllnessIsactive(byte illnessIsactive) {
+	public void setIllnessIsactive(boolean illnessIsactive) {
 		this.illnessIsactive = illnessIsactive;
 	}
 
-	public byte getIllnessIschronic() {
-		return this.illnessIschronic;
+	public boolean isIllnessIschronic() {
+		return illnessIschronic;
 	}
 
-	public void setIllnessIschronic(byte illnessIschronic) {
+	public void setIllnessIschronic(boolean illnessIschronic) {
 		this.illnessIschronic = illnessIschronic;
 	}
 
-	public byte getIllnessIsother() {
-		return this.illnessIsother;
+	public boolean isIllnessIsother() {
+		return illnessIsother;
 	}
 
-	public void setIllnessIsother(byte illnessIsother) {
+	public void setIllnessIsother(boolean illnessIsother) {
 		this.illnessIsother = illnessIsother;
 	}
 

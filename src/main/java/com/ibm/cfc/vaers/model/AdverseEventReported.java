@@ -22,24 +22,24 @@ public class AdverseEventReported implements Serializable {
 
 	@Lob
 	@Column(name="ADEV_REP_ADDITIONAL_NOTES")
-	private byte[] adevRepAdditionalNotes;
+	private String adevRepAdditionalNotes;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="ADEV_REP_DATE_OF_DEATH")
 	private Date adevRepDateOfDeath;
 
 	@Column(name="ADEV_REP_ISFATAL", nullable=false)
-	private byte adevRepIsfatal;
+	private boolean adevRepIsfatal;
 
 	@Column(name="ADEV_REP_ISMEDIC_NEEDED", nullable=false)
-	private byte adevRepIsmedicNeeded;
+	private boolean adevRepIsmedicNeeded;
 
 	@Column(name="ADEV_REP_ISRECOVERED")
-	private byte adevRepIsrecovered;
+	private boolean adevRepIsrecovered;
 
 	@Lob
 	@Column(name="ADEV_REP_MEDIC_NOTES")
-	private byte[] adevRepMedicNotes;
+	private String adevRepMedicNotes;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="ADEV_REP_RECOVERY_DATE")
@@ -82,53 +82,13 @@ public class AdverseEventReported implements Serializable {
 	public void setAdevRepId(long adevRepId) {
 		this.adevRepId = adevRepId;
 	}
-
-	public byte[] getAdevRepAdditionalNotes() {
-		return this.adevRepAdditionalNotes;
-	}
-
-	public void setAdevRepAdditionalNotes(byte[] adevRepAdditionalNotes) {
-		this.adevRepAdditionalNotes = adevRepAdditionalNotes;
-	}
-
+	
 	public Date getAdevRepDateOfDeath() {
 		return this.adevRepDateOfDeath;
 	}
 
 	public void setAdevRepDateOfDeath(Date adevRepDateOfDeath) {
 		this.adevRepDateOfDeath = adevRepDateOfDeath;
-	}
-
-	public byte getAdevRepIsfatal() {
-		return this.adevRepIsfatal;
-	}
-
-	public void setAdevRepIsfatal(byte adevRepIsfatal) {
-		this.adevRepIsfatal = adevRepIsfatal;
-	}
-
-	public byte getAdevRepIsmedicNeeded() {
-		return this.adevRepIsmedicNeeded;
-	}
-
-	public void setAdevRepIsmedicNeeded(byte adevRepIsmedicNeeded) {
-		this.adevRepIsmedicNeeded = adevRepIsmedicNeeded;
-	}
-
-	public byte getAdevRepIsrecovered() {
-		return this.adevRepIsrecovered;
-	}
-
-	public void setAdevRepIsrecovered(byte adevRepIsrecovered) {
-		this.adevRepIsrecovered = adevRepIsrecovered;
-	}
-
-	public byte[] getAdevRepMedicNotes() {
-		return this.adevRepMedicNotes;
-	}
-
-	public void setAdevRepMedicNotes(byte[] adevRepMedicNotes) {
-		this.adevRepMedicNotes = adevRepMedicNotes;
 	}
 
 	public Date getAdevRepRecoveryDate() {
@@ -186,5 +146,47 @@ public class AdverseEventReported implements Serializable {
 	public void setUserVaccine(UserVaccine userVaccine) {
 		this.userVaccine = userVaccine;
 	}
+
+	public String getAdevRepAdditionalNotes() {
+		return adevRepAdditionalNotes;
+	}
+
+	public void setAdevRepAdditionalNotes(String adevRepAdditionalNotes) {
+		this.adevRepAdditionalNotes = adevRepAdditionalNotes;
+	}
+
+	public boolean isAdevRepIsfatal() {
+		return adevRepIsfatal;
+	}
+
+	public void setAdevRepIsfatal(boolean adevRepIsfatal) {
+		this.adevRepIsfatal = adevRepIsfatal;
+	}
+
+	public boolean isAdevRepIsmedicNeeded() {
+		return adevRepIsmedicNeeded;
+	}
+
+	public void setAdevRepIsmedicNeeded(boolean adevRepIsmedicNeeded) {
+		this.adevRepIsmedicNeeded = adevRepIsmedicNeeded;
+	}
+
+	public boolean isAdevRepIsrecovered() {
+		return adevRepIsrecovered;
+	}
+
+	public void setAdevRepIsrecovered(boolean adevRepIsrecovered) {
+		this.adevRepIsrecovered = adevRepIsrecovered;
+	}
+
+	public String getAdevRepMedicNotes() {
+		return adevRepMedicNotes;
+	}
+
+	public void setAdevRepMedicNotes(String adevRepMedicNotes) {
+		this.adevRepMedicNotes = adevRepMedicNotes;
+	}
+	
+	
 
 }
