@@ -11,17 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ibm.cfc.vaers.controller.VaccineManagamentController;
 import com.ibm.cfc.vaers.dto.out.IllnessMasterOut;
-import com.ibm.cfc.vaers.dto.out.VacccineMasterOut;
-import com.ibm.cfc.vaers.dto.out.VaccineDoseMasterOut;
 import com.ibm.cfc.vaers.model.IllnessMaster;
-import com.ibm.cfc.vaers.model.VaccineDoseMaster;
-import com.ibm.cfc.vaers.model.VaccineMaster;
 import com.ibm.cfc.vaers.repository.IllnessMasterRepository;
-import com.ibm.cfc.vaers.repository.VaccineMasterRepository;
 import com.ibm.cfc.vaers.service.IllnessManagementService;
-import com.ibm.cfc.vaers.service.VaccineManagementService;
 
 
 @Service
