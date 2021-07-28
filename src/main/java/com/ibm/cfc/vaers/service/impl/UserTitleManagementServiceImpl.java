@@ -55,7 +55,7 @@ public class UserTitleManagementServiceImpl implements UserTitleManagementServic
 		
 		for(UserTitleMaster userTitleMaster : userTitleMasters) {
 			UserTitleMasterOut userTitleMasterOut = new UserTitleMasterOut();
-			logger.debug("Inside getListOfUserTitles of UserTitleManagementServiceImpl >>>>>>> userTitleMasters.getuserTitleId() >>>> " + ((UserTitleMasterOut) userTitleMasters).getuserTitleId());
+			logger.debug("Inside getListOfUserTitles of UserTitleManagementServiceImpl >>>>>>> userTitleMasters.getuserTitleId() >>>> " + userTitleMaster.getUserTitleId());;
 			
 			userTitleMasterOut.setuserTitleId(userTitleMaster.getUserTitleId());
 			userTitleMasterOut.setuserTitleName(userTitleMaster.getUserTitleName());
