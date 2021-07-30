@@ -26,8 +26,8 @@ public class SeverityMaster implements Serializable {
 	private Date dateCreated;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DATE_MOFIFIED")
-	private Date dateMofified;
+	@Column(name="DATE_MODIFIED")
+	private Date dateModified;
 
 	@Column(name="SEV_ISACTIVE")
 	private boolean sevIsactive;
@@ -59,11 +59,11 @@ public class SeverityMaster implements Serializable {
 	}
 
 	public Date getDateMofified() {
-		return this.dateMofified;
+		return this.dateModified;
 	}
 
 	public void setDateMofified(Date dateMofified) {
-		this.dateMofified = dateMofified;
+		this.dateModified = dateMofified;
 	}
 
 	public boolean isSevIsactive() {
