@@ -9,5 +9,5 @@ import com.ibm.cfc.vaers.model.AllergicConditionsMaster;
 public interface AllergicConditionsMasterRepository extends JpaRepository<AllergicConditionsMaster, Long> {
 
 	
-	List<AllergicConditionsMaster> findAll();
+	List<AllergicConditionsMaster> findByAllgcondIsactiveTrue();
 }

@@ -13,8 +13,6 @@ public class AdverseEventMasterOut implements Serializable{
 	public String adevName;
 	
 	public boolean adevIsactive;
-	
-	public SeverityMasterOut severityMasterOut;
 
 	public long getAdevId() {
 		return adevId;
@@ -40,11 +38,4 @@ public class AdverseEventMasterOut implements Serializable{
 		this.adevIsactive = adevIsactive;
 	}
 
-	public SeverityMasterOut getSeverityMasterOut() {
-		return severityMasterOut;
-	}
-
-	public void setSeverityMasterOut(SeverityMasterOut severityMasterOut) {
-		this.severityMasterOut = severityMasterOut;
-	}
 }

@@ -33,7 +33,7 @@ public class IllnessManagementServiceImpl implements IllnessManagementService {
 		List <IllnessMasterOut> returnObject = new ArrayList<IllnessMasterOut>(); 
 		
 			
-		List<IllnessMaster> illnessMasters = illnessMasterRepository.findAll();
+		List<IllnessMaster> illnessMasters = illnessMasterRepository.findByIllnessIsactiveTrue();
 		
 		logger.debug("Inside getListOfIllness of IllnessManagementServiceImpl >>>>>>> illnessMasters.size >>> " + illnessMasters.size());
 		

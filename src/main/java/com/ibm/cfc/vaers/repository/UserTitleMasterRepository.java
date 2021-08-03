@@ -14,6 +14,6 @@ import com.ibm.cfc.vaers.model.VaccineMaster;
 @Repository
 public interface UserTitleMasterRepository extends JpaRepository <UserTitleMaster, Integer>{
 	
-	List<UserTitleMaster> findAll();
+	List<UserTitleMaster> findByUserTitleIsactiveTrue();
 	
 }

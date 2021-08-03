@@ -59,13 +59,13 @@ public class AdverseEventReported implements Serializable {
 
 	//bi-directional many-to-one association to AdverseEventMaster
 	@ManyToOne
-	@JoinColumn(name="ADEV_REP_PARENT_ADEV_ID", nullable=false)
+	@JoinColumn(name="ADEV_REP_ADEV_ID", nullable=false)
 	private AdverseEventMaster adverseEventMaster1;
 
 	//bi-directional many-to-one association to AdverseEventMaster
 	@ManyToOne
-	@JoinColumn(name="ADEV_REP_CHILD_ADEV_ID", nullable=false)
-	private AdverseEventMaster adverseEventMaster2;
+	@JoinColumn(name="ADEV_REP_SEV_ID", nullable=false)
+	private SeverityMaster severityMaster;
 
 	//bi-directional many-to-one association to UserVaccine
 	@ManyToOne
@@ -131,12 +131,12 @@ public class AdverseEventReported implements Serializable {
 		this.adverseEventMaster1 = adverseEventMaster1;
 	}
 
-	public AdverseEventMaster getAdverseEventMaster2() {
-		return this.adverseEventMaster2;
+	public SeverityMaster getSeverityMaster() {
+		return severityMaster;
 	}
 
-	public void setAdverseEventMaster2(AdverseEventMaster adverseEventMaster2) {
-		this.adverseEventMaster2 = adverseEventMaster2;
+	public void setSeverityMaster(SeverityMaster severityMaster) {
+		this.severityMaster = severityMaster;
 	}
 
 	public UserVaccine getUserVaccine() {

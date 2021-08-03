@@ -24,14 +24,9 @@ public class AdverseEventManagamentController {
 	@Autowired
 	AdverseEventManagementService adverseEventManagementService;
 	
-	@RequestMapping("/getParentAdverseEvents")
+	@RequestMapping("/getAdverseEvents")
 	public List<AdverseEventMasterOut> getParentAdverseEvents() {
-		return adverseEventManagementService.getParentAdverseEvents();
-	}
-	
-	@RequestMapping("/getChildAdverseEvents")
-	public List<AdverseEventMasterOut> getChildAdverseEvents(@RequestBody GetChildAdverseEventsIn getChildAdverseEventsIn) {
-		return adverseEventManagementService.getChildAdverseEvents(getChildAdverseEventsIn);
+		return adverseEventManagementService.getAdverseEvents();
 	}
 	
 }

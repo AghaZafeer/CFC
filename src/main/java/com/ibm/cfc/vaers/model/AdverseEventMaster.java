@@ -20,9 +20,6 @@ public class AdverseEventMaster implements Serializable {
 	@Column(name="ADEV_ID")
 	private long adevId;
 
-	@Column(name="ADEV_IS_PARENT_ELEMENT")
-	private boolean adevIsParentElement;
-
 	@Column(name="ADEV_ISACTIVE")
 	private boolean adevIsactive;
 
@@ -37,11 +34,6 @@ public class AdverseEventMaster implements Serializable {
 	@Column(name="DATE_MODIFIED")
 	private Date dateModified;
 
-	//bi-directional many-to-one association to SeverityMaster
-	@ManyToOne
-	@JoinColumn(name="ADEV_SEV_ID")
-	private SeverityMaster severityMaster;
-
 	public AdverseEventMaster() {
 	}
 
@@ -51,14 +43,6 @@ public class AdverseEventMaster implements Serializable {
 
 	public void setAdevId(long adevId) {
 		this.adevId = adevId;
-	}
-
-	public boolean isAdevIsParentElement() {
-		return adevIsParentElement;
-	}
-
-	public void setAdevIsParentElement(boolean adevIsParentElement) {
-		this.adevIsParentElement = adevIsParentElement;
 	}
 
 	public boolean isAdevIsactive() {
@@ -91,14 +75,6 @@ public class AdverseEventMaster implements Serializable {
 
 	public void setDateModified(Date dateModified) {
 		this.dateModified = dateModified;
-	}
-
-	public SeverityMaster getSeverityMaster() {
-		return this.severityMaster;
-	}
-
-	public void setSeverityMaster(SeverityMaster severityMaster) {
-		this.severityMaster = severityMaster;
 	}
 
 }

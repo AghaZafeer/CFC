@@ -13,6 +13,6 @@ import com.ibm.cfc.vaers.model.VaccineMaster;
 @Repository
 public interface IllnessMasterRepository extends JpaRepository <IllnessMaster, Integer>{
 	
-	List<IllnessMaster> findAll();
+	List<IllnessMaster> findByIllnessIsactiveTrue();
 	
 }

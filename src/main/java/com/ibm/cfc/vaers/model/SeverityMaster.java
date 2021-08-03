@@ -37,7 +37,7 @@ public class SeverityMaster implements Serializable {
 
 	//bi-directional many-to-one association to AdverseEventMaster
 	@OneToMany(mappedBy="severityMaster")
-	private List<AdverseEventMaster> adverseEventMasters;
+	private List<AdverseEventReported> adverseEventReporteds;
 
 	public SeverityMaster() {
 	}
@@ -82,26 +82,26 @@ public class SeverityMaster implements Serializable {
 		this.sevName = sevName;
 	}
 
-	public List<AdverseEventMaster> getAdverseEventMasters() {
-		return this.adverseEventMasters;
+	public List<AdverseEventReported> getAdverseEventReporteds() {
+		return this.adverseEventReporteds;
 	}
 
-	public void setAdverseEventMasters(List<AdverseEventMaster> adverseEventMasters) {
-		this.adverseEventMasters = adverseEventMasters;
+	public void setAdverseEventReporteds(List<AdverseEventReported> adverseEventReporteds) {
+		this.adverseEventReporteds = adverseEventReporteds;
 	}
 
-	public AdverseEventMaster addAdverseEventMaster(AdverseEventMaster adverseEventMaster) {
-		getAdverseEventMasters().add(adverseEventMaster);
-		adverseEventMaster.setSeverityMaster(this);
+	public AdverseEventReported addAdverseEventReported(AdverseEventReported adverseEventReported) {
+		getAdverseEventReporteds().add(adverseEventReported);
+		adverseEventReported.setSeverityMaster(this);
 
-		return adverseEventMaster;
+		return adverseEventReported;
 	}
 
-	public AdverseEventMaster removeAdverseEventMaster(AdverseEventMaster adverseEventMaster) {
-		getAdverseEventMasters().remove(adverseEventMaster);
-		adverseEventMaster.setSeverityMaster(null);
+	public AdverseEventReported removeAdverseEventReported(AdverseEventReported adverseEventReported) {
+		getAdverseEventReporteds().remove(adverseEventReported);
+		adverseEventReported.setSeverityMaster(null);
 
-		return adverseEventMaster;
+		return adverseEventReported;
 	}
 
 }

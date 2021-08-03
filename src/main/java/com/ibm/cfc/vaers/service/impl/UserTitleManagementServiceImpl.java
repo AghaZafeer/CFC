@@ -48,7 +48,7 @@ public class UserTitleManagementServiceImpl implements UserTitleManagementServic
 		
 		List <UserTitleMasterOut> returnObject = new ArrayList<UserTitleMasterOut>(); 
 		
-		List<UserTitleMaster> userTitleMasters = userTitleMasterRepository.findAll();
+		List<UserTitleMaster> userTitleMasters = userTitleMasterRepository.findByUserTitleIsactiveTrue();
 		
 		
 		logger.debug("Inside getListOfUserTitles of UserTitleManagementServiceImpl >>>>>>> userTitleMasters.size >>> " + userTitleMasters.size());

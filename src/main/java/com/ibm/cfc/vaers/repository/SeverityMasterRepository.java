@@ -14,6 +14,6 @@ import com.ibm.cfc.vaers.model.VaccineMaster;
 @Repository
 public interface SeverityMasterRepository extends JpaRepository <SeverityMaster, Integer>{
 	
-	List<SeverityMaster> findAll();
+	List<SeverityMaster> findBySevIsactiveTrue();
 	
 }

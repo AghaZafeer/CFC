@@ -7,7 +7,6 @@ import com.ibm.cfc.vaers.dto.out.AdverseEventMasterOut;
 
 
 public interface AdverseEventManagementService {
-	List<AdverseEventMasterOut> getParentAdverseEvents();
+	List<AdverseEventMasterOut> getAdverseEvents();
 	
-	List<AdverseEventMasterOut> getChildAdverseEvents(GetChildAdverseEventsIn getChildAdverseEventsIn);
 }

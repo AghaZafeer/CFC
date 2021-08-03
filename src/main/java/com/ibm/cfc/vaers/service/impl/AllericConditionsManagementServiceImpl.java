@@ -30,7 +30,7 @@ private static final Logger logger = LoggerFactory.getLogger(AllericConditionsMa
 		List <AllergicConditionsMasterOut> returnObject = new ArrayList<AllergicConditionsMasterOut>(); 
 		
 			
-		List<AllergicConditionsMaster> allergicConditionsMasters = allergicConditionsMasterRepository.findAll();
+		List<AllergicConditionsMaster> allergicConditionsMasters = allergicConditionsMasterRepository.findByAllgcondIsactiveTrue();
 		
 		logger.debug("Inside getListOfAllergicConditions of AllergicConditionsManagementServiceImpl >>>>>>> allergicConditionsMasters.size >>> " + allergicConditionsMasters.size());
 		

@@ -13,6 +13,6 @@ import com.ibm.cfc.vaers.model.VaccineMaster;
 @Repository
 public interface AdverseEventMasterRepository extends JpaRepository <AdverseEventMaster, Integer>{
 	
-	List<AdverseEventMaster> findByAdevIsParentElementTrue();
+	List<AdverseEventMaster> findByAdevIsactiveTrue();
 	
 }

@@ -36,7 +36,7 @@ public class VaccineManagementServiceImpl implements VaccineManagementService {
 		List <VacccineMasterOut> returnObject = new ArrayList<VacccineMasterOut>(); 
 		
 			
-		List<VaccineMaster> vaccineMasters = vaccineMasterRepository.findAll();
+		List<VaccineMaster> vaccineMasters = vaccineMasterRepository.findByVaccineIsactiveTrue();
 		
 		logger.debug("Inside getListOfVaccines of VaccineManagementServiceImpl >>>>>>> vaccineMasters.size >>> " + vaccineMasters.size());
 		
