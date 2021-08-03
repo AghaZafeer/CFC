@@ -2,7 +2,7 @@ package com.ibm.cfc.vaers.dto.in;
 
 import java.io.Serializable;
 
-public class GetChildAdverseEventsIn implements Serializable {
+public class ReportAdverseEventsForUserIn implements Serializable {
 	
 	public String parentAdevId;
 

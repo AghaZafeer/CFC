@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ibm.cfc.vaers.dto.in.GetChildAdverseEventsIn;
+import com.ibm.cfc.vaers.dto.in.ReportAdverseEventsForUserIn;
 import com.ibm.cfc.vaers.dto.out.AdverseEventMasterOut;
 import com.ibm.cfc.vaers.dto.out.SeverityMasterOut;
 import com.ibm.cfc.vaers.model.AdverseEventMaster;
