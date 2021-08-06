@@ -1,0 +1,79 @@
+import React, { Component } from 'react';
+import './App.css';
+import Register from 'components/register/register';
+import { AppBar, Button, MuiThemeProvider, Toolbar, Typography } from '@material-ui/core';
+import Login from './Login';
+import { IconLogo } from 'assets/icons';
+import LogoComponent from 'components/custom/LogoComponent';
+import { SidebarComponent } from 'components/sidebar';
+class Loginscreen extends Component {
+  constructor(props){
+    super(props);
+    this.state={
+      username:'',
+      password:'',
+      loginscreen:[],
+      loginmessage:'',
+      buttonLabel:'Register',
+      isLogin:true
+    }
+  }
+ 
+  handleClick(event){
+    // console.log("event",event);
+    var loginmessage;
+    if(this.state.isLogin){
+      var loginscreen=[];
+      loginscreen.push(<Register parentContext={this}/>);
+      loginmessage = "Already registered.Go to Login";
+      this.setState({
+                     loginscreen:loginscreen,
+                     loginmessage:loginmessage,
+                     buttonLabel:"Login",
+                     isLogin:false
+                   })
+    }
+    else{
+      var loginscreen=[];
+      loginscreen.push(<Login parentContext={this}/>);
+      loginmessage = "Not Registered yet.Go to registration";
+      this.setState({
+                     loginscreen:loginscreen,
+                     loginmessage:loginmessage,
+                     buttonLabel:"Register",
+                     isLogin:true
+                   })
+    }
+  }
+  componentWillMount(){
+    var loginscreen=[];
+    loginscreen.push(<Login parentContext={this} appContext={this.props.parentContext}/>);
+    var loginmessage = "Not registered yet, Register Now";
+    this.setState({
+                  loginscreen:loginscreen,
+                  loginmessage:loginmessage
+                    })
+  }
+  render() {
+    return (
+        <div className="App">
+            
+         <div className="App-header">
+          <div className="Login">
+          <div className="loginscreen">
+                {this.state.loginscreen}<br/>
+                <Button variant="contained" color="primary" onClick={(event) => this.handleClick(event)} > {this.state.buttonLabel}</Button>  
+          <div>
+              <div>  {this.state.loginmessage}</div>
+         </div>
+        </div>
+        </div>
+      </div>
+      </div>
+    );
+  }
+}
+const style = {
+  margin: 15,
+};
+export default Loginscreen;
