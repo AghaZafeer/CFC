@@ -15,4 +15,6 @@ public interface AdverseEventMasterRepository extends JpaRepository <AdverseEven
 	
 	List<AdverseEventMaster> findByAdevIsactiveTrue();
 	
+	AdverseEventMaster findByAdevName(String adevName);
+	
 }

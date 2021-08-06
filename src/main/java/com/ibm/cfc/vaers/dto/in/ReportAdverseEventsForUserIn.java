@@ -14,10 +14,10 @@ public class ReportAdverseEventsForUserIn implements Serializable {
 	public String userAlternateMobile;
 	public String userEmail;
 	public String userAddress;
-	public int userAge;
+	public String userAge;
 	public String dateOfBirth;
 	public String userSex; // 'MALE','FEMALE','UNKNOWN'
-	public boolean userIsPregnant;
+	public String userIsPregnant;
 	
 	public List<UserAllergicConditionIn> userAllergicConditionIns;
 	public List<UserIllnessIn> userIllnessIns;
@@ -111,11 +111,11 @@ public class ReportAdverseEventsForUserIn implements Serializable {
 		this.userAddress = userAddress;
 	}
 
-	public int getUserAge() {
+	public String getUserAge() {
 		return userAge;
 	}
 
-	public void setUserAge(int userAge) {
+	public void setUserAge(String userAge) {
 		this.userAge = userAge;
 	}
 
@@ -135,11 +135,11 @@ public class ReportAdverseEventsForUserIn implements Serializable {
 		this.userSex = userSex;
 	}
 
-	public boolean isUserIsPregnant() {
+	public String getUserIsPregnant() {
 		return userIsPregnant;
 	}
 
-	public void setUserIsPregnant(boolean userIsPregnant) {
+	public void setUserIsPregnant(String userIsPregnant) {
 		this.userIsPregnant = userIsPregnant;
 	}
 

@@ -8,9 +8,9 @@ public class UserAdverseEffectIn implements Serializable {
 	public String severityID;
 	public String additionalNotes;
 	public String adverseEffectReportingDate;
-	public boolean adverseEffectIsFatal;
+	public String adverseEffectIsFatal;
 	public String dateOfDeath;
-	public boolean adverseEffectIsRecovered;
+	public String adverseEffectIsRecovered;
 	public String dateOfRecovery;
 	public String getAdverseEffectID() {
 		return adverseEffectID;
@@ -36,10 +36,10 @@ public class UserAdverseEffectIn implements Serializable {
 	public void setAdverseEffectReportingDate(String adverseEffectReportingDate) {
 		this.adverseEffectReportingDate = adverseEffectReportingDate;
 	}
-	public boolean isAdverseEffectIsFatal() {
+	public String getAdverseEffectIsFatal() {
 		return adverseEffectIsFatal;
 	}
-	public void setAdverseEffectIsFatal(boolean adverseEffectIsFatal) {
+	public void setAdverseEffectIsFatal(String adverseEffectIsFatal) {
 		this.adverseEffectIsFatal = adverseEffectIsFatal;
 	}
 	public String getDateOfDeath() {
@@ -48,10 +48,10 @@ public class UserAdverseEffectIn implements Serializable {
 	public void setDateOfDeath(String dateOfDeath) {
 		this.dateOfDeath = dateOfDeath;
 	}
-	public boolean isAdverseEffectIsRecovered() {
+	public String getAdverseEffectIsRecovered() {
 		return adverseEffectIsRecovered;
 	}
-	public void setAdverseEffectIsRecovered(boolean adverseEffectIsRecovered) {
+	public void setAdverseEffectIsRecovered(String adverseEffectIsRecovered) {
 		this.adverseEffectIsRecovered = adverseEffectIsRecovered;
 	}
 	public String getDateOfRecovery() {

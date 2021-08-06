@@ -15,4 +15,5 @@ public interface IllnessMasterRepository extends JpaRepository <IllnessMaster, I
 	
 	List<IllnessMaster> findByIllnessIsactiveTrue();
 	
+	IllnessMaster findByIllnessName(String illnessName);
 }

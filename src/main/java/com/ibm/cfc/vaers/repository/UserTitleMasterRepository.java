@@ -16,4 +16,6 @@ public interface UserTitleMasterRepository extends JpaRepository <UserTitleMaste
 	
 	List<UserTitleMaster> findByUserTitleIsactiveTrue();
 	
+	UserTitleMaster findByUserTitleName(String userTitleName);
+	
 }

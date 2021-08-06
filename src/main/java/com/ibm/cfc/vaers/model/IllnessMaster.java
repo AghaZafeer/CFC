@@ -22,11 +22,11 @@ public class IllnessMaster implements Serializable {
 	private long illnessId;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DATE_CREATED", nullable=false)
+	@Column(name="DATE_CREATED")
 	private Date dateCreated;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DATE_MODIFIED", nullable=false)
+	@Column(name="DATE_MODIFIED")
 	private Date dateModified;
 
 	@Column(name="ILLNESS_ISACTIVE", nullable=false)

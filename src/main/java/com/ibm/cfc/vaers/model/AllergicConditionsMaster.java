@@ -28,11 +28,11 @@ public class AllergicConditionsMaster implements Serializable {
 	private String allgcondName;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DATE_CREATED", nullable=false)
+	@Column(name="DATE_CREATED")
 	private Date dateCreated;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DATE_MODIFIED", nullable=false)
+	@Column(name="DATE_MODIFIED")
 	private Date dateModified;
 
 	//bi-directional many-to-one association to UserAllergicCondition

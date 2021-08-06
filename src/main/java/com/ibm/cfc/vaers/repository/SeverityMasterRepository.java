@@ -16,4 +16,5 @@ public interface SeverityMasterRepository extends JpaRepository <SeverityMaster,
 	
 	List<SeverityMaster> findBySevIsactiveTrue();
 	
+	SeverityMaster findBySevName(String sevName);
 }

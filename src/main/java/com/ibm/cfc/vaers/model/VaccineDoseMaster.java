@@ -22,11 +22,11 @@ public class VaccineDoseMaster implements Serializable {
 	private long vaccineDoseId;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DATE_CREATED", nullable=false)
+	@Column(name="DATE_CREATED")
 	private Date dateCreated;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DATE_MODIFIED", nullable=false)
+	@Column(name="DATE_MODIFIED")
 	private Date dateModified;
 
 	@Column(name="VACCINE_DOSE_DETAIL", length=255)

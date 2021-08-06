@@ -6,11 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ibm.cfc.vaers.dto.in.ReportAdverseEventsForUserIn;
 import com.ibm.cfc.vaers.dto.out.AdverseEventMasterOut;
 import com.ibm.cfc.vaers.service.AdverseEventManagementService;
 

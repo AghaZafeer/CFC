@@ -23,11 +23,11 @@ public class UserVaccine implements Serializable {
 	private long usvacId;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DATE_CREATED", nullable=false)
+	@Column(name="DATE_CREATED")
 	private Date dateCreated;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DATE_MODIFIED", nullable=false)
+	@Column(name="DATE_MODIFIED")
 	private Date dateModified;
 
 	@Column(name="USVAC_VACCINATION_CENTER", length=255)

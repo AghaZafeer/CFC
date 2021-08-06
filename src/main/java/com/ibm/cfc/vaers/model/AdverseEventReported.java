@@ -46,7 +46,7 @@ public class AdverseEventReported implements Serializable {
 	private Date adevRepRecoveryDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="ADEV_REP_START_DATE_TIME", nullable=false)
+	@Column(name="ADEV_REP_START_DATE_TIME")
 	private Date adevRepStartDateTime;
 
 	@Temporal(TemporalType.TIMESTAMP)
