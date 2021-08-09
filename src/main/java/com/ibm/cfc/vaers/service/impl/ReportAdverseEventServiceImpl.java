@@ -172,7 +172,7 @@ public class ReportAdverseEventServiceImpl implements ReportAdverseEventService 
 				userVaccine.setVaccineMaster(vaccineMaster);
 				userVaccine.setVaccineDoseMaster(vaccineDoseMaster);
 				userVaccine.setUsvacVaccinationCenter(reportAdverseEventsForUserIn.getVaccinationCenter());
-				userVaccine.setUsvacVaccinationDatetime(VaersUtilities.getTimestampFromString(reportAdverseEventsForUserIn.getDateOfBirth()));
+				userVaccine.setUsvacVaccinationDatetime(VaersUtilities.getTimestampFromString(reportAdverseEventsForUserIn.getVaccinationDate()));
 				
 				userVaccine.setDateCreated(VaersUtilities.getCurrentDate());
 				userVaccine.setDateModified(VaersUtilities.getCurrentDate());
