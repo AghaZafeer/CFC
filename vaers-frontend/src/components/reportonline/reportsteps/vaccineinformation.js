@@ -6,6 +6,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import CustomizeTable from 'resources/customizeTable';
 import  { CustomizeDialog } from 'resources/customizeDialog';
 import axios from 'axios';
+import { checkDateValidation } from 'resources/utilities';
+import { CustomAlertDialog } from 'resources/customAlertDialog';
 
 const VaccineInformationComponent = ({
     handleNext,
@@ -18,6 +20,7 @@ const VaccineInformationComponent = ({
     const [radioValue, setRadioValue] = React.useState();
     const [open, setOpen] = React.useState(false);
     const [selectedValue, setSelectedValue] = React.useState(false);
+    const [alertError, setAlertError] = React.useState(false);
     const [noOfVaccines, setNoOfVaccines] = React.useState([]);
     React.useEffect(() => {
       axios.get('/getVaccineList').then(res => {
@@ -50,16 +53,31 @@ const VaccineInformationComponent = ({
 
   const handleClose = (symptom,severity,dateStartedAdvEvt,isfatal,dateOfDeath,
     isrecovered, recoveryDate) => {
-    setOpen(false);
-    if (symptom !== undefined) {
-        setState(prevState => [...prevState, {"adverseEffectID":symptom, "severityID" : severity, "adverseEffectReportingDate": dateStartedAdvEvt,
-        "adverseEffectIsFatal" : isfatal ,"dateOfDeath" : dateOfDeath,
-        "adverseEffectIsRecovered": isrecovered, "dateOfRecovery": recoveryDate}] );
-        setSelectedValue(true);
-        handleState(prevState,{"adverseEffectID":symptom,"severityID":severity,"adverseEffectReportingDate":dateStartedAdvEvt,
-          "adverseEffectIsFatal" : isfatal ,"dateOfDeath" : dateOfDeath, "adverseEffectIsRecovered": isrecovered, "dateOfRecovery": recoveryDate});
+    if(checkDateValidation(dateVaccination,dateStartedAdvEvt)){
+      if (checkDateValidation(dateStartedAdvEvt,recoveryDate)){
+       if(checkDateValidation(dateStartedAdvEvt,dateOfDeath)) {
+        setOpen(false);
+        if (symptom !== undefined) {
+            setState(prevState => [...prevState, {"adverseEffectID":symptom, "severityID" : severity, "adverseEffectReportingDate": dateStartedAdvEvt,
+            "adverseEffectIsFatal" : isfatal ,"dateOfDeath" : dateOfDeath,
+            "adverseEffectIsRecovered": isrecovered, "dateOfRecovery": recoveryDate}] );
+            setSelectedValue(true);
+            handleState(prevState,{"adverseEffectID":symptom,"severityID":severity,"adverseEffectReportingDate":dateStartedAdvEvt,
+              "adverseEffectIsFatal" : isfatal ,"dateOfDeath" : dateOfDeath, "adverseEffectIsRecovered": isrecovered, "dateOfRecovery": recoveryDate});
+        }
+    } else {
+      setAlertError(true);
+    } }else {
+      setAlertError(true);
+    } }else {
+      setAlertError(true);
     }
   };
+
+ const handleCloseDialog = () => {
+    setAlertError(false);
+   };
+
     return (
       <>
         <Grid container spacing={2}>
@@ -120,7 +138,7 @@ const VaccineInformationComponent = ({
           />
             </Grid>
             <Grid item xs={12}>
-            <Button
+            <Button disabled={!isValid}
               variant="contained"
               color="primary" onClick={handleClickOpen}
             >
@@ -131,6 +149,9 @@ const VaccineInformationComponent = ({
            <StyledCustomizeTableApp prevState = {prevState}/> 
           ) :null }
             </Grid>
+            { alertError ? (
+            <CustomAlertDialog  onClose = {handleCloseDialog} title = {"Date Validation Failed"} message ={"1)Date of Vaccination should be greater than Adverse event start date.  2)Adverse event Started date should be greater than recovery Date or Date of Death."} />
+            ) :null}
         </Grid>
         <div
           style={{ display: "flex", marginTop: 50, justifyContent: "flex-end" }}
