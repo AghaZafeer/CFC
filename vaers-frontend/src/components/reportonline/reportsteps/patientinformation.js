@@ -9,26 +9,28 @@ import Button from "@material-ui/core/Button";
 import { FormControlLabel, FormLabel, Radio, RadioGroup } from '@material-ui/core';
 import Dropdown from 'react-mui-multiselect-dropdown'
 import axios from 'axios';
-import Multiselect from 'multiselect-react-dropdown';
 
 // Destructuring props
 const PatientInformationComponent = ({
     handleNext,
     handleChange,
-    values: { firstName, lastName, email ,address, contactNo, aadharnumber,age,date,gender,ispregnant,existingIllness,existingallergy},
+    values: { title, firstName,middleName, lastName, email ,address, contactNo,altcontactNo, aadharnumber,age,date,gender,ispregnant,existingIllness,existingallergy},
     formErrors
   }) => {
     const [illness, setIllness] = React.useState([]);
     const [selectedIllness, setSelectedIllness] = React.useState([]);
     const [alergy, setAlergy] = React.useState([]);
     const [selectedalergy, setSelectedalergy] = React.useState([]);
-
+    const [titles, setTitles] = React.useState([]);
     React.useEffect(() => {
       axios.get('/getIllnessList').then(res => {
         setIllness(res.data);
       }).catch(err => console.log(err))
       axios.get('/getAllergicConditionsList').then(res => {
         setAlergy(res.data);
+      }).catch(err => console.log(err))
+      axios.get('/getListOfUserTitles').then(res => {
+        setTitles(res.data);
       }).catch(err => console.log(err))
      },[])
     const isValid =
@@ -45,11 +47,22 @@ const PatientInformationComponent = ({
       age.length > 0 &&
       !formErrors.age &&
       date.length > 0 &&
-      gender.length > 0;
+      gender.length > 0 &&
+      title.length >0;
 
     return (
       <Fragment>
         <Grid container spacing={2} noValidate>
+        <Grid item xs={12} sm={6}>
+            <FormControl fullWidth required margin="normal">
+                <InputLabel>Title</InputLabel>
+                <Select value={title} onChange={handleChange} name="title">
+                {titles.map((tit) =>
+                <MenuItem value={tit.userTitleName}>{tit.userTitleName}</MenuItem>
+                )}
+                </Select>
+            </FormControl>
+            </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
@@ -62,6 +75,19 @@ const PatientInformationComponent = ({
               error={!!formErrors.firstName}
               helperText={formErrors.firstName}
               required
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              fullWidth
+              label="Middle Name"
+              name="MiddleName"
+              placeholder="Your Middle name"
+              margin="normal"
+              value={middleName || ""}
+              onChange={handleChange}
+              error={!!formErrors.middleName}
+              helperText={formErrors.middleName}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -116,6 +142,19 @@ const PatientInformationComponent = ({
               error={!!formErrors.contactNo}
               helperText={formErrors.contactNo}
               required
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              fullWidth
+              label="Alternative Contact Number"
+              name="altcontactNo"
+              placeholder="i.e: xxx-xxx-xxxx"
+              margin="normal"
+              value={altcontactNo || ""}
+              onChange={handleChange}
+              error={!!formErrors.altcontactNo}
+              helperText={formErrors.altcontactNo}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -221,12 +260,13 @@ const PatientInformationComponent = ({
             <FormControl fullWidth required margin="normal">
                 <InputLabel>Gender</InputLabel>
                 <Select value={gender} onChange={handleChange} name="gender">
-                  <MenuItem value={"Male"}>Male</MenuItem>
-                  <MenuItem value={"Female"}>Female</MenuItem>
+                  <MenuItem value={"MALE"}>Male</MenuItem>
+                  <MenuItem value={"FEMALE"}>Female</MenuItem>
+                  <MenuItem value={"UNKNOWN"}>Unknown</MenuItem>
                 </Select>
             </FormControl>
         </Grid>
-        {(gender === 'Female') ? (
+        {(gender === 'FEMALE') ? (
           <Grid item xs={12} sm={6}>
               <FormControl component="fieldset" fullWidth  margin="normal">
                   <FormLabel component="legend">Are you pregnant ?</FormLabel>

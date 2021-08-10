@@ -18,3 +18,15 @@ export function ordinal(number) {
     const suffix = suffixes[english_ordinal_rules.select(number)];
     return (number + suffix);
 }
+export function convertArraytoJsonObject(arrayData,parameter) {
+    var jsonarray = [];
+    if(arrayData !==null && arrayData !==undefined){
+        arrayData.forEach(function(value) {
+            var jsonObj = {};
+            jsonObj[parameter] = value;
+            jsonarray.push(jsonObj);
+        });
+    }
+  return jsonarray;
+
+}

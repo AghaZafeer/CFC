@@ -32,7 +32,9 @@ function getSteps() {
 }
 
 const initialValues = {
+  title :"",
   firstName: "",
+  middleName:"",
   lastName: "",
   email: "",
   gender: "",
@@ -46,10 +48,14 @@ const initialValues = {
   ispregnant:"",
   address:"",
   contactNo:"",
+  altcontactNo:"",
   relationToUser:"",
+  reporterTitle:"",
   reporterFirstName:"",
+  reporterMiddleName:"",
   reporterLastName :"",
   reporterContactNo :"",
+  reporterAltContactNo :"",
   reporterAddress :"",
   reporterEmail :"",
   vaccinename:"",
@@ -69,6 +75,12 @@ const initialValues = {
 
 const fieldsValidation = {
   firstName: {
+    error: "",
+    validate: "text",
+    minLength: 2,
+    maxLength: 20
+  },
+  middleName: {
     error: "",
     validate: "text",
     minLength: 2,
@@ -110,9 +122,17 @@ const fieldsValidation = {
     validate: "contactNo",
     maxLength: 15
   },
+  altcontactNo: {
+    error: "",
+    validate: "contactNo",
+    maxLength: 15
+  },
+  reporterTitle:{},
   reporterFirstName:{},
+  reporterMiddleName:{},
   reporterLastName :{},
   reporterContactNo :{},
+  reporterAltContactNo:{},
   reporterAddress :{},
   reporterEmail :{},
   vaccinename :{},
@@ -122,6 +142,7 @@ const fieldsValidation = {
   age:{},
   date:{},
   gender:{},
+  title:{},
   ispregnant:{},
   symptom:[{}],
   severity:{},
@@ -151,12 +172,12 @@ export default function ReportOnlineComponent() {
   const handleState = (prevState,nextState) => {
     setFormValues((prev) => ({
       ...prev,
-      ["symptom"]: [...prevState, {name:nextState.name,severity:nextState.severity,
-        datestartedadvevt:nextState.datestartedadvevt, 
-        isfatal : nextState.isfatal ,
-        dateOfDeath : nextState.dateOfDeath,
-        isrecovered: nextState.isrecovered, 
-        recoveryDate: nextState.recoveryDate }]
+      ["symptom"]: [...prevState, {"adverseEffectID":nextState.adverseEffectID,"severityID":nextState.severityID,
+        "adverseEffectReportingDate":nextState.adverseEffectReportingDate, 
+        "adverseEffectIsFatal" : nextState.adverseEffectIsFatal ,
+        "dateOfDeath" : nextState.dateOfDeath,
+        "adverseEffectIsRecovered": nextState.adverseEffectIsRecovered, 
+        "dateOfRecovery": nextState.dateOfRecovery }]
     }));
   };
 

@@ -46,9 +46,9 @@ class CustomizeTable extends React.Component {
             {this.state.items.map((item, i) => {
                 return (
                     <TableRow key={`row-${i}`}>
-                    <TableCell>{item.name}</TableCell>
-                    <TableCell>{item.datestartedadvevt}</TableCell>
-                    <TableCell>{item.severity}</TableCell>
+                    <TableCell>{item.adverseEffectID}</TableCell>
+                    <TableCell>{item.adverseEffectReportingDate}</TableCell>
+                    <TableCell>{item.severityID}</TableCell>
                     <TableCell>
                         <Button
                         onClick={this.deleteItem.bind(this, i)}

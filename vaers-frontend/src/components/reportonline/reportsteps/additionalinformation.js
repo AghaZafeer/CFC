@@ -13,12 +13,15 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import axios from "axios";
+import { convertArraytoJsonObject } from "resources/utilities";
 // Destructure props
 const Confirm = ({
   handleNext,
   handleBack,
-  values: { firstName, lastName, email ,address, contactNo, aadharnumber,age,date,gender,ispregnant,
-    relationToUser,reporterFirstName,reporterLastName,reporterContactNo,reporterAddress,reporterEmail,
+  values: { title,firstName,middleName, lastName, email ,address, contactNo,altcontactNo, aadharnumber,age,date,gender,ispregnant,
+    relationToUser,reporterTitle,reporterFirstName,reporterMiddleName,reporterLastName,reporterContactNo,reporterAltContactNo,
+    reporterAddress,reporterEmail,
     vaccinename,dosages,instituteName,dateVaccination,symptom, existingIllness,existingallergy
     }
 }) => {
@@ -32,13 +35,42 @@ const Confirm = ({
     setTermEvt2({ ...termEvt2,[e.target.name]: e.target.checked });
   };
   const handleSubmit = () => {
-    const form = {'firstName' : firstName, 'lastName' : lastName, 
-    'email':email , 'symptom' : symptom, 'address' :address,'contactNo': contactNo, 'aadharnumber':aadharnumber,'age':age,'date':date,'gender': gender,
-    'ispregnant' : ispregnant, 'reporterFirstName':reporterFirstName,'reporterLastName':reporterLastName,'reporterContactNo': reporterContactNo,
-    'reporterAddress':reporterAddress,'reporterEmail' : reporterEmail,'vaccinename': vaccinename,'dosages' : dosages,'instituteName' : instituteName,
-    'dateVaccination':dateVaccination, 'relationToUser' : relationToUser, "existingIllness" : existingIllness[existingIllness.length-1] , 'existingallergy' : existingallergy[existingallergy.length - 1]}
+    const form = {'userTitleID' : title,
+    'userFirstName' : firstName,
+    'userMiddleName' : middleName, 
+    'userLastName' : lastName, 
+    'userEmail':email , 
+    'userAdverseEffectIns' : symptom, 
+    'userAddress' :address,
+    'userMobile': contactNo, 
+    'userAlternateMobile': altcontactNo, 
+    'userAadhaarNumber':aadharnumber,
+    'userAge':age,
+    'dateOfBirth':date,
+    'userSex': gender,
+    'userIsPregnant' : ispregnant, 
+    'reporterTitleID':reporterTitle,
+    'reporterFirstName':reporterFirstName,
+    'reporterMiddleName':reporterMiddleName,
+    'reporterLastName':reporterLastName,
+    'reporterMobile': reporterContactNo,
+    'reporterAlternateMobile': reporterAltContactNo,
+    'reporterAddress':reporterAddress,
+    'reporterEmail' : reporterEmail,
+    'vaccineID': vaccinename,
+    'vaccineDoseID' : dosages,
+    'vaccinationCenter' : instituteName,
+    'vaccinationDate':dateVaccination, 
+    'reportedBy' : relationToUser, 
+    "userIllnessIns" : convertArraytoJsonObject(existingIllness[existingIllness.length-1] ,"illnessID"), 
+    'userAllergicConditionIns' : convertArraytoJsonObject(existingallergy[existingallergy.length - 1], "allergicConditionID")}
     console.log("form", form);
-    handleNext();
+    axios.post('/reportAdverseEffects', form)
+        .then(response => {
+          if (response.data.status === 'SUCCESS') {
+            handleNext();
+          }
+        }).catch(err => console.log(err));
   };
   return (
     <Fragment>
@@ -70,14 +102,18 @@ const Confirm = ({
            <Grid item xs={12} sm={6}>
               <ListItem>
               <ListItemText primary="Phone Number" secondary={contactNo.length > 0 ? contactNo : "Not Provided"}/>
+              {(existingIllness[existingIllness.length-1] !== null && existingIllness[existingIllness.length-1] !== undefined) ? (
               <ListItemText primary="Existing Illness" secondary={existingIllness[existingIllness.length-1].join(",")}/>
+              ):null}
             </ListItem>
             </Grid>
+            {(existingallergy[existingallergy.length-1] !== null && existingallergy[existingallergy.length-1] !== undefined) ? (
             <Grid item xs={12} sm={6}>
               <ListItem>
               <ListItemText primary="Existing Allergy" secondary={existingallergy[existingallergy.length-1].join(",")}/>
             </ListItem>
             </Grid>
+            ):null}
            </Grid>
            <Grid container spacing={2}>
            <Grid item xs={12} sm={15}>
@@ -87,7 +123,7 @@ const Confirm = ({
             </ListItem>
             
            </Grid>
-           {relationToUser !== 'self' ? (
+           {relationToUser !== 'SELF' ? (
              <Grid container spacing={2}>
            <Grid item xs={12} sm={6}>
            <ListItem>
@@ -137,16 +173,16 @@ const Confirm = ({
                           <TableCell align="right">Date Of Recovery</TableCell>
                         </TableRow>
                       </TableHead>
-                      <TableBody>
+                      <TableBody> 
                         {symptom.map((row) => (
-                          <TableRow key={row.name}>
+                          <TableRow key={row.adverseEffectID}>
                             <TableCell component="th" scope="row">
-                              {row.name}
+                              {row.adverseEffectID}
                             </TableCell>
-                            <TableCell align="right">{row.datestartedadvevt}</TableCell>
-                            <TableCell align="right">{row.severity}</TableCell>
-                            {row.isfatal?(<TableCell align="right">{row.dateOfDeath}</TableCell>):<TableCell align="right"></TableCell>}
-                            {row.isrecovered?(<TableCell align="right">{row.recoveryDate}</TableCell>):<TableCell align="right"></TableCell>}
+                            <TableCell align="right">{row.adverseEffectReportingDate}</TableCell>
+                            <TableCell align="right">{row.severityID}</TableCell>
+                            {row.adverseEffectIsFatal?(<TableCell align="right">{row.dateOfDeath}</TableCell>):<TableCell align="right"></TableCell>}
+                            {row.adverseEffectIsRecovered?(<TableCell align="right">{row.dateOfRecovery}</TableCell>):<TableCell align="right"></TableCell>}
                           </TableRow>
                         ))}
                       </TableBody>

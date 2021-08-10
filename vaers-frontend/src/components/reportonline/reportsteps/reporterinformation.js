@@ -2,29 +2,34 @@ import React, { useEffect } from 'react';
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@material-ui/core';
+import { FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio, RadioGroup, Select } from '@material-ui/core';
+import axios from 'axios';
 
 // Destructuring props
 const ReporterInformationComponent = ({
     handleNext,
     handleBack,
     handleChange,
-    values: {relationToUser,reporterFirstName,reporterLastName,reporterContactNo,reporterAddress,reporterEmail},
+    values: {relationToUser,reporterTitle , reporterFirstName,reporterMiddleName,reporterLastName,reporterContactNo,reporterAltContactNo,reporterAddress,reporterEmail},
     formErrors
   }) => {
+    const [titles, setTitles] = React.useState([]);
     const isValid =
       relationToUser.length > 0 &&
        !formErrors.relationToUser;
        const [selectedValue, setSelectedValue] = React.useState(false);
 
   useEffect(() => {
-    if(relationToUser === 'self'){
+    if(relationToUser === 'SELF'){
       setSelectedValue(true);
     }
+    axios.get('/getListOfUserTitles').then(res => {
+      setTitles(res.data);
+    }).catch(err => console.log(err))
   });
     
   const handleAutoFill = (value) => {
-       if(value === 'user'){
+       if(value === 'SELF'){
         setSelectedValue(true);
        } else {
         setSelectedValue(false);
@@ -37,15 +42,28 @@ const ReporterInformationComponent = ({
             <FormControl component="fieldset" fullWidth required margin="normal">
                 <FormLabel component="legend">Relation to User:</FormLabel>
                 <RadioGroup aria-label="relationToUser" name="relationToUser" value={relationToUser || ""} onChange={handleChange}>
-                    <FormControlLabel value="Heathcare Professional/Staff" control={<Radio onClick = 
-                            {(e) => {handleAutoFill(e.target.value)}} color="primary"/>} label="Heathcare Professional/Staff" />
-                    <FormControlLabel value="self" control={<Radio onClick = 
-                            {(e) => {handleAutoFill(e.target.value)}} color="primary"/>} label="Self" />
-                    <FormControlLabel value="Other" control={<Radio onClick = 
-                            {(e) => {handleAutoFill(e.target.value)}} color="primary"/>} label="Parent/Guardian/Relative/Caregiver" />
+                    <FormControlLabel value="HEALTHCARE_PROFESSIONAL" control={<Radio onClick = 
+                            {(e) => {handleAutoFill(e.target.value)}} color="primary"/>} label="HEALTHCARE_PROFESSIONAL" />
+                    <FormControlLabel value="SELF" control={<Radio onClick = 
+                            {(e) => {handleAutoFill(e.target.value)}} color="primary"/>} label="SELF" />
+                    <FormControlLabel value="RELATIVE" control={<Radio onClick = 
+                            {(e) => {handleAutoFill(e.target.value)}} color="primary"/>} label="RELATIVE" />
+                     <FormControlLabel value="OTHERS" control={<Radio onClick = 
+                            {(e) => {handleAutoFill(e.target.value)}} color="primary"/>} label="OTHERS" />
                 </RadioGroup>
             </FormControl>
         </Grid>
+        {!selectedValue ? (  
+        <Grid item xs={12} sm={6}>
+        <FormControl fullWidth required margin="normal">
+            <InputLabel>Title</InputLabel>
+            <Select value={reporterTitle} onChange={handleChange} name="reporterTitle">
+            {titles.map((tit) =>
+            <MenuItem value={tit.userTitleName}>{tit.userTitleName}</MenuItem>
+            )}
+            </Select>
+        </FormControl>
+        </Grid> ) :null }
         {!selectedValue ? (  
         <Grid item xs={12} sm={6}>
             <TextField
@@ -59,6 +77,20 @@ const ReporterInformationComponent = ({
               error={!!formErrors.reporterFirstName}
               helperText={formErrors.reporterFirstName}
               required
+            />
+          </Grid> ) :null }
+          {!selectedValue ? (  
+        <Grid item xs={12} sm={6}>
+            <TextField
+              fullWidth
+              label="MiddleName"
+              name="reporterMiddleName"
+              placeholder="reporterMiddleName"
+              margin="normal"
+              value={reporterMiddleName || ""}
+              onChange={handleChange}
+              error={!!formErrors.reporterMiddleName}
+              helperText={formErrors.reporterMiddleName}
             />
           </Grid> ) :null }
           {!selectedValue ? ( 
@@ -88,6 +120,20 @@ const ReporterInformationComponent = ({
               onChange={handleChange}
               error={!!formErrors.reporterContactNo}
               helperText={formErrors.reporterContactNo}
+            />
+         </Grid> ) :null }
+         {!selectedValue ? ( 
+          <Grid item xs={12} sm={6}>
+            <TextField
+              fullWidth
+              label="Alternative ContactNo"
+              name="reporterAltContactNo"
+              placeholder="reporterAltContactNo"
+              margin="normal"
+              value={reporterAltContactNo || ""}
+              onChange={handleChange}
+              error={!!formErrors.reporterAltContactNo}
+              helperText={formErrors.reporterAltContactNo}
             />
          </Grid> ) :null }
          {!selectedValue ? ( 

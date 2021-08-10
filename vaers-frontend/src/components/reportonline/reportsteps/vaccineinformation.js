@@ -52,12 +52,12 @@ const VaccineInformationComponent = ({
     isrecovered, recoveryDate) => {
     setOpen(false);
     if (symptom !== undefined) {
-        setState(prevState => [...prevState, {name:symptom, severity : severity, datestartedadvevt: dateStartedAdvEvt,
-          isfatal : isfatal ,dateOfDeath : dateOfDeath,
-          isrecovered: isrecovered, recoveryDate: recoveryDate}] );
+        setState(prevState => [...prevState, {"adverseEffectID":symptom, "severityID" : severity, "adverseEffectReportingDate": dateStartedAdvEvt,
+        "adverseEffectIsFatal" : isfatal ,"dateOfDeath" : dateOfDeath,
+        "adverseEffectIsRecovered": isrecovered, "dateOfRecovery": recoveryDate}] );
         setSelectedValue(true);
-        handleState(prevState,{name:symptom,severity:severity,datestartedadvevt:dateStartedAdvEvt,
-          isfatal : isfatal ,dateOfDeath : dateOfDeath, isrecovered: isrecovered, recoveryDate: recoveryDate});
+        handleState(prevState,{"adverseEffectID":symptom,"severityID":severity,"adverseEffectReportingDate":dateStartedAdvEvt,
+          "adverseEffectIsFatal" : isfatal ,"dateOfDeath" : dateOfDeath, "adverseEffectIsRecovered": isrecovered, "dateOfRecovery": recoveryDate});
     }
   };
     return (
