@@ -15,4 +15,6 @@ public interface VaccineDoseMasterRepository extends JpaRepository <VaccineDoseM
 	
 	VaccineDoseMaster findByVaccineMasterAndVaccineDoseName(VaccineMaster vaccineMaster, String vaccineDoseName);
 	
+	List<VaccineDoseMaster> findByVaccineMaster(VaccineMaster vaccineMaster);
+	
 }

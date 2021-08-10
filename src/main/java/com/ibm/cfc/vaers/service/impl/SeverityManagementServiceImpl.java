@@ -22,7 +22,7 @@ public class SeverityManagementServiceImpl implements SeverityManagementService 
 	@Autowired
 	SeverityMasterRepository severityMasterRepository; 
 	
-
+		@Override
 		public List<SeverityMasterOut> getListOfSeverity(){
 		// TODO Auto-generated method stub
 		logger.debug("Inside getListOfSeverity of SeverityManagementServiceImpl >>>>>>> ");

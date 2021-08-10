@@ -120,6 +120,7 @@ public class ReportAdverseEventServiceImpl implements ReportAdverseEventService 
 			user.setUserReporterAlternateNumber(reportAdverseEventsForUserIn.getReporterAlternateMobile());
 			user.setUserReporterEmailId(reportAdverseEventsForUserIn.getReporterEmail());
 			
+			user.setUserIsactive(true);
 			user.setDateCreated(VaersUtilities.getCurrentDate());
 			user.setDateModified(VaersUtilities.getCurrentDate());
 			
