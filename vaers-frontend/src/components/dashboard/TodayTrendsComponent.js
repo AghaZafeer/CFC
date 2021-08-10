@@ -3,7 +3,7 @@ import { Column, Row } from 'simple-flexbox';
 import { createUseStyles, useTheme } from 'react-jss';
 import {Doughnut, Bar} from 'react-chartjs-2';
 import {  exportGraphCriteria } from 'resources/dataService';
-import { FormControl, MenuItem, Select, InputLabel, ListItem, ListItemText, Divider, List } from '@material-ui/core';
+import { FormControl, MenuItem, Select, InputLabel, ListItem, ListItemText, Divider, List, TableCell, TableBody, TableHead, Table, TableContainer, Paper, Grid, TableRow } from '@material-ui/core';
 import { Fragment } from 'react';
 const data = [];
 
@@ -133,7 +133,7 @@ function TodayTrendsComponent(props) {
                 max: 100,
                 stepSize: 10,
                 callback: function (value) {
-                  return (value / this.max * 100).toFixed(0) + '%'; // convert it to percentage
+                  return (value / this.max * 100).toFixed(0) + '%';
                 },
               },
               type: "linear",
@@ -222,7 +222,7 @@ function TodayTrendsComponent(props) {
       };
 
       const adverseEventGraphData = {
-        labels: ["18-40" , "40-60" , ">60"],
+        labels: ["18-40","40-60",">60"],
         datasets: [
             {
               label: adverseeventcriteria,
@@ -505,41 +505,90 @@ useEffect(() => {
             </Column>
             <Column flexGrow={3} flexBasis='200px' breakpoints={{ 512: classes.stats }}>
                     {renderStat( "Total"+ " " + JSON.stringify(selectedVaccine) + " "+'User',totalUserVaccineWise)}
-            {totalSymptoms.map((itm) => {
-                     return(<Fragment>  
-                        <ListItem>
-                         <ListItemText className={classes.statadverse} primary={itm.name} secondary={ itm.totalusercount} />
-                       </ListItem>
-                       {(graphcriteria === 'By Severity') ? (
-                       <Fragment>
-                       <ListItem>
-                         <ListItemText className={classes.statadverse} primary="Mile" secondary={itm.mileusercount} />
-                       </ListItem>
-                       <ListItem>
-                         <ListItemText className={classes.statadverse} primary="Moderate" secondary={itm.moderateusercount} />
-                       </ListItem>
-                       <ListItem>
-                         <ListItemText className={classes.statadverse} primary="Severe" secondary={itm.severeusercount} />
-                       </ListItem> 
-                       <Divider/> 
-                       </Fragment>) :null }
-                       {(graphcriteria === 'By Ages') ? (
-                       <Fragment>
-                       <ListItem>
-                         <ListItemText className={classes.statadverse} primary="18-40" secondary={itm.agegroup1} />
-                       </ListItem>
-                       <ListItem>
-                         <ListItemText className={classes.statadverse} primary="40-60" secondary={itm.agegroup2} />
-                       </ListItem>
-                       <ListItem>
-                         <ListItemText className={classes.statadverse} primary=">60" secondary={itm.agegroup3} />
-                       </ListItem> 
-                       <Divider/> 
-                       </Fragment>) :null }
-                     </Fragment>
-                     );
-                    })}
-
+          {(graphcriteria === 'By Doses') ? (
+                      <Grid item xs={12} sm={15}>
+                          <TableContainer component={Paper}>
+                                <Table  aria-label="simple table">
+                                  <TableHead>
+                                    <TableRow>
+                                      <TableCell>Adverse Event</TableCell>
+                                      <TableCell>Total User</TableCell>
+                                    </TableRow>
+                                  </TableHead>
+                                  <TableBody> 
+                                    {totalSymptoms.map((row) => (
+                                      <TableRow key={row.name}>
+                                        <TableCell component="th" scope="row">
+                                          {row.name}
+                                        </TableCell>
+                                        <TableCell>{row.totalusercount}</TableCell>
+                                      </TableRow>
+                                    ))}
+                                  </TableBody>
+                                </Table>
+                        </TableContainer>
+                   </Grid> 
+                      ):null }
+          {(graphcriteria === 'By Severity') ? (
+            <Grid item xs={12} sm={15}>
+                    <TableContainer component={Paper}>
+                          <Table  aria-label="simple table">
+                            <TableHead>
+                              <TableRow>
+                                <TableCell>Adverse Event</TableCell>
+                                <TableCell align="right">Mile</TableCell>
+                                <TableCell align="right">Moderate</TableCell>
+                                <TableCell align="right">Severe</TableCell>
+                                <TableCell align="right">Total User</TableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody> 
+                              {totalSymptoms.map((row) => (
+                                <TableRow key={row.name}>
+                                  <TableCell component="th" scope="row">
+                                    {row.name}
+                                  </TableCell>
+                                  <TableCell align="right">{row.mileusercount}</TableCell>
+                                  <TableCell align="right">{row.moderateusercount}</TableCell>
+                                  <TableCell align="right">{row.severeusercount}</TableCell>
+                                  <TableCell align="right">{row.totalusercount}</TableCell>
+                                </TableRow>
+                              ))}
+                            </TableBody>
+                          </Table>
+                  </TableContainer>
+              </Grid> 
+           ) : null}
+           {(graphcriteria === 'By Ages') ? (
+            <Grid item xs={12} sm={15}>
+                    <TableContainer component={Paper}>
+                          <Table  aria-label="simple table">
+                            <TableHead>
+                              <TableRow>
+                                <TableCell>Adverse Event</TableCell>
+                                <TableCell align="right">18-40</TableCell>
+                                <TableCell align="right">40-60</TableCell>
+                                <TableCell align="right">Above 60</TableCell>
+                                <TableCell align="right">Total User</TableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody> 
+                              {totalSymptoms.map((row) => (
+                                <TableRow key={row.name}>
+                                  <TableCell component="th" scope="row">
+                                    {row.name}
+                                  </TableCell>
+                                  <TableCell align="right">{row.agegroup1}</TableCell>
+                                  <TableCell align="right">{row.agegroup2}</TableCell>
+                                  <TableCell align="right">{row.agegroup3}</TableCell>
+                                  <TableCell align="right">{row.totalusercount}</TableCell>
+                                </TableRow>
+                              ))}
+                            </TableBody>
+                          </Table>
+                  </TableContainer>
+              </Grid> 
+           ) : null}
                     </Column>
         </Row>
     );
