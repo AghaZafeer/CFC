@@ -7,6 +7,9 @@ public class ReportAdverseEventsForUserOut implements Serializable {
 	public String status;
 	
 	public String message;
+	
+	public String caseNumber;
+	
 
 	public String getStatus() {
 		return status;
@@ -23,5 +26,12 @@ public class ReportAdverseEventsForUserOut implements Serializable {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
+
+	public String getCaseNumber() {
+		return caseNumber;
+	}
+
+	public void setCaseNumber(String caseNumber) {
+		this.caseNumber = caseNumber;
+	}
 }

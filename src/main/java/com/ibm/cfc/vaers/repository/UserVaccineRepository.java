@@ -21,4 +21,6 @@ public interface UserVaccineRepository extends JpaRepository <UserVaccine, Integ
 	
 	@Query("select userVaccine from UserVaccine userVaccine where userVaccine.user.userIsactive=true and userVaccine.vaccineMaster = ?1 and userVaccine.vaccineDoseMaster = ?2")
 	List<UserVaccine> findAllByVaccineMasterAndVaccineDoseMaster(VaccineMaster vaccineMaster, VaccineDoseMaster vaccineDoseMaster);
+	
+	UserVaccine findByUserAndVaccineMasterAndVaccineDoseMaster(User user, VaccineMaster vaccineMaster, VaccineDoseMaster vaccineDoseMaster);
 }

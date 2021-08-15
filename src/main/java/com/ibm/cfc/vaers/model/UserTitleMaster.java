@@ -36,12 +36,12 @@ public class UserTitleMaster implements Serializable {
 	private String userTitleName;
 
 	//bi-directional many-to-one association to User
-	@OneToMany(mappedBy="userTitleMaster1")
-	private List<User> users1;
-
-	//bi-directional many-to-one association to User
 	@OneToMany(mappedBy="userTitleMaster2")
 	private List<User> users2;
+	
+	//bi-directional many-to-one association to User
+	@OneToMany(mappedBy="caseReporterTitleId")
+	private List<CaseReporter> caseReporters;
 
 	public UserTitleMaster() {
 	}
@@ -86,28 +86,6 @@ public class UserTitleMaster implements Serializable {
 		this.userTitleName = userTitleName;
 	}
 
-	public List<User> getUsers1() {
-		return this.users1;
-	}
-
-	public void setUsers1(List<User> users1) {
-		this.users1 = users1;
-	}
-
-	public User addUsers1(User users1) {
-		getUsers1().add(users1);
-		users1.setUserTitleMaster1(this);
-
-		return users1;
-	}
-
-	public User removeUsers1(User users1) {
-		getUsers1().remove(users1);
-		users1.setUserTitleMaster1(null);
-
-		return users1;
-	}
-
 	public List<User> getUsers2() {
 		return this.users2;
 	}
@@ -128,6 +106,28 @@ public class UserTitleMaster implements Serializable {
 		users2.setUserTitleMaster2(null);
 
 		return users2;
+	}
+	
+	public List<CaseReporter> getCaseReporters() {
+		return this.caseReporters;
+	}
+
+	public void setCaseReporters(List<CaseReporter> caseReporters) {
+		this.caseReporters = caseReporters;
+	}
+
+	public CaseReporter addCaseReporters(CaseReporter caseReporter) {
+		getCaseReporters().add(caseReporter);
+		caseReporter.setCaseReporterTitleId(this);
+
+		return caseReporter;
+	}
+
+	public CaseReporter removeCaseReporters(CaseReporter caseReporter) {
+		getCaseReporters().remove(caseReporter);
+		caseReporter.setCaseReporterTitleId(null);
+
+		return caseReporter;
 	}
 
 }

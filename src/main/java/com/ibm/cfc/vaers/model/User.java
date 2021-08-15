@@ -2,6 +2,7 @@ package com.ibm.cfc.vaers.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -51,9 +52,6 @@ public class User implements Serializable {
 	@Column(name="USER_FIRST_NAME", length=100)
 	private String userFirstName;
 
-	@Column(name="USER_INFO_ADDED_BY", length=1)
-	private String userInfoAddedBy;
-
 	@Column(name="USER_IS_PREGNANT")
 	private boolean userIsPregnant;
 
@@ -69,31 +67,8 @@ public class User implements Serializable {
 	@Column(name="USER_MOBILE", length=15)
 	private String userMobile;
 
-	@Column(name="USER_REPORTER_ALTERNATE_NUMBER", length=15)
-	private String userReporterAlternateNumber;
-
-	@Column(name="USER_REPORTER_EMAIL_ID", length=200)
-	private String userReporterEmailId;
-
-	@Column(name="USER_REPORTER_FIRST_NAME", length=100)
-	private String userReporterFirstName;
-
-	@Column(name="USER_REPORTER_LAST_NAME", length=100)
-	private String userReporterLastName;
-
-	@Column(name="USER_REPORTER_MIDDLE_NAME", length=100)
-	private String userReporterMiddleName;
-
-	@Column(name="USER_REPORTER_MOBILE", length=15)
-	private String userReporterMobile;
-
 	@Column(name="USER_SEX", length=1)
 	private String userSex;
-
-	//bi-directional many-to-one association to UserTitleMaster
-	@ManyToOne
-	@JoinColumn(name="USER_REPORTER_TITLE_ID")
-	private UserTitleMaster userTitleMaster1;
 
 	//bi-directional many-to-one association to UserTitleMaster
 	@ManyToOne
@@ -111,6 +86,11 @@ public class User implements Serializable {
 	//bi-directional many-to-one association to UserVaccine
 	@OneToMany(mappedBy="user")
 	private List<UserVaccine> userVaccines;
+	
+	//bi-directional many-to-one association to CaseReporter
+	@OneToMany(mappedBy="user")
+	private List<CaseReporter> caseReporters;
+
 
 	public User() {
 	}
@@ -195,14 +175,6 @@ public class User implements Serializable {
 		this.userFirstName = userFirstName;
 	}
 
-	public String getUserInfoAddedBy() {
-		return this.userInfoAddedBy;
-	}
-
-	public void setUserInfoAddedBy(String userInfoAddedBy) {
-		this.userInfoAddedBy = userInfoAddedBy;
-	}
-
 	public boolean isUserIsPregnant() {
 		return this.userIsPregnant;
 	}
@@ -243,53 +215,6 @@ public class User implements Serializable {
 		this.userMobile = userMobile;
 	}
 
-	public String getUserReporterAlternateNumber() {
-		return this.userReporterAlternateNumber;
-	}
-
-	public void setUserReporterAlternateNumber(String userReporterAlternateNumber) {
-		this.userReporterAlternateNumber = userReporterAlternateNumber;
-	}
-
-	public String getUserReporterEmailId() {
-		return this.userReporterEmailId;
-	}
-
-	public void setUserReporterEmailId(String userReporterEmailId) {
-		this.userReporterEmailId = userReporterEmailId;
-	}
-
-	public String getUserReporterFirstName() {
-		return this.userReporterFirstName;
-	}
-
-	public void setUserReporterFirstName(String userReporterFirstName) {
-		this.userReporterFirstName = userReporterFirstName;
-	}
-
-	public String getUserReporterLastName() {
-		return this.userReporterLastName;
-	}
-
-	public void setUserReporterLastName(String userReporterLastName) {
-		this.userReporterLastName = userReporterLastName;
-	}
-
-	public String getUserReporterMiddleName() {
-		return this.userReporterMiddleName;
-	}
-
-	public void setUserReporterMiddleName(String userReporterMiddleName) {
-		this.userReporterMiddleName = userReporterMiddleName;
-	}
-
-	public String getUserReporterMobile() {
-		return this.userReporterMobile;
-	}
-
-	public void setUserReporterMobile(String userReporterMobile) {
-		this.userReporterMobile = userReporterMobile;
-	}
 
 	public String getUserSex() {
 		return this.userSex;
@@ -297,14 +222,6 @@ public class User implements Serializable {
 
 	public void setUserSex(String userSex) {
 		this.userSex = userSex;
-	}
-
-	public UserTitleMaster getUserTitleMaster1() {
-		return this.userTitleMaster1;
-	}
-
-	public void setUserTitleMaster1(UserTitleMaster userTitleMaster1) {
-		this.userTitleMaster1 = userTitleMaster1;
 	}
 
 	public UserTitleMaster getUserTitleMaster2() {
@@ -379,6 +296,28 @@ public class User implements Serializable {
 		userVaccine.setUser(null);
 
 		return userVaccine;
+	}
+	
+	public List<CaseReporter> getCaseReporters() {
+		return this.caseReporters;
+	}
+
+	public void setCaseReporters(List<CaseReporter> caseReporters) {
+		this.caseReporters = caseReporters;
+	}
+
+	public CaseReporter addCaseReporter(CaseReporter caseReporter) {
+		getCaseReporters().add(caseReporter);
+		caseReporter.setUser(this);
+
+		return caseReporter;
+	}
+
+	public CaseReporter removeCaseReporter(CaseReporter caseReporter) {
+		getCaseReporters().remove(caseReporter);
+		caseReporter.setUser(null);
+
+		return caseReporter;
 	}
 
 }
