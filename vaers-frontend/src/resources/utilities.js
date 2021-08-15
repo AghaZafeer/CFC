@@ -30,3 +30,17 @@ export function convertArraytoJsonObject(arrayData,parameter) {
   return jsonarray;
 
 }
+
+export function checkDateValidation(firstDate,secondDate) {
+    if(firstDate ===null ||  firstDate === undefined){
+       return true;
+    }
+    if (firstDate === secondDate) {
+        return true;
+    }
+    if ((new Date(firstDate) > new Date(secondDate)) || (new Date(secondDate) < new Date(firstDate))) {
+      return false;
+    } else {
+      return true;
+    }
+  }

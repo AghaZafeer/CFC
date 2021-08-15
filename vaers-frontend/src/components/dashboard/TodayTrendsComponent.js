@@ -79,7 +79,7 @@ const useStyles = createUseStyles((theme) => ({
         ...theme.typography.title,
         textAlign: 'center',
         fontSize: 20,
-        color: theme.color.veryDarkGrayishBlue
+        color: theme.color.grayishBlue2
     }
     ,
     statSeverity: {
@@ -88,6 +88,9 @@ const useStyles = createUseStyles((theme) => ({
         color: theme.color.blue,
         fontSize: 10,
         whiteSpace: 'nowrap'
+    },
+    table: {
+      minWidth: 650,
     }
 }));
 
@@ -268,7 +271,6 @@ function TodayTrendsComponent(props) {
 
     function renderingPieData(){
         const r =  totalSymptoms.map((item) => {return (item.totalusercount.toString())})
-        console.log("r1" , r);
         return r;
         }
     function renderingMileData(){
@@ -344,18 +346,28 @@ useEffect(() => {
        totalSymptoms.splice(0,totalSymptoms.length);
         items.map((item) => { 
             if(selectedVaccine === item.vaccineName) {
-              setTotalUserVaccineWise(item.totaluser);
-              item.listofadverseevent.map((lstItem) => {
-                lstItem.symptoms.map((it) => {
-                    if(!datas.includes(it.value))
-                    datas.push({ "name":it.value,"totalusercount":it.totaluser,"mileusercount":it.milduser, 
-                    "moderateusercount":it.moderateuser , "severeusercount":it.severeuser , "agegroup1":it.agegroup1,"agegroup2":it.agegroup2, "agegroup3":it.agegroup3  });
+              setTotalUserVaccineWise(item.totalNoOfUsersPerVaccine);
+              item.listOfVaccineDosesDataOuts.map((lstItem) => {
+                lstItem.listOfAdverseEventsDataOuts.map((it) => {
+                    if(!datas.includes(it.nameOfAdverseEvent))
+                    datas.push({ "name":it.nameOfAdverseEvent,"totalusercount":it.totalNoOfUsersForAdverseEvent,"mileusercount":it.totalNoOfUsersForAdverseEventWithMildSeverity, 
+                    "moderateusercount":it.totalNoOfUsersForAdverseEventWithModerateSeverity , "severeusercount":it.totalNoOfUsersForAdverseEventWithHighSeverity , 
+                    "agegroup1":it.totalNoOfUsersForAdverseEventOfAgeGroup1,"agegroup2":it.totalNoOfUsersForAdverseEventOfAgeGroup2, "agegroup3":it.totalNoOfUsersForAdverseEventOfAgeGroup3  });
                 })
               })
+              
               var result = datas.reduce(function(acc, val){
                 var o = acc.filter(function(obj){
                     return obj.name===val.name;
-                }).pop() || {name:val.name,totalusercount:0,mileusercount:0,moderateusercount:0,severeusercount:0,agegroup1:0 , agegroup2:0 , agegroup3:0};
+                }).pop() || {name:val.name,
+                  totalusercount:0,
+                  mileusercount:0,
+                  moderateusercount:0,
+                  severeusercount:0,
+                  agegroup1:0, 
+                  agegroup2:0,
+                  agegroup3:0};
+
                 o.totalusercount += val.totalusercount;
                 o.mileusercount += val.mileusercount;
                 o.moderateusercount += val.moderateusercount;
@@ -366,25 +378,35 @@ useEffect(() => {
                 acc.push(o);
                 return acc;
             },[]);
+            console.log("result",result);
             datas = result.filter(function(elem, pos) {
                 return result.indexOf(elem) === pos;
                });
-              item.listofadverseevent.map((lstItem) => {
+               setTotalSymptoms(datas);
+              item.listOfVaccineDosesDataOuts.map((lstItem) => {
                   if(selectedDosage === lstItem.vaccineDoseName) {
-                    optiondatas.splice(0,datas.length);
-                    console.log(lstItem.vaccineDoseName);
-                      setTotalUserVaccineWise(lstItem.totaluser);
-                      lstItem.symptoms.map((lstSym) => {
-                        optiondatas.push({"name":lstSym.value,"totalusercount":lstSym.totaluser, "mileusercount" :lstSym.milduser,
-                           "moderateusercount":lstSym.moderateuser,"severeusercount":lstSym.severeuser,"agegroup1":lstSym.agegroup1,"agegroup2":lstSym.agegroup2, "agegroup3":lstSym.agegroup3});
+                    optiondatas.splice(0,optiondatas.length);
+                      setTotalUserVaccineWise(lstItem.totalNoOfUsersForDose);
+                      lstItem.listOfAdverseEventsDataOuts.map((lstSym) => {
+                        optiondatas.push({"name":lstSym.nameOfAdverseEvent,
+                        "totalusercount":lstSym.totalNoOfUsersForAdverseEvent, 
+                        "mileusercount" :lstSym.totalNoOfUsersForAdverseEventWithMildSeverity,
+                        "moderateusercount":lstSym.totalNoOfUsersForAdverseEventWithModerateSeverity,
+                        "severeusercount":lstSym.totalNoOfUsersForAdverseEventWithHighSeverity,
+                        "agegroup1":lstSym.totalNoOfUsersForAdverseEventOfAgeGroup1,
+                        "agegroup2":lstSym.totalNoOfUsersForAdverseEventOfAgeGroup2,
+                        "agegroup3":lstSym.totalNoOfUsersForAdverseEventOfAgeGroup3});
                       })
+                      setTotalSymptoms(optiondatas);
                   }
               })
-              if (optiondatas.length >0) {
-                setTotalSymptoms(optiondatas);
-              } else {
-                setTotalSymptoms(datas);
-              }
+             // if (optiondatas.length >0) {
+               // setTotalSymptoms(optiondatas);
+              //} else {
+               // setTotalSymptoms(datas);
+              //}
+              //console.log(datas);
+              // console.log(optiondatas);
             }
         })
         }, [selectedVaccine,selectedDosage]);
@@ -508,11 +530,11 @@ useEffect(() => {
           {(graphcriteria === 'By Doses') ? (
                       <Grid item xs={12} sm={15}>
                           <TableContainer component={Paper}>
-                                <Table  aria-label="simple table">
+                                <Table aria-label="simple table">
                                   <TableHead>
                                     <TableRow>
-                                      <TableCell>Adverse Event</TableCell>
-                                      <TableCell>Total User</TableCell>
+                                      <TableCell >Adverse Event</TableCell>
+                                      <TableCell >Total User</TableCell>
                                     </TableRow>
                                   </TableHead>
                                   <TableBody> 

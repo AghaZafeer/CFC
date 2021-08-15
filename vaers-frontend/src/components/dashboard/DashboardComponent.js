@@ -3,10 +3,6 @@ import { Column, Row } from 'simple-flexbox';
 import { createUseStyles } from 'react-jss';
 import MiniCardComponent from 'components/cards/MiniCardComponent';
 import TodayTrendsComponent from './TodayTrendsComponent';
-import UnresolvedTicketsComponent from './UnresolvedTicketsComponent';
-import TasksComponent from './TasksComponent';
-import { getNoofRecords, getVaccines } from 'resources/dataService';
-import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import CardComponent from 'components/cards/CardComponent';
 import axios from 'axios';
 
@@ -51,9 +47,9 @@ const useStyles = createUseStyles({
 
 function DashboardComponent() {
     const classes = useStyles();
-    const record = getNoofRecords();
-    const [vaccinename, setVaccinename] = React.useState("Covaxin"); // Default Values
-    const [dosages, setDosages] = React.useState("DOSE 1"); // Default Values
+    const [vaccinename, setVaccinename] = React.useState(""); // Default Values
+    const [dosages, setDosages] = React.useState(""); // Default Values
+    const [graphrecord, setGraphRecord]= React.useState({totalUser:"", data: []});
     const onComplete = (vaccinename, dosages) => {
         setVaccinename(vaccinename);
         setDosages(dosages);
@@ -62,6 +58,10 @@ function DashboardComponent() {
     React.useEffect(() => {
       axios.get('/getVaccineList').then(res => {
         setNoOfVaccines(res.data)
+      }).catch(err => console.log(err))
+      axios.get('/getReportAndGraphData').then(res => {
+          console.log(res.data);
+        setGraphRecord({totalUser:res.data.totalNoOfUsers,data:res.data.listOfVaccineDataOuts});
       }).catch(err => console.log(err))
      }, [])
     return (
@@ -83,7 +83,7 @@ function DashboardComponent() {
                     <MiniCardComponent
                         className={classes.miniCardContainer}
                         title='Number of Registered Users'
-                        value={record.value}
+                        value={graphrecord.totalUser}
                     />
                     <CardComponent onComplete = {onComplete} title="Use Filter for Graph generation" subtitle ="" link ="" items={noOfVaccines} > </CardComponent>
                
@@ -98,7 +98,7 @@ function DashboardComponent() {
                 </Row>
             </Row>
             <div className={classes.todayTrends}>
-                <TodayTrendsComponent items={record.listofvaccines} selectedVaccine ={vaccinename} selectedDosage= {dosages} />
+                <TodayTrendsComponent items={graphrecord.data} selectedVaccine ={vaccinename} selectedDosage= {dosages} />
             </div>
         </Column>
     );
