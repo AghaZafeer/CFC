@@ -47,8 +47,8 @@ const useStyles = createUseStyles({
 
 function DashboardComponent() {
     const classes = useStyles();
-    const [vaccinename, setVaccinename] = React.useState(""); // Default Values
-    const [dosages, setDosages] = React.useState(""); // Default Values
+    const [vaccinename, setVaccinename] = React.useState("Covaxin"); // Default Values
+    const [dosages, setDosages] = React.useState("Dose 1"); // Default Values
     const [graphrecord, setGraphRecord]= React.useState({totalUser:"", data: []});
     const onComplete = (vaccinename, dosages) => {
         setVaccinename(vaccinename);
@@ -60,7 +60,6 @@ function DashboardComponent() {
         setNoOfVaccines(res.data)
       }).catch(err => console.log(err))
       axios.get('/getReportAndGraphData').then(res => {
-          console.log(res.data);
         setGraphRecord({totalUser:res.data.totalNoOfUsers,data:res.data.listOfVaccineDataOuts});
       }).catch(err => console.log(err))
      }, [])
@@ -98,7 +97,9 @@ function DashboardComponent() {
                 </Row>
             </Row>
             <div className={classes.todayTrends}>
+                { graphrecord.totalUser !== "" ? (
                 <TodayTrendsComponent items={graphrecord.data} selectedVaccine ={vaccinename} selectedDosage= {dosages} />
+                ) :null }
             </div>
         </Column>
     );
