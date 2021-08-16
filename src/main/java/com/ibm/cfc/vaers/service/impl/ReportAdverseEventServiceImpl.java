@@ -364,10 +364,11 @@ public class ReportAdverseEventServiceImpl implements ReportAdverseEventService 
 		String uniqueCaseID = caseID;
 		CaseReporter caseReporter = caseReporterRepository.findByCaseReporterCaseId(uniqueCaseID);
 		
-		while(caseReporter.getCaseReporterId() > 0) {
-			uniqueCaseID = getUniqueCaseID(VaersUtilities.generateCaseID());
+		if(caseReporter != null) {
+			while(caseReporter.getCaseReporterId() > 0) {
+				uniqueCaseID = getUniqueCaseID(VaersUtilities.generateCaseID());
+			}
 		}
-		
 		return uniqueCaseID;
 	}
 	
