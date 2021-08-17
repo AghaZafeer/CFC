@@ -1,11 +1,10 @@
 package com.ibm.cfc.vaers.service.impl;
 
-import javax.transaction.Transactional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ibm.cfc.vaers.dto.in.ReportAdverseEventsForUserIn;
 import com.ibm.cfc.vaers.dto.in.UserAdverseEffectIn;
@@ -97,6 +96,7 @@ public class ReportAdverseEventServiceImpl implements ReportAdverseEventService 
 	EmailService emailService;
 	
 	@Override
+	@Transactional
 	public ReportAdverseEventsForUserOut saveUserReportedAdverseEffects(ReportAdverseEventsForUserIn reportAdverseEventsForUserIn) {
 		ReportAdverseEventsForUserOut reportAdverseEventsForUserOut = new ReportAdverseEventsForUserOut();
 		
@@ -242,11 +242,12 @@ public class ReportAdverseEventServiceImpl implements ReportAdverseEventService 
 				AllergicConditionsMaster allergicConditionsMaster = allergicConditionsMasterRepository.findByAllgcondName(userAllergicConditionIn.getAllergicConditionID());
 				userAllergicCondition = userAllergicConditionRepository.findByUserAndAllergicConditionsMaster(newUser, allergicConditionsMaster);
 				if(userAllergicCondition == null) {
-					userAllergicCondition.setUser(newUser);
-					userAllergicCondition.setAllergicConditionsMaster(allergicConditionsMaster);
-					userAllergicCondition.setDateCreated(VaersUtilities.getCurrentDate());
-					userAllergicCondition.setDateModified(VaersUtilities.getCurrentDate());
-					UserAllergicCondition newUserAllergicCondition = userAllergicConditionRepository.saveAndFlush(userAllergicCondition);
+					UserAllergicCondition userAllergicCondition2 = new UserAllergicCondition();
+					userAllergicCondition2.setUser(newUser);
+					userAllergicCondition2.setAllergicConditionsMaster(allergicConditionsMaster);
+					userAllergicCondition2.setDateCreated(VaersUtilities.getCurrentDate());
+					userAllergicCondition2.setDateModified(VaersUtilities.getCurrentDate());
+					UserAllergicCondition newUserAllergicCondition = userAllergicConditionRepository.saveAndFlush(userAllergicCondition2);
 				}
 			}
 		}
@@ -261,11 +262,12 @@ public class ReportAdverseEventServiceImpl implements ReportAdverseEventService 
 				IllnessMaster illnessMaster = illnessMasterRepository.findByIllnessName(userIllnessIn.getIllnessID());
 				userIllness = userIllnessRepository.findByUserAndIllnessMaster(newUser, illnessMaster);
 				if(userIllness == null) {
-					userIllness.setUser(newUser);
-					userIllness.setIllnessMaster(illnessMaster);
-					userIllness.setDateCreated(VaersUtilities.getCurrentDate());
-					userIllness.setDateModified(VaersUtilities.getCurrentDate());
-					UserIllness newUserIllness = userIllnessRepository.saveAndFlush(userIllness);
+					UserIllness userIllness2 = new UserIllness();
+					userIllness2.setUser(newUser);
+					userIllness2.setIllnessMaster(illnessMaster);
+					userIllness2.setDateCreated(VaersUtilities.getCurrentDate());
+					userIllness2.setDateModified(VaersUtilities.getCurrentDate());
+					UserIllness newUserIllness = userIllnessRepository.saveAndFlush(userIllness2);
 				}
 			}
 		}
