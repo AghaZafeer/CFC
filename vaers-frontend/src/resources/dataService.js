@@ -41,9 +41,58 @@ export function getVaccines() {
       {name: 'C1', value: 'By Doses'},
       {name: 'C2', value: 'By Severity'},
       {name: 'C3', value: 'By Ages'},
+      {name: 'C4', value: 'By Recovery Rate'}
        ]
   }
 
+  export function getNoofRecordsForRecovery() {
+   return {listofvaccines : [{"vaccineID":1,"vaccineName":"Covaxin",
+    listofadverseevent : [{"vaccineDoseId":1,"vaccineDoseName":"Dose 1", 
+    symtoms :      [{name:"Fever",data:   [{"userid" : "1" , "recoverydurationdays" : "1"},
+                                          {"userid" : "2" , "recoverydurationdays" : "3"}, 
+                                          {"userid" : "3" , "recoverydurationdays" : "1"},
+                                          {"userid" : "4" , "recoverydurationdays" : "5"}]
+                    },
+                    {name:"Tiredness",data:[{"userid" : "5" , "recoverydurationdays" : "1"},
+                                          {"userid" : "6" , "recoverydurationdays" : "3"}, 
+                                          {"userid" : "7" , "recoverydurationdays" : "1"},
+                                          {"userid" : "8" , "recoverydurationdays" : "3"}]
+                    },
+                    {name:"Pain",data:[{"userid" : "21" , "recoverydurationdays" : "1"},
+                    {"userid" : "22" , "recoverydurationdays" : "2"}, 
+                    {"userid" : "23" , "recoverydurationdays" : "1"},
+                    {"userid" : "24" , "recoverydurationdays" : "3"}]
+                   }
+                  ]
+                  }, 
+                  {"vaccineDoseId":2,"vaccineDoseName":"Dose 2", 
+    symtoms :        [{name:"Fever",data:   [{"userid" : "9" , "recoverydurationdays" : "1"},
+                                            {"userid" : "10" , "recoverydurationdays" : "3"}, 
+                                            {"userid" : "11" , "recoverydurationdays" : "1"},
+                                            {"userid" : "12" , "recoverydurationdays" : "3"}]
+                    },
+                      {name:"Tiredness",data:[{"userid" : "13" , "recoverydurationdays" : "1"},
+                                            {"userid" :   "14" , "recoverydurationdays" : "3"}, 
+                                            {"userid" :   "15" , "recoverydurationdays" : "1"},
+                                            {"userid" :   "16" , "recoverydurationdays" : "3"}]
+                      },
+                      {name:"Diagraee",data:[{"userid" : "17" , "recoverydurationdays" : "1"},
+                      {"userid" : "18" , "recoverydurationdays" : "3"}, 
+                      {"userid" : "19" , "recoverydurationdays" : "1"},
+                      {"userid" : "20" , "recoverydurationdays" : "3"}]
+                     },
+                     {name:"Pain",data:[{"userid" : "17" , "recoverydurationdays" : "1"},
+                      {"userid" : "18" , "recoverydurationdays" : "3"}, 
+                      {"userid" : "19" , "recoverydurationdays" : "1"},
+                      {"userid" : "20" , "recoverydurationdays" : "3"}]
+                     }
+                    ]
+                      }
+                    ]  
+                    }
+                  ]
+          }         
+  }
   export function getNoofRecords() { 
     return {name : "totaluser" , value :'500', 
     listofvaccines : [{"vaccineID":1,"vaccineName":"Covaxin", totaluser : '109',
@@ -61,7 +110,7 @@ export function getVaccines() {
                 {name:"adverseevent2", value :"Tiredness", totaluser :20, milduser:10 , moderateuser:5 , severeuser:5, agegroup1: 10, agegroup2:5 , agegroup3:5},
                 {name:"adverseevent3", value :"Diarrhea", totaluser :4 ,milduser:1 , moderateuser:2 , severeuser:1,agegroup1: 1, agegroup2:2 , agegroup3:1  }           
                 ]
-                        },        
+              },        
             ]},
                 {"vaccineID":2, "vaccineName":"Covisheild",totaluser : '150', 
     listofadverseevent : [{"vaccineDoseId":3,"vaccineDoseName":"Dose 1",totaluser : '75',

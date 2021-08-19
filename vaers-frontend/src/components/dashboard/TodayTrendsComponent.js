@@ -1,16 +1,11 @@
 import React, { useEffect } from 'react';
 import { Column, Row } from 'simple-flexbox';
 import { createUseStyles, useTheme } from 'react-jss';
-import {Doughnut, Bar} from 'react-chartjs-2';
-import {  exportGraphCriteria } from 'resources/dataService';
-import { FormControl, MenuItem, Select, InputLabel, ListItem, ListItemText, Divider, List, TableCell, TableBody, TableHead, Table, TableContainer, Paper, Grid, TableRow } from '@material-ui/core';
-import { Fragment } from 'react';
+import {Doughnut, Bar, Scatter} from 'react-chartjs-2';
+import {  exportGraphCriteria} from 'resources/dataService';
+import { groupBy } from 'resources/utilities';
+import { FormControl, MenuItem, Select, InputLabel, TableCell, TableBody, TableHead, Table, TableContainer, Paper, Grid, TableRow } from '@material-ui/core';
 const data = [];
-
-for (let x = 1; x <= 24; x++) {
-    data.push({ x: x, y: Math.floor(Math.random() * 100) });
-}
-
 const useStyles = createUseStyles((theme) => ({
     container: {
         backgroundColor: '#FFFFFF',
@@ -97,14 +92,14 @@ const useStyles = createUseStyles((theme) => ({
 function TodayTrendsComponent(props) {
     const theme = useTheme();
     const classes = useStyles({ theme });
-    const {items,selectedVaccine,selectedDosage } = props;
+    const {recoveryDataItems,items,selectedVaccine,selectedDosage } = props;
     const [totalUserVaccineWise, setTotalUserVaccineWise] = React.useState();
     const [totalSymptoms, setTotalSymptoms] = React.useState([]);
     const [graphcriteria, setGraphCriteria] = React.useState("By Doses");
     const [adverseeventcriteria, setAdverseEventCriteria] = React.useState("");
     const [todayDate] = React.useState({date: new Date()});
     const graphCriteria = exportGraphCriteria();
-    
+    const [recoveryAdverseEvent, setRecoveryAdverseEvent] = React.useState();
     const handleChange = (e) => {
         setGraphCriteria(e.target.value);
     }
@@ -240,6 +235,17 @@ function TodayTrendsComponent(props) {
           ]
       };
 
+      const adverseEventScatterData = {
+        datasets: [
+            {
+              label: adverseeventcriteria,
+              backgroundColor: '#B21F00',
+              borderWidth: 1,
+              stack:1,
+              data: renderingAdverseEventRecoveryData()
+            }
+          ]
+      };
     var dosesdata = {
         labels:renderingLabels()
         ,
@@ -340,9 +346,36 @@ function TodayTrendsComponent(props) {
               }
           }
      }
+
+     function renderingAdverseEventRecoveryData() {
+      var arr = [];
+      if(recoveryAdverseEvent !==undefined) {
+        Object.keys(recoveryAdverseEvent) 
+        .forEach(function(lengthKey) { 
+          if(lengthKey === adverseeventcriteria){
+          var useridcount =1 ;
+          for (var i =0 ;i<recoveryAdverseEvent[lengthKey].length;i++) 
+          {
+              var b = recoveryAdverseEvent[lengthKey][i];
+              if(b !== undefined) {
+                for (var d =0 ;d<b.data.length;d++) {
+                  var z = b.data[d];
+                  if(z !== undefined) {
+                    arr.push({x:useridcount,y:z.recoverydurationdays});
+                    useridcount= useridcount+1;
+                  }
+                }
+              }
+          } 
+        }
+        });
+        return arr;
+    }
+   }
 useEffect(() => {
        var datas = []; 
        var optiondatas = [];
+       var recoverydatas = []; 
        totalSymptoms.splice(0,totalSymptoms.length);
         items.map((item) => { 
             if(selectedVaccine === item.vaccineName) {
@@ -355,7 +388,6 @@ useEffect(() => {
                     "agegroup1":it.totalNoOfUsersForAdverseEventOfAgeGroup1,"agegroup2":it.totalNoOfUsersForAdverseEventOfAgeGroup2, "agegroup3":it.totalNoOfUsersForAdverseEventOfAgeGroup3  });
                 })
               })
-              
               var result = datas.reduce(function(acc, val){
                 var o = acc.filter(function(obj){
                     return obj.name===val.name;
@@ -367,7 +399,6 @@ useEffect(() => {
                   agegroup1:0, 
                   agegroup2:0,
                   agegroup3:0};
-
                 o.totalusercount += val.totalusercount;
                 o.mileusercount += val.mileusercount;
                 o.moderateusercount += val.moderateusercount;
@@ -400,17 +431,33 @@ useEffect(() => {
                       setTotalSymptoms(optiondatas);
                   }
               })
-             // if (optiondatas.length >0) {
-               // setTotalSymptoms(optiondatas);
-              //} else {
-               // setTotalSymptoms(datas);
-              //}
-              //console.log(datas);
-              // console.log(optiondatas);
+              recoveryDataItems.map((item) => { 
+                  if(selectedVaccine === item.vaccineName) {
+                    item.listofadverseevent.map((lstItem) => {
+                      lstItem.symtoms.map((it) => {
+                          if(recoverydatas !== undefined) {
+                            recoverydatas.push({name:it.name,data:it.data});
+                          } 
+                      })
+                      })
+                    }
+                    setRecoveryAdverseEvent(groupBy(recoverydatas,'name'))
+                    item.listofadverseevent.map((lstItem) => {
+                      if(selectedDosage === lstItem.vaccineDoseName) {
+                        recoverydatas.splice(0,recoverydatas.length);
+                        lstItem.symtoms.map((it) => {
+                          if(recoverydatas !== undefined) {
+                            recoverydatas.push({name:it.name,data:it.data});
+                          }
+                        })
+                        setRecoveryAdverseEvent(groupBy(recoverydatas,'name'))
+                      }
+                  })
+                });
             }
         })
         }, [selectedVaccine,selectedDosage]);
-    function renderLegend(color, title) {
+    function renderLegend() {
         return (
             <Row vertical='center'>
                 <FormControl fullWidth required margin="normal">
@@ -424,17 +471,23 @@ useEffect(() => {
         );
     }
 
-    function renderAdverseEvent(color, title) {
+    function renderAdverseEvent() {
         return (
                 <FormControl fullWidth  margin="normal">
                 <InputLabel>Select Adverse Event</InputLabel>
                 <Select  onChange={handleAdverseEventChange} name="selectedAdverseevent">
                 <MenuItem value="UnSelect">UnSelect</MenuItem>
-                {totalSymptoms.map((itm) => {
-                return (<MenuItem value={itm.name}>{itm.name}</MenuItem>)
+                {(graphcriteria !== 'By Recovery Rate') ? (
+                 totalSymptoms.map((itm) => {
+                   return (<MenuItem value={itm.name}>{itm.name}</MenuItem>)
                 }
                 )
-                }
+                ):null}
+                {(graphcriteria === 'By Recovery Rate') ? (
+                  Object.keys(recoveryAdverseEvent).map((key) => {
+                    return <MenuItem value={key}>{key}</MenuItem>
+                })
+                ):null}
                 </Select>
             </FormControl> 
         );
@@ -473,11 +526,13 @@ useEffect(() => {
                         <span className={classes.graphTitle}> Adverse Event for Vaccine :- {selectedVaccine}, {selectedDosage}</span>
                         <span className={classes.graphSubtitle}>as of {todayDate.date.toString()}</span>
                     </Column>
-                    {renderLegend(theme.color.lightBlue, 'Today')}
+                    {renderLegend()}
                     {(graphcriteria === 'By Ages') ? 
-                    (  renderAdverseEvent(theme.color.lightBlue, 'Today')
-                    ) : null
-                 }
+                    (  renderAdverseEvent()
+                    ) : null}
+                    {(graphcriteria === 'By Recovery Rate') ? 
+                    (  renderAdverseEvent()
+                    ) : null}
                 </Row>
                 <div className={classes.graphContainer}>
                 {(graphcriteria === 'By Doses') ? 
@@ -511,7 +566,7 @@ useEffect(() => {
                         height="200px"
                       /> ) : null
                  }
-                   {(graphcriteria === 'By Ages' && adverseeventcriteria !== '') ? 
+                 {(graphcriteria === 'By Ages' && adverseeventcriteria !== '') ? 
                     (  
                     <Bar 
                         data = { adverseEventGraphData }  
@@ -519,7 +574,41 @@ useEffect(() => {
                         height="200px"
                       /> ) : null
                  }
-
+                {(graphcriteria === 'By Recovery Rate') ? 
+                    ( 
+                    <Scatter 
+                        data = { adverseEventScatterData }  
+                        options = {{
+                          plugins: {
+                            subtitle: {
+                                display: true,
+                                text: 'X-axis = Users | Y-axis = Recovery days',
+                                position: 'bottom'
+                            },
+                          },
+                          scales: {
+                            y: {
+                              ticks: {
+                                callback: function(val) {
+                                  return Number.isInteger(val) ? val : null;
+                                }
+                              },
+                              min : 0,
+                            },
+                            x: {
+                              ticks: {
+                                callback: function(val) {
+                                  return Number.isInteger(val) ? val : null;
+                                }
+                              },
+                              min : 0,
+                            }
+                        } 
+                        } 
+                        }
+                        height="200px"
+                      /> ) : null
+                 }
                 </div>
             </Column>
             <Column className={classes.separator} breakpoints={{ 1024: { display: 'none' } }}>

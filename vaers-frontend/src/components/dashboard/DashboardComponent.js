@@ -5,6 +5,7 @@ import MiniCardComponent from 'components/cards/MiniCardComponent';
 import TodayTrendsComponent from './TodayTrendsComponent';
 import CardComponent from 'components/cards/CardComponent';
 import axios from 'axios';
+import { getNoofRecordsForRecovery } from 'resources/dataService';
 
 const useStyles = createUseStyles({
     cardsContainer: {
@@ -50,6 +51,7 @@ function DashboardComponent() {
     const [vaccinename, setVaccinename] = React.useState("Covaxin"); // Default Values
     const [dosages, setDosages] = React.useState("Dose 1"); // Default Values
     const [graphrecord, setGraphRecord]= React.useState({totalUser:"", data: []});
+    const recoveryData = getNoofRecordsForRecovery();
     const onComplete = (vaccinename, dosages) => {
         setVaccinename(vaccinename);
         setDosages(dosages);
@@ -98,7 +100,7 @@ function DashboardComponent() {
             </Row>
             <div className={classes.todayTrends}>
                 { graphrecord.totalUser !== "" ? (
-                <TodayTrendsComponent items={graphrecord.data} selectedVaccine ={vaccinename} selectedDosage= {dosages} />
+                <TodayTrendsComponent items={graphrecord.data} recoveryDataItems = {recoveryData.listofvaccines} selectedVaccine ={vaccinename} selectedDosage= {dosages} />
                 ) :null }
             </div>
         </Column>

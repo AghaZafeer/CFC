@@ -158,7 +158,7 @@ const PatientInformationComponent = ({
               <div style={{ display: "flex", marginTop:10, justifyContent: "flex-end" }}>
                 <Button  style={{marginRight:15 }} disabled = {isValidOtp} variant="contained" color="primary" onClick={sendOTP} >Send OTP</Button>
                 <Button  style={{marginRight:15 }} disabled = {!isValidOtp} variant="contained" color="primary" onClick={validateOTP} >Validate OTP</Button>
-                <Button variant="contained" color="primary" onClick={reset} >Reset</Button>
+                <Button variant="contained" color="primary" onClick={reset} >Resend</Button>
               </div>
               { errorMessage &&
               <h3 style={{ color: 'red' }}> {errorMessage } </h3> }
