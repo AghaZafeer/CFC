@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cfc-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cfc-backend
+  template:
+    metadata:
+      labels:
+        app: cfc-backend
+    spec:
+      containers:
+      - name: mysqldb
+        image: docker.io/rikkimaster/cfc-backend:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8081

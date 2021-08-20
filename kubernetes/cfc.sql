@@ -1,0 +1,423 @@
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Server version:               8.0.25 - MySQL Community Server - GPL
+-- Server OS:                    Win64
+-- HeidiSQL Version:             11.3.0.6295
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+-- Dumping database structure for cfc-vaers
+CREATE DATABASE IF NOT EXISTS `cfc-vaers` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `cfc-vaers`;
+
+-- Dumping structure for table cfc-vaers.adverse_event_master
+DROP TABLE IF EXISTS `adverse_event_master`;
+CREATE TABLE IF NOT EXISTS `adverse_event_master` (
+  `ADEV_ID` bigint NOT NULL AUTO_INCREMENT,
+  `ADEV_NAME` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `ADEV_ISACTIVE` tinyint NOT NULL,
+  `DATE_CREATED` datetime DEFAULT CURRENT_TIMESTAMP,
+  `DATE_MODIFIED` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ADEV_ID`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table cfc-vaers.adverse_event_master: ~13 rows (approximately)
+DELETE FROM `adverse_event_master`;
+/*!40000 ALTER TABLE `adverse_event_master` DISABLE KEYS */;
+INSERT INTO `adverse_event_master` (`ADEV_ID`, `ADEV_NAME`, `ADEV_ISACTIVE`, `DATE_CREATED`, `DATE_MODIFIED`) VALUES
+	(1, 'Fever', 1, '2021-07-27 23:33:10', '2021-07-27 23:33:11'),
+	(2, 'Diarrhoea', 1, '2021-07-27 23:35:28', '2021-07-27 23:35:29'),
+	(3, 'Fatigue', 1, '2021-07-27 23:35:57', '2021-07-27 23:35:57'),
+	(4, 'Headache', 1, '2021-07-27 23:36:14', '2021-07-27 23:36:15'),
+	(5, 'Pain at the injection site', 1, '2021-07-27 23:36:36', '2021-07-27 23:36:36'),
+	(6, 'Muscle Pain', 1, '2021-07-27 23:37:05', '2021-07-27 23:37:06'),
+	(7, 'Chills', 1, '2021-07-27 23:37:31', '2021-07-27 23:37:32'),
+	(8, '99 - 100 Degree ', 1, '2021-07-28 22:10:42', '2021-07-28 22:10:56'),
+	(9, '100 - 102 Degree', 1, '2021-07-28 22:11:20', '2021-07-28 22:11:21'),
+	(10, '102 - 104 Degree', 1, '2021-07-28 22:11:53', '2021-07-28 22:11:54'),
+	(11, 'Pain only', 1, '2021-07-28 22:14:46', '2021-07-28 22:14:47'),
+	(12, 'Pain with Redness', 0, '2021-07-28 22:15:16', '2021-07-28 22:15:17'),
+	(13, 'Pain with Swelling and Redness', 0, '2021-07-28 22:15:38', '2021-07-28 22:15:38');
+/*!40000 ALTER TABLE `adverse_event_master` ENABLE KEYS */;
+
+-- Dumping structure for table cfc-vaers.adverse_event_reported
+DROP TABLE IF EXISTS `adverse_event_reported`;
+CREATE TABLE IF NOT EXISTS `adverse_event_reported` (
+  `ADEV_REP_ID` bigint NOT NULL AUTO_INCREMENT,
+  `ADEV_REP_USVAC_ID` bigint NOT NULL,
+  `ADEV_REP_ADEV_ID` bigint NOT NULL,
+  `ADEV_REP_SEV_ID` bigint NOT NULL,
+  `ADEV_REP_ADDITIONAL_NOTES` blob,
+  `ADEV_REP_START_DATE_TIME` datetime NOT NULL,
+  `ADEV_REP_ISFATAL` tinyint NOT NULL DEFAULT '0',
+  `ADEV_REP_DATE_OF_DEATH` date DEFAULT NULL,
+  `ADEV_REP_ISMEDIC_NEEDED` tinyint NOT NULL,
+  `ADEV_REP_MEDIC_NOTES` blob,
+  `ADEV_REP_ISRECOVERED` tinyint DEFAULT NULL,
+  `ADEV_REP_RECOVERY_DATE` date DEFAULT NULL,
+  `DATE_CREATED` datetime DEFAULT CURRENT_TIMESTAMP,
+  `DATE_MODIFIED` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ADEV_REP_ID`),
+  KEY `ADEV_REP_USVAC_ID_FK` (`ADEV_REP_USVAC_ID`),
+  KEY `ADEV_REP_ADEV_ID_FK` (`ADEV_REP_ADEV_ID`),
+  KEY `ADEV_REP_SEV_ID_FK` (`ADEV_REP_SEV_ID`),
+  CONSTRAINT `ADEV_REP_ADEV_ID_FK` FOREIGN KEY (`ADEV_REP_ADEV_ID`) REFERENCES `adverse_event_master` (`ADEV_ID`),
+  CONSTRAINT `ADEV_REP_SEV_ID_FK` FOREIGN KEY (`ADEV_REP_SEV_ID`) REFERENCES `severity_master` (`SEV_ID`),
+  CONSTRAINT `ADEV_REP_USVAC_ID_FK` FOREIGN KEY (`ADEV_REP_USVAC_ID`) REFERENCES `user_vaccine` (`USVAC_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table cfc-vaers.adverse_event_reported: ~8 rows (approximately)
+DELETE FROM `adverse_event_reported`;
+/*!40000 ALTER TABLE `adverse_event_reported` DISABLE KEYS */;
+INSERT INTO `adverse_event_reported` (`ADEV_REP_ID`, `ADEV_REP_USVAC_ID`, `ADEV_REP_ADEV_ID`, `ADEV_REP_SEV_ID`, `ADEV_REP_ADDITIONAL_NOTES`, `ADEV_REP_START_DATE_TIME`, `ADEV_REP_ISFATAL`, `ADEV_REP_DATE_OF_DEATH`, `ADEV_REP_ISMEDIC_NEEDED`, `ADEV_REP_MEDIC_NOTES`, `ADEV_REP_ISRECOVERED`, `ADEV_REP_RECOVERY_DATE`, `DATE_CREATED`, `DATE_MODIFIED`) VALUES
+	(1, 1, 1, 2, _binary 0x5374696c6c2070657273697374696e672061742061726f756e64203939202d203130302044656772656520466572656e68656974, '2021-08-01 00:00:00', 0, NULL, 0, NULL, 0, NULL, NULL, NULL),
+	(2, 1, 2, 3, _binary 0x5265636f7665726564206166746572206f7665722074686520636f756e746572206d656469636174696f6e73, '2021-08-02 00:00:00', 0, NULL, 0, NULL, 1, '2021-08-04', NULL, NULL),
+	(3, 2, 1, 2, _binary 0x5374696c6c2070657273697374696e672061742061726f756e64203939202d203130302044656772656520466572656e68656974, '2021-08-01 00:00:00', 0, NULL, 0, NULL, 0, NULL, '2021-08-06 14:48:31', '2021-08-06 14:48:31'),
+	(4, 2, 2, 3, _binary 0x5265636f7665726564206166746572206f7665722074686520636f756e746572206d656469636174696f6e73, '2021-08-02 00:00:00', 0, NULL, 0, NULL, 1, '2021-08-04', '2021-08-06 14:48:31', '2021-08-06 14:48:31'),
+	(5, 3, 1, 2, _binary 0x5374696c6c2070657273697374696e672061742061726f756e64203939202d203130302044656772656520466572656e68656974, '2021-08-01 00:00:00', 0, NULL, 0, NULL, 0, NULL, '2021-08-06 15:07:30', '2021-08-06 15:07:30'),
+	(6, 3, 2, 3, _binary 0x5265636f7665726564206166746572206f7665722074686520636f756e746572206d656469636174696f6e73, '2021-08-02 00:00:00', 0, NULL, 0, NULL, 1, '2021-08-04', '2021-08-06 15:07:30', '2021-08-06 15:07:30'),
+	(7, 4, 1, 2, _binary 0x5374696c6c2070657273697374696e672061742061726f756e64203939202d203130302044656772656520466572656e68656974, '2021-08-01 00:00:00', 0, NULL, 0, NULL, 0, NULL, '2021-08-06 16:15:02', '2021-08-06 16:15:02'),
+	(8, 4, 2, 3, _binary 0x5265636f7665726564206166746572206f7665722074686520636f756e746572206d656469636174696f6e73, '2021-08-02 00:00:00', 0, NULL, 0, NULL, 1, '2021-08-04', '2021-08-06 16:15:02', '2021-08-06 16:15:02');
+/*!40000 ALTER TABLE `adverse_event_reported` ENABLE KEYS */;
+
+-- Dumping structure for table cfc-vaers.allergic_conditions_master
+DROP TABLE IF EXISTS `allergic_conditions_master`;
+CREATE TABLE IF NOT EXISTS `allergic_conditions_master` (
+  `ALLGCOND_ID` bigint NOT NULL AUTO_INCREMENT,
+  `ALLGCOND_NAME` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `ALLGCOND_ISACTIVE` tinyint NOT NULL,
+  `DATE_CREATED` datetime DEFAULT CURRENT_TIMESTAMP,
+  `DATE_MODIFIED` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ALLGCOND_ID`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table cfc-vaers.allergic_conditions_master: ~4 rows (approximately)
+DELETE FROM `allergic_conditions_master`;
+/*!40000 ALTER TABLE `allergic_conditions_master` DISABLE KEYS */;
+INSERT INTO `allergic_conditions_master` (`ALLGCOND_ID`, `ALLGCOND_NAME`, `ALLGCOND_ISACTIVE`, `DATE_CREATED`, `DATE_MODIFIED`) VALUES
+	(1, 'Seafoods', 1, '1021-08-03 11:41:44', '2021-08-03 11:41:46'),
+	(2, 'Egg', 1, '2021-08-03 11:42:03', '2021-08-03 11:42:04'),
+	(3, 'Sulphur', 1, '2021-08-03 11:43:02', '2021-08-03 11:43:04'),
+	(4, 'Cifraxin', 1, '2021-08-03 11:43:38', '2021-08-03 11:43:39');
+/*!40000 ALTER TABLE `allergic_conditions_master` ENABLE KEYS */;
+
+-- Dumping structure for table cfc-vaers.case_reporter
+DROP TABLE IF EXISTS `case_reporter`;
+CREATE TABLE IF NOT EXISTS `case_reporter` (
+  `CASE_REPORTER_ID` bigint NOT NULL AUTO_INCREMENT,
+  `CASE_REPORTER_ CASE_ID` varchar(50) NOT NULL,
+  `CASE_REPORTER_USER_ID` bigint NOT NULL,
+  `CASE_INFO_ADDED_BY` enum('SELF','HEALTHCARE_PROFESSIONAL','RELATIVE','OTHERS') NOT NULL,
+  `CASE_REPORTER_TITLE_ID` bigint DEFAULT NULL,
+  `CASE_REPORTER_FIRST_NAME` varchar(100) DEFAULT NULL,
+  `CASE_REPORTER_MIDDLE_NAME` varchar(100) DEFAULT NULL,
+  `CASE_REPORTER_LAST_NAME` varchar(100) DEFAULT NULL,
+  `CASE_REPORTER_MOBILE_NUMBER` varchar(20) DEFAULT NULL,
+  `CASE_REPORTER_ALTERNATE_NUMBER` varchar(20) DEFAULT NULL,
+  `CASE_REPORTER_EMAIL_ID` varchar(255) DEFAULT NULL,
+  `DATE_CREATED` datetime DEFAULT CURRENT_TIMESTAMP,
+  `DATE_MODIFIED` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`CASE_REPORTER_ID`),
+  KEY `REPORTER_USER_ID_FK` (`CASE_REPORTER_USER_ID`),
+  CONSTRAINT `REPORTER_USER_ID_FK` FOREIGN KEY (`CASE_REPORTER_USER_ID`) REFERENCES `user` (`USER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table cfc-vaers.case_reporter: ~0 rows (approximately)
+DELETE FROM `case_reporter`;
+/*!40000 ALTER TABLE `case_reporter` DISABLE KEYS */;
+/*!40000 ALTER TABLE `case_reporter` ENABLE KEYS */;
+
+-- Dumping structure for table cfc-vaers.illness_master
+DROP TABLE IF EXISTS `illness_master`;
+CREATE TABLE IF NOT EXISTS `illness_master` (
+  `ILLNESS_ID` bigint NOT NULL AUTO_INCREMENT,
+  `ILLNESS_NAME` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `ILLNESS_ISCHRONIC` tinyint NOT NULL,
+  `ILLNESS_ISOTHER` tinyint NOT NULL,
+  `ILLNESS_ISACTIVE` tinyint NOT NULL,
+  `DATE_CREATED` datetime DEFAULT CURRENT_TIMESTAMP,
+  `DATE_MODIFIED` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ILLNESS_ID`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table cfc-vaers.illness_master: ~6 rows (approximately)
+DELETE FROM `illness_master`;
+/*!40000 ALTER TABLE `illness_master` DISABLE KEYS */;
+INSERT INTO `illness_master` (`ILLNESS_ID`, `ILLNESS_NAME`, `ILLNESS_ISCHRONIC`, `ILLNESS_ISOTHER`, `ILLNESS_ISACTIVE`, `DATE_CREATED`, `DATE_MODIFIED`) VALUES
+	(1, 'Asthma', 1, 0, 1, '2021-07-24 20:27:51', '2021-07-24 20:27:52'),
+	(2, 'High BP', 1, 0, 1, '2021-07-24 20:28:22', '2021-07-24 20:28:23'),
+	(3, 'Diabetes', 1, 0, 1, '2021-07-24 20:29:23', '2021-07-24 20:29:23'),
+	(4, 'Gastritis', 1, 0, 1, '2021-07-24 20:30:24', '2021-07-24 20:30:25'),
+	(5, 'Thyroid Defeciency', 0, 1, 1, '2021-07-24 20:31:29', '2021-07-24 20:31:30'),
+	(6, 'Renal Diseases', 0, 1, 1, '2021-07-24 20:32:18', '2021-07-24 20:32:18');
+/*!40000 ALTER TABLE `illness_master` ENABLE KEYS */;
+
+-- Dumping structure for table cfc-vaers.mail_detail
+DROP TABLE IF EXISTS `mail_detail`;
+CREATE TABLE IF NOT EXISTS `mail_detail` (
+  `MD_ID` bigint NOT NULL AUTO_INCREMENT,
+  `MD_CODE` enum('OTP','REPORTING') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `MD_FROM_EMAIL` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `MD_FROM_EMAIL_NAME` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `MD_SUBJECT` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `MD_BODY` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `DATE_CREATED` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `DATE_MODIFIED` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`MD_ID`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table cfc-vaers.mail_detail: ~0 rows (approximately)
+DELETE FROM `mail_detail`;
+/*!40000 ALTER TABLE `mail_detail` DISABLE KEYS */;
+INSERT INTO `mail_detail` (`MD_ID`, `MD_CODE`, `MD_FROM_EMAIL`, `MD_FROM_EMAIL_NAME`, `MD_SUBJECT`, `MD_BODY`, `DATE_CREATED`, `DATE_MODIFIED`) VALUES
+	(1, 'OTP', 'info-vaers@ibm.com', 'VAERS-IBM', 'IBM VAERS OTP ', 'Dear, <br/> The OTP for your validation is given below. <br/><br/><b><OTP></b><br/><br/>It is valid for 120 seconds. <br/><br/>Regards,<br/>IBM VAERS Team.', '2021-08-15 10:37:50', '2021-08-15 10:37:50'),
+	(2, 'REPORTING', 'infor-vaers@ibm.com', 'VAERS-IBM', 'IBM VAERS ACKNOWLEDGEMENT', 'Dear <USERTITLE> <USERLASTNAME>,<br/>Thank you for your participation in providing the valuable information.<br/>We are highly obliged and really appreciate your effort and time spent for this.<br/><br/>Regards,<br/>IBM VAERS Team.', '2021-08-15 10:42:49', '2021-08-15 10:42:50');
+/*!40000 ALTER TABLE `mail_detail` ENABLE KEYS */;
+
+-- Dumping structure for table cfc-vaers.otp_codes
+DROP TABLE IF EXISTS `otp_codes`;
+CREATE TABLE IF NOT EXISTS `otp_codes` (
+  `OTP_ID` bigint NOT NULL AUTO_INCREMENT,
+  `OTP_VALUE` varchar(5) NOT NULL,
+  `OTP_EMAIL_ID` varchar(255) NOT NULL,
+  `OTP_ACTIVE` tinyint(1) DEFAULT NULL,
+  `DATE_CREATED` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `DATE_MODIFIED` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`OTP_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table cfc-vaers.otp_codes: ~0 rows (approximately)
+DELETE FROM `otp_codes`;
+/*!40000 ALTER TABLE `otp_codes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `otp_codes` ENABLE KEYS */;
+
+-- Dumping structure for table cfc-vaers.severity_master
+DROP TABLE IF EXISTS `severity_master`;
+CREATE TABLE IF NOT EXISTS `severity_master` (
+  `SEV_ID` bigint NOT NULL AUTO_INCREMENT,
+  `SEV_NAME` varchar(255) NOT NULL,
+  `SEV_ISACTIVE` tinyint NOT NULL,
+  `DATE_CREATED` datetime DEFAULT CURRENT_TIMESTAMP,
+  `DATE_MODIFIED` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`SEV_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table cfc-vaers.severity_master: ~3 rows (approximately)
+DELETE FROM `severity_master`;
+/*!40000 ALTER TABLE `severity_master` DISABLE KEYS */;
+INSERT INTO `severity_master` (`SEV_ID`, `SEV_NAME`, `SEV_ISACTIVE`, `DATE_CREATED`, `DATE_MODIFIED`) VALUES
+	(1, 'Severe', 1, '2021-07-27 00:32:15', '2021-07-27 00:32:16'),
+	(2, 'Moderate', 1, '2021-07-27 00:32:28', '2021-07-27 00:32:28'),
+	(3, 'Mild', 1, '2021-07-27 00:32:37', '2021-07-27 00:32:38');
+/*!40000 ALTER TABLE `severity_master` ENABLE KEYS */;
+
+-- Dumping structure for table cfc-vaers.user
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE IF NOT EXISTS `user` (
+  `USER_ID` bigint NOT NULL AUTO_INCREMENT,
+  `USER_AADHAAR_NO` varchar(50) NOT NULL,
+  `USER_TITLE_ID` bigint DEFAULT NULL,
+  `USER_FIRST_NAME` varchar(100) DEFAULT NULL,
+  `USER_MIDDLE_NAME` varchar(100) DEFAULT NULL,
+  `USER_LAST_NAME` varchar(100) DEFAULT NULL,
+  `USER_MOBILE` varchar(15) DEFAULT NULL,
+  `USER_ALTERNATE_NUMBER` varchar(15) DEFAULT NULL,
+  `USER_EMAIL_ID` varchar(200) DEFAULT NULL,
+  `USER_ADDRESS` varchar(255) DEFAULT NULL,
+  `USER_AGE` smallint DEFAULT NULL,
+  `USER_DOB` date DEFAULT NULL,
+  `USER_SEX` enum('MALE','FEMALE','UNKNOWN') DEFAULT NULL,
+  `USER_IS_PREGNANT` tinyint DEFAULT NULL,
+  `USER_ISACTIVE` tinyint NOT NULL,
+  `DATE_CREATED` datetime DEFAULT CURRENT_TIMESTAMP,
+  `DATE_MODIFIED` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`USER_ID`),
+  UNIQUE KEY `USER_AADHAAR_NO` (`USER_AADHAAR_NO`),
+  KEY `USER_TITLE_ID_FK` (`USER_TITLE_ID`) USING BTREE,
+  CONSTRAINT `USER_TITLE_ID_FK` FOREIGN KEY (`USER_TITLE_ID`) REFERENCES `user_title_master` (`USER_TITLE_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table cfc-vaers.user: ~4 rows (approximately)
+DELETE FROM `user`;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` (`USER_ID`, `USER_AADHAAR_NO`, `USER_TITLE_ID`, `USER_FIRST_NAME`, `USER_MIDDLE_NAME`, `USER_LAST_NAME`, `USER_MOBILE`, `USER_ALTERNATE_NUMBER`, `USER_EMAIL_ID`, `USER_ADDRESS`, `USER_AGE`, `USER_DOB`, `USER_SEX`, `USER_IS_PREGNANT`, `USER_ISACTIVE`, `DATE_CREATED`, `DATE_MODIFIED`) VALUES
+	(4, '1234 5678 9012', 1, 'Ravi', 'Kumar', 'Dahiya', '9999999999', '8888888888', 'user@test.com', 'Uttar Pradesh, India', 38, '1982-10-18', 'MALE', 0, 1, NULL, NULL),
+	(6, '1234 5678 9013', 1, 'Ravi', 'Kumar', 'Dahiya', '9999999999', '8888888888', 'user@test.com', 'Uttar Pradesh, India', 38, '1982-10-18', 'MALE', 0, 1, '2021-08-06 14:48:31', '2021-08-06 14:48:31'),
+	(8, '1234 5678 9014', 1, 'Ravi', 'Kumar', 'Dahiya', '9999999999', '8888888888', 'user@test.com', 'Uttar Pradesh, India', 38, '1982-10-18', 'MALE', 0, 1, '2021-08-06 15:07:30', '2021-08-06 15:07:30'),
+	(10, '1234 5678 9015', 1, 'Ravi', 'Kumar', 'Dahiya', '9999999999', '8888888888', 'user@test.com', 'Uttar Pradesh, India', 38, '1982-10-18', 'MALE', 0, 1, '2021-08-06 16:15:02', '2021-08-06 16:15:02');
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+
+-- Dumping structure for table cfc-vaers.user_allergic_conditions
+DROP TABLE IF EXISTS `user_allergic_conditions`;
+CREATE TABLE IF NOT EXISTS `user_allergic_conditions` (
+  `USER_ALLGCOND_ID` bigint NOT NULL AUTO_INCREMENT,
+  `ALLGCOND_ID` bigint NOT NULL,
+  `USER_ID` bigint NOT NULL,
+  `DATE_CREATED` datetime DEFAULT CURRENT_TIMESTAMP,
+  `DATE_MODIFIED` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`USER_ALLGCOND_ID`),
+  KEY `ALLGCOND_ID_FK` (`ALLGCOND_ID`),
+  KEY `USER_ID_FK` (`USER_ID`),
+  CONSTRAINT `ALLGCOND_ID_FK` FOREIGN KEY (`ALLGCOND_ID`) REFERENCES `allergic_conditions_master` (`ALLGCOND_ID`),
+  CONSTRAINT `USER_ID_FK` FOREIGN KEY (`USER_ID`) REFERENCES `user` (`USER_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table cfc-vaers.user_allergic_conditions: ~8 rows (approximately)
+DELETE FROM `user_allergic_conditions`;
+/*!40000 ALTER TABLE `user_allergic_conditions` DISABLE KEYS */;
+INSERT INTO `user_allergic_conditions` (`USER_ALLGCOND_ID`, `ALLGCOND_ID`, `USER_ID`, `DATE_CREATED`, `DATE_MODIFIED`) VALUES
+	(1, 2, 4, NULL, NULL),
+	(2, 3, 4, NULL, NULL),
+	(3, 2, 6, '2021-08-06 14:48:31', '2021-08-06 14:48:31'),
+	(4, 3, 6, '2021-08-06 14:48:31', '2021-08-06 14:48:31'),
+	(5, 2, 8, '2021-08-06 15:07:30', '2021-08-06 15:07:30'),
+	(6, 3, 8, '2021-08-06 15:07:30', '2021-08-06 15:07:30'),
+	(7, 2, 10, '2021-08-06 16:15:02', '2021-08-06 16:15:02'),
+	(8, 3, 10, '2021-08-06 16:15:02', '2021-08-06 16:15:02');
+/*!40000 ALTER TABLE `user_allergic_conditions` ENABLE KEYS */;
+
+-- Dumping structure for table cfc-vaers.user_illness
+DROP TABLE IF EXISTS `user_illness`;
+CREATE TABLE IF NOT EXISTS `user_illness` (
+  `USER_ILLNESS_ID` bigint NOT NULL AUTO_INCREMENT,
+  `ILLNESS_ID` bigint NOT NULL,
+  `USER_ID` bigint NOT NULL,
+  `DATE_CREATED` datetime DEFAULT CURRENT_TIMESTAMP,
+  `DATE_MODIFIED` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`USER_ILLNESS_ID`),
+  KEY `ILLNESS_ID_FK` (`ILLNESS_ID`),
+  KEY `USER_ID_ILLNESS_FK` (`USER_ID`),
+  CONSTRAINT `ILLNESS_ID_FK` FOREIGN KEY (`ILLNESS_ID`) REFERENCES `illness_master` (`ILLNESS_ID`),
+  CONSTRAINT `USER_ID_ILLNESS_FK` FOREIGN KEY (`USER_ID`) REFERENCES `user` (`USER_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table cfc-vaers.user_illness: ~8 rows (approximately)
+DELETE FROM `user_illness`;
+/*!40000 ALTER TABLE `user_illness` DISABLE KEYS */;
+INSERT INTO `user_illness` (`USER_ILLNESS_ID`, `ILLNESS_ID`, `USER_ID`, `DATE_CREATED`, `DATE_MODIFIED`) VALUES
+	(1, 1, 4, NULL, NULL),
+	(2, 3, 4, NULL, NULL),
+	(3, 1, 6, '2021-08-06 14:48:31', '2021-08-06 14:48:31'),
+	(4, 3, 6, '2021-08-06 14:48:31', '2021-08-06 14:48:31'),
+	(5, 1, 8, '2021-08-06 15:07:30', '2021-08-06 15:07:30'),
+	(6, 3, 8, '2021-08-06 15:07:30', '2021-08-06 15:07:30'),
+	(7, 1, 10, '2021-08-06 16:15:02', '2021-08-06 16:15:02'),
+	(8, 3, 10, '2021-08-06 16:15:02', '2021-08-06 16:15:02');
+/*!40000 ALTER TABLE `user_illness` ENABLE KEYS */;
+
+-- Dumping structure for table cfc-vaers.user_title_master
+DROP TABLE IF EXISTS `user_title_master`;
+CREATE TABLE IF NOT EXISTS `user_title_master` (
+  `USER_TITLE_ID` bigint NOT NULL AUTO_INCREMENT,
+  `USER_TITLE_NAME` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `USER_TITLE_ISACTIVE` tinyint NOT NULL,
+  `DATE_CREATED` datetime DEFAULT CURRENT_TIMESTAMP,
+  `DATE_MODIFIED` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`USER_TITLE_ID`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table cfc-vaers.user_title_master: ~3 rows (approximately)
+DELETE FROM `user_title_master`;
+/*!40000 ALTER TABLE `user_title_master` DISABLE KEYS */;
+INSERT INTO `user_title_master` (`USER_TITLE_ID`, `USER_TITLE_NAME`, `USER_TITLE_ISACTIVE`, `DATE_CREATED`, `DATE_MODIFIED`) VALUES
+	(1, 'Mr.', 1, '2021-07-22 15:14:07', '2021-07-22 15:14:08'),
+	(2, 'Miss', 1, '2021-07-22 15:15:19', '2021-07-22 15:15:19'),
+	(3, 'Mrs.', 1, '2021-07-22 15:15:41', '2021-07-22 15:15:41');
+/*!40000 ALTER TABLE `user_title_master` ENABLE KEYS */;
+
+-- Dumping structure for table cfc-vaers.user_vaccine
+DROP TABLE IF EXISTS `user_vaccine`;
+CREATE TABLE IF NOT EXISTS `user_vaccine` (
+  `USVAC_ID` bigint NOT NULL AUTO_INCREMENT,
+  `USVAC_USER_ID` bigint NOT NULL,
+  `USVAC_VACCINE_ID` bigint NOT NULL,
+  `USVAC_VACCINE_DOSE_ID` bigint NOT NULL,
+  `USVAC_VACCINATION_DATETIME` timestamp NOT NULL,
+  `USVAC_VACCINATION_CENTER` varchar(255) DEFAULT NULL,
+  `DATE_CREATED` datetime DEFAULT CURRENT_TIMESTAMP,
+  `DATE_MODIFIED` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`USVAC_ID`),
+  KEY `USVAC_USER_ID_FK` (`USVAC_USER_ID`),
+  KEY `USVAC_VACCINE_ID_FK` (`USVAC_VACCINE_ID`),
+  KEY `USVAC_VACCINE_DOSE_ID_FK` (`USVAC_VACCINE_DOSE_ID`),
+  CONSTRAINT `USVAC_USER_ID_FK` FOREIGN KEY (`USVAC_USER_ID`) REFERENCES `user` (`USER_ID`),
+  CONSTRAINT `USVAC_VACCINE_DOSE_ID_FK` FOREIGN KEY (`USVAC_VACCINE_DOSE_ID`) REFERENCES `vaccine_dose_master` (`VACCINE_DOSE_ID`),
+  CONSTRAINT `USVAC_VACCINE_ID_FK` FOREIGN KEY (`USVAC_VACCINE_ID`) REFERENCES `vaccine_master` (`VACCINE_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table cfc-vaers.user_vaccine: ~4 rows (approximately)
+DELETE FROM `user_vaccine`;
+/*!40000 ALTER TABLE `user_vaccine` DISABLE KEYS */;
+INSERT INTO `user_vaccine` (`USVAC_ID`, `USVAC_USER_ID`, `USVAC_VACCINE_ID`, `USVAC_VACCINE_DOSE_ID`, `USVAC_VACCINATION_DATETIME`, `USVAC_VACCINATION_CENTER`, `DATE_CREATED`, `DATE_MODIFIED`) VALUES
+	(1, 4, 2, 3, '1982-10-17 20:30:00', 'IBM Fortis DLF Tower B', NULL, NULL),
+	(2, 6, 2, 3, '1982-10-17 20:30:00', 'IBM Fortis DLF Tower B', '2021-08-06 14:48:31', '2021-08-06 14:48:31'),
+	(3, 8, 2, 3, '1982-10-17 20:30:00', 'IBM Fortis DLF Tower B', '2021-08-06 15:07:30', '2021-08-06 15:07:30'),
+	(4, 10, 2, 3, '1982-10-17 20:30:00', 'IBM Fortis DLF Tower B', '2021-08-06 16:15:02', '2021-08-06 16:15:02');
+/*!40000 ALTER TABLE `user_vaccine` ENABLE KEYS */;
+
+-- Dumping structure for table cfc-vaers.vaccine_dose_master
+DROP TABLE IF EXISTS `vaccine_dose_master`;
+CREATE TABLE IF NOT EXISTS `vaccine_dose_master` (
+  `VACCINE_DOSE_ID` bigint NOT NULL AUTO_INCREMENT,
+  `VACCINE_ID` bigint NOT NULL,
+  `VACCINE_DOSE_NAME` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `VACCINE_DOSE_DETAIL` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `VACCINE_DOSE_ISACTIVE` tinyint NOT NULL,
+  `DATE_CREATED` datetime DEFAULT CURRENT_TIMESTAMP,
+  `DATE_MODIFIED` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`VACCINE_DOSE_ID`) USING BTREE,
+  KEY `VAC_ID_FK` (`VACCINE_ID`),
+  CONSTRAINT `VAC_ID_FK` FOREIGN KEY (`VACCINE_ID`) REFERENCES `vaccine_master` (`VACCINE_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table cfc-vaers.vaccine_dose_master: ~10 rows (approximately)
+DELETE FROM `vaccine_dose_master`;
+/*!40000 ALTER TABLE `vaccine_dose_master` DISABLE KEYS */;
+INSERT INTO `vaccine_dose_master` (`VACCINE_DOSE_ID`, `VACCINE_ID`, `VACCINE_DOSE_NAME`, `VACCINE_DOSE_DETAIL`, `VACCINE_DOSE_ISACTIVE`, `DATE_CREATED`, `DATE_MODIFIED`) VALUES
+	(1, 1, 'Dose 1', NULL, 1, '2021-07-22 14:50:36', '2021-07-22 14:50:36'),
+	(2, 1, 'Dose 2', NULL, 1, '2021-07-22 14:50:58', '2021-07-22 14:50:59'),
+	(3, 2, 'Dose 1', NULL, 1, '2021-07-22 14:51:14', '2021-07-22 14:51:15'),
+	(4, 2, 'Dose 2', NULL, 1, '2021-07-22 14:51:29', '2021-07-22 14:51:32'),
+	(5, 3, 'Dose 1', NULL, 1, '2021-07-22 15:02:33', '2021-07-22 15:02:33'),
+	(6, 4, 'Dose 1', NULL, 1, '2021-07-22 15:12:01', '2021-07-22 15:12:02'),
+	(7, 4, 'Dose 2', NULL, 1, '2021-07-22 15:12:22', '2021-07-22 15:12:26'),
+	(8, 5, 'Dose 1', NULL, 1, '2021-07-22 15:12:51', '2021-07-22 15:12:51'),
+	(9, 5, 'Dose 2', NULL, 1, '2021-07-22 15:13:10', '2021-07-22 15:13:11'),
+	(10, 6, 'Dose 1', NULL, 1, '2021-07-22 15:13:35', '2021-07-22 15:13:35');
+/*!40000 ALTER TABLE `vaccine_dose_master` ENABLE KEYS */;
+
+-- Dumping structure for table cfc-vaers.vaccine_master
+DROP TABLE IF EXISTS `vaccine_master`;
+CREATE TABLE IF NOT EXISTS `vaccine_master` (
+  `VACCINE_ID` bigint NOT NULL AUTO_INCREMENT,
+  `VACCINE_NAME` varchar(100) NOT NULL,
+  `VACCINE_MANUFACTURER` varchar(100) DEFAULT NULL,
+  `VACCINE_ISACTIVE` tinyint NOT NULL,
+  `DATE_CREATED` datetime DEFAULT CURRENT_TIMESTAMP,
+  `DATE_MODIFIED` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`VACCINE_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table cfc-vaers.vaccine_master: ~6 rows (approximately)
+DELETE FROM `vaccine_master`;
+/*!40000 ALTER TABLE `vaccine_master` DISABLE KEYS */;
+INSERT INTO `vaccine_master` (`VACCINE_ID`, `VACCINE_NAME`, `VACCINE_MANUFACTURER`, `VACCINE_ISACTIVE`, `DATE_CREATED`, `DATE_MODIFIED`) VALUES
+	(1, 'Covaxin', 'Serum', 1, '2021-07-22 14:46:05', '2021-07-22 14:46:06'),
+	(2, 'Covisheild', 'Biotek', 1, '2021-07-22 14:47:37', '2021-07-22 14:47:38'),
+	(3, 'Sputnik', 'Russia', 1, '2021-07-22 14:48:03', '2021-07-22 14:48:04'),
+	(4, 'Astrazeneca', 'Europe', 0, '2021-07-22 14:48:34', '2021-07-22 14:48:35'),
+	(5, 'Moderna', 'USA', 0, '2021-07-22 14:50:01', '2021-07-22 14:50:01'),
+	(6, 'J&J', 'Europe', 1, '2021-07-22 14:55:44', '2021-07-22 14:55:44');
+/*!40000 ALTER TABLE `vaccine_master` ENABLE KEYS */;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
