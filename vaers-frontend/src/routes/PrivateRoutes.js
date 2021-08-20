@@ -17,7 +17,7 @@ function PrivateRoutes() {
                 <Route exact path={SLUGS.contacts} render={() => <div>Contact Us</div>} />
                 <Route exact path={SLUGS.vaccenter} render={() => <div>Covid 19 Vaccination Centre</div>} />
                 <Route exact path={SLUGS.login} component={Loginscreen} />
-                <Redirect to={SLUGS.dashboard} />
+                <Redirect to={SLUGS.dashboard} component={DashboardComponent} />
             </Switch>
         </Suspense>
     );

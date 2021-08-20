@@ -74,65 +74,6 @@ function HeaderComponent() {
     return (
         <Row className={classes.container} vertical='center' horizontal='space-between'>
             <span className={classes.title}>{title}</span>
-            <Row vertical='center'>
-                <div className={classes.iconStyles}>
-                    <IconSearch />
-                </div>
-                <div className={classes.iconStyles}>
-                    <DropdownComponent
-                        label={<IconBell />}
-                        options={[
-                            {
-                                label: 'Notification #1',
-                                onClick: () => console.log('Notification #1')
-                            },
-                            {
-                                label: 'Notification #2',
-                                onClick: () => console.log('Notification #2')
-                            },
-                            {
-                                label: 'Notification #3',
-                                onClick: () => console.log('Notification #3')
-                            },
-                            {
-                                label: 'Notification #4',
-                                onClick: () => console.log('Notification #4')
-                            }
-                        ]}
-                        position={{
-                            top: 42,
-                            right: -14
-                        }}
-                    />
-                </div>
-                <div className={classes.separator}></div>
-                <DropdownComponent
-                    label={
-                        <>
-                            <span className={classes.name}>Sukhsimran Singh</span>
-                            <img
-                                src='https://avatars3.githubusercontent.com/u/21162888?s=460&v=4'
-                                alt='avatar'
-                                className={classes.avatar}
-                            />
-                        </>
-                    }
-                    options={[
-                        {
-                            label: 'Settings',
-                            onClick: onSettingsClick
-                        },
-                        {
-                            label: 'Logout',
-                            onClick: () => console.log('logout')
-                        }
-                    ]}
-                    position={{
-                        top: 52,
-                        right: -6
-                    }}
-                />
-            </Row>
         </Row>
     );
 }
