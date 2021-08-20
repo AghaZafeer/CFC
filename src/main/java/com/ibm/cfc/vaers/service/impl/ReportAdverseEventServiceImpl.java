@@ -105,6 +105,8 @@ public class ReportAdverseEventServiceImpl implements ReportAdverseEventService 
 		if(userInScope != null && userInScope.getUserId() > 0) {
 			if(!checkIfVaccineAndDosageInfoPresentInRecordForUser(reportAdverseEventsForUserIn, userInScope)) {
 				//persist the Case Reporter data
+				User updateUser = updateUserInfo(reportAdverseEventsForUserIn, userInScope);
+				
 				String caseID = persistCaseReporterInfo(reportAdverseEventsForUserIn, userInScope);
 				
 				//persist user allergies
@@ -216,6 +218,7 @@ public class ReportAdverseEventServiceImpl implements ReportAdverseEventService 
 		user.setUserMiddleName(reportAdverseEventsForUserIn.getUserMiddleName());
 		user.setUserLastName(reportAdverseEventsForUserIn.getUserLastName());
 		user.setUserAadhaarNo(reportAdverseEventsForUserIn.getUserAadhaarNumber());
+		user.setUserAadhaarNo(reportAdverseEventsForUserIn.getUserBeneficiaryRefID());
 		user.setUserMobile(reportAdverseEventsForUserIn.getUserMobile());
 		user.setUserAlternateNumber(reportAdverseEventsForUserIn.getUserAlternateMobile());
 		user.setUserEmailId(reportAdverseEventsForUserIn.getUserEmail());
@@ -227,6 +230,32 @@ public class ReportAdverseEventServiceImpl implements ReportAdverseEventService 
 		
 		user.setUserIsactive(true);
 		user.setDateCreated(VaersUtilities.getCurrentDate());
+		user.setDateModified(VaersUtilities.getCurrentDate());
+		
+		User newUser = userMasterRepository.saveAndFlush(user);
+		return newUser;
+	}
+	
+	public User updateUserInfo(ReportAdverseEventsForUserIn reportAdverseEventsForUserIn, User user) {
+		
+		UserTitleMaster userTitleMaster = new UserTitleMaster();
+		if(reportAdverseEventsForUserIn.getUserTitleID()!= null) {
+			userTitleMaster = userTitleMasterRepository.findByUserTitleName(reportAdverseEventsForUserIn.getUserTitleID());
+		}
+		user.setUserTitleMaster2(userTitleMaster);
+		user.setUserFirstName(reportAdverseEventsForUserIn.getUserFirstName());
+		user.setUserMiddleName(reportAdverseEventsForUserIn.getUserMiddleName());
+		user.setUserLastName(reportAdverseEventsForUserIn.getUserLastName());
+		user.setUserAadhaarNo(reportAdverseEventsForUserIn.getUserBeneficiaryRefID());
+		user.setUserMobile(reportAdverseEventsForUserIn.getUserMobile());
+		user.setUserAlternateNumber(reportAdverseEventsForUserIn.getUserAlternateMobile());
+		user.setUserAddress(reportAdverseEventsForUserIn.getUserAddress());
+		user.setUserAge(Short.parseShort(reportAdverseEventsForUserIn.getUserAge()));
+		user.setUserDob(VaersUtilities.getDateFromString(reportAdverseEventsForUserIn.getDateOfBirth()));
+		user.setUserSex(reportAdverseEventsForUserIn.getUserSex());
+		user.setUserIsPregnant(VaersUtilities.getBooleanFromString(reportAdverseEventsForUserIn.getUserIsPregnant()));
+		
+		user.setUserIsactive(true);
 		user.setDateModified(VaersUtilities.getCurrentDate());
 		
 		User newUser = userMasterRepository.saveAndFlush(user);
