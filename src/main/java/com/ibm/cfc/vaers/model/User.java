@@ -32,6 +32,9 @@ public class User implements Serializable {
 
 	@Column(name="USER_AADHAAR_NO", nullable=false, length=50)
 	private String userAadhaarNo;
+	
+	@Column(name="USER_BENEFICIARY_REF_ID", nullable=false, length=50)
+	private String userBeneficiaryRefId;
 
 	@Column(name="USER_ADDRESS", length=255)
 	private String userAddress;
@@ -127,6 +130,14 @@ public class User implements Serializable {
 		this.userAadhaarNo = userAadhaarNo;
 	}
 
+	public String getUserBeneficiaryRefId() {
+		return userBeneficiaryRefId;
+	}
+
+	public void setUserBeneficiaryRefId(String userBeneficiaryRefId) {
+		this.userBeneficiaryRefId = userBeneficiaryRefId;
+	}
+	
 	public String getUserAddress() {
 		return this.userAddress;
 	}
@@ -319,5 +330,4 @@ public class User implements Serializable {
 
 		return caseReporter;
 	}
-
 }

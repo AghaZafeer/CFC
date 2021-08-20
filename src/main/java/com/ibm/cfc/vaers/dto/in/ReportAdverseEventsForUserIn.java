@@ -10,6 +10,7 @@ public class ReportAdverseEventsForUserIn implements Serializable {
 	public String userMiddleName;
 	public String userLastName;
 	public String userAadhaarNumber;
+	public String userBeneficiaryRefID;
 	public String userMobile;
 	public String userAlternateMobile;
 	public String userEmail;
@@ -79,6 +80,14 @@ public class ReportAdverseEventsForUserIn implements Serializable {
 		this.userAadhaarNumber = userAadhaarNumber;
 	}
 
+	public String getUserBeneficiaryRefID() {
+		return userBeneficiaryRefID;
+	}
+
+	public void setUserBeneficiaryRefID(String userBeneficiaryRefID) {
+		this.userBeneficiaryRefID = userBeneficiaryRefID;
+	}
+	
 	public String getUserMobile() {
 		return userMobile;
 	}
