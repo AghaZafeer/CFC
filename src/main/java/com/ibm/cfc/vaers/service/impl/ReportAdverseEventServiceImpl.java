@@ -199,7 +199,7 @@ public class ReportAdverseEventServiceImpl implements ReportAdverseEventService 
 		
 		UserVaccine userVaccine = userVaccineRepository.findByUserAndVaccineMasterAndVaccineDoseMaster(user, vaccineMaster, vaccineDoseMaster);
 		
-		if(userVaccine.getUsvacId() > 0) {
+		if(userVaccine != null && userVaccine.getUsvacId() > 0) {
 			return true;
 		}
 		return false;

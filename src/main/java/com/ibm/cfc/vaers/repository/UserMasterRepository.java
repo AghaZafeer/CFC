@@ -16,4 +16,6 @@ public interface UserMasterRepository extends JpaRepository <User, Integer>{
 	List<User> findByUserIsactiveTrue();
 	
 	User findByUserAadhaarNo(String userAadhaarNo);
+	
+	User findByUserBeneficiaryRefId(String userBeneficiaryRefId);
 }
