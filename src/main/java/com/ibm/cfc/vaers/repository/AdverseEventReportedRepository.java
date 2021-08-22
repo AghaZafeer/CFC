@@ -24,4 +24,12 @@ public interface AdverseEventReportedRepository extends JpaRepository <AdverseEv
 			+ "adverseEventReported.userVaccine.vaccineDoseMaster = ?3")
 	List<AdverseEventReported> findAllByAdverseEventMaster1AndVaccineMasterAndVaccineDoseMaster(AdverseEventMaster adverseEventMaster, VaccineMaster vaccineMaster, VaccineDoseMaster vaccineDoseMaster);
 	
+	@Query("select adverseEventReported from AdverseEventReported adverseEventReported "
+			+ "where adverseEventReported.adverseEventMaster1 = ?1 and "
+			+ "adverseEventReported.adevRepIsrecovered = true and "
+			+ "adverseEventReported.userVaccine.user.userIsactive=true and "
+			+ "adverseEventReported.userVaccine.vaccineMaster = ?2 and "
+			+ "adverseEventReported.userVaccine.vaccineDoseMaster = ?3")
+	List<AdverseEventReported> findAllByAdverseEventMaster1AndVaccineMasterAndVaccineDoseMasterAndAdevRepIsrecoveredTrue(AdverseEventMaster adverseEventMaster, VaccineMaster vaccineMaster, VaccineDoseMaster vaccineDoseMaster);
+	
 }

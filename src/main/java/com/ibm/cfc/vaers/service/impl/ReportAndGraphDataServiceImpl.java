@@ -1,6 +1,10 @@
 package com.ibm.cfc.vaers.service.impl;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -8,10 +12,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ibm.cfc.vaers.dto.out.AdverseEventReportObjOut;
 import com.ibm.cfc.vaers.dto.out.ListOfAdverseEventsDataOut;
 import com.ibm.cfc.vaers.dto.out.ListOfVaccineDataOut;
 import com.ibm.cfc.vaers.dto.out.ListOfVaccineDosesDataOut;
+import com.ibm.cfc.vaers.dto.out.RecoveryReportAndGraphDataOut;
 import com.ibm.cfc.vaers.dto.out.ReportAndGraphDataOut;
+import com.ibm.cfc.vaers.dto.out.UserAndRecoveryDataReportObjOut;
+import com.ibm.cfc.vaers.dto.out.VaccineAndAdverseEventReportObjOut;
 import com.ibm.cfc.vaers.model.AdverseEventMaster;
 import com.ibm.cfc.vaers.model.AdverseEventReported;
 import com.ibm.cfc.vaers.model.SeverityMaster;
@@ -27,6 +35,7 @@ import com.ibm.cfc.vaers.repository.UserVaccineRepository;
 import com.ibm.cfc.vaers.repository.VaccineDoseMasterRepository;
 import com.ibm.cfc.vaers.repository.VaccineMasterRepository;
 import com.ibm.cfc.vaers.service.ReportAndGraphDataService;
+import com.ibm.cfc.vaers.utils.VaersUtilities;
 
 @Service
 public class ReportAndGraphDataServiceImpl implements ReportAndGraphDataService {
@@ -66,6 +75,90 @@ public class ReportAndGraphDataServiceImpl implements ReportAndGraphDataService 
 		returnObject.setListOfVaccineDataOuts(listOfVaccineDataOuts);
 		
 		return returnObject;
+	}
+	
+	@Override
+	public List<RecoveryReportAndGraphDataOut> getRecoveryReportAndGraphData() {
+		List<RecoveryReportAndGraphDataOut> returnObject = new ArrayList<RecoveryReportAndGraphDataOut>();
+		
+		List<VaccineMaster> vaccineMasters = vaccineMasterRepository.findByVaccineIsactiveTrue();
+		for(VaccineMaster vaccineMaster : vaccineMasters) {
+			
+			RecoveryReportAndGraphDataOut recoveryReportAndGraphDataOut = new RecoveryReportAndGraphDataOut();
+			List<VaccineAndAdverseEventReportObjOut> vaccineAndAdverseEventReportObjOuts = new ArrayList<VaccineAndAdverseEventReportObjOut>();
+			
+			vaccineAndAdverseEventReportObjOuts = getVaccineAndAdverseEventReportObjOuts(vaccineMaster);
+			if(vaccineAndAdverseEventReportObjOuts != null && vaccineAndAdverseEventReportObjOuts.size() > 0) {
+				recoveryReportAndGraphDataOut.setVaccineID(String.valueOf(vaccineMaster.getVaccineId()));
+				recoveryReportAndGraphDataOut.setVaccineName(vaccineMaster.getVaccineName());
+				
+				recoveryReportAndGraphDataOut.setVaccineAndAdverseEventReportObjOuts(vaccineAndAdverseEventReportObjOuts);
+				
+				returnObject.add(recoveryReportAndGraphDataOut);
+			}
+		}
+		
+		return returnObject;
+	}
+	
+	protected List<VaccineAndAdverseEventReportObjOut> getVaccineAndAdverseEventReportObjOuts(VaccineMaster vaccineMaster) {
+		List<VaccineAndAdverseEventReportObjOut> vaccineAndAdverseEventReportObjOuts = new ArrayList<VaccineAndAdverseEventReportObjOut>();
+		
+		List<VaccineDoseMaster> vaccineDoseMasters = new ArrayList<VaccineDoseMaster>();
+		//Get the doses for the vaccine
+		vaccineDoseMasters = vaccineDoseMasterRepository.findByVaccineMaster(vaccineMaster);
+		if(vaccineDoseMasters.size() > 0) {
+			for(VaccineDoseMaster vaccineDoseMaster : vaccineDoseMasters) {
+				
+				VaccineAndAdverseEventReportObjOut vaccineAndAdverseEventReportObjOut = new VaccineAndAdverseEventReportObjOut();
+				List<AdverseEventReportObjOut> adverseEventReportObjOuts = new ArrayList<AdverseEventReportObjOut>();
+				adverseEventReportObjOuts = getAdverseEventReportObjOuts(vaccineMaster, vaccineDoseMaster);
+				
+				if(adverseEventReportObjOuts != null && adverseEventReportObjOuts.size() > 0) {
+					vaccineAndAdverseEventReportObjOut.setVaccineDoseId(String.valueOf(vaccineDoseMaster.getVaccineDoseId()));
+					vaccineAndAdverseEventReportObjOut.setVaccineDoseName(vaccineDoseMaster.getVaccineDoseName());
+					
+					vaccineAndAdverseEventReportObjOut.setAdverseEventReportObjOuts(adverseEventReportObjOuts);
+					vaccineAndAdverseEventReportObjOuts.add(vaccineAndAdverseEventReportObjOut);
+				}
+			}
+		}
+		
+		return vaccineAndAdverseEventReportObjOuts;
+	}
+	
+	protected List<AdverseEventReportObjOut> getAdverseEventReportObjOuts(VaccineMaster vaccineMaster, VaccineDoseMaster vaccineDoseMaster){
+		List <AdverseEventReportObjOut> adverseEventReportObjOuts = new ArrayList<AdverseEventReportObjOut>();
+		List<AdverseEventMaster> adverseEventMasters = new ArrayList<AdverseEventMaster>();
+		
+		adverseEventMasters = adverseEventMasterRepository.findByAdevIsactiveTrue();
+		for(AdverseEventMaster adverseEventMaster: adverseEventMasters) {
+			AdverseEventReportObjOut adverseEventReportObjOut = new AdverseEventReportObjOut();
+			List<AdverseEventReported> adverseEventReporteds = new ArrayList<AdverseEventReported>();
+			adverseEventReporteds = adverseEventReportedRepository.findAllByAdverseEventMaster1AndVaccineMasterAndVaccineDoseMasterAndAdevRepIsrecoveredTrue(adverseEventMaster, vaccineMaster, vaccineDoseMaster);
+			if(adverseEventReporteds!= null && adverseEventReporteds.size() > 0) {
+				adverseEventReportObjOut.setAdverseEventName(adverseEventMaster.getAdevName());
+				List <UserAndRecoveryDataReportObjOut> userAndRecoveryDataReportObjOuts = new ArrayList<UserAndRecoveryDataReportObjOut>();
+				for(AdverseEventReported adverseEventReported : adverseEventReporteds) {
+					UserAndRecoveryDataReportObjOut userAndRecoveryDataReportObjOut = new UserAndRecoveryDataReportObjOut();
+					
+					userAndRecoveryDataReportObjOut.setUserID(String.valueOf(adverseEventReported.getUserVaccine().getUser().getUserId()));
+					
+					userAndRecoveryDataReportObjOut.setRecoveryDurationInDays(String.valueOf(
+							VaersUtilities.getDateDifferenceInDays(
+									VaersUtilities.convertToLocalDateViaInstant(adverseEventReported.getAdevRepRecoveryDate()), 
+									VaersUtilities.convertToLocalDateViaInstant(adverseEventReported.getUserVaccine().getUsvacVaccinationDatetime()
+									))));
+					
+					userAndRecoveryDataReportObjOuts.add(userAndRecoveryDataReportObjOut);
+				}
+				adverseEventReportObjOut.setUserAndRecoveryDataReportObjOuts(userAndRecoveryDataReportObjOuts);
+				
+				adverseEventReportObjOuts.add(adverseEventReportObjOut);
+			}
+		}
+		
+		return adverseEventReportObjOuts;
 	}
 	
 	protected List<ListOfVaccineDataOut> getListOfVaccineDataOut(){

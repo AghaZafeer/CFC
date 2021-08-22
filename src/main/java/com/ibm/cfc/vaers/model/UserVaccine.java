@@ -34,7 +34,7 @@ public class UserVaccine implements Serializable {
 	private String usvacVaccinationCenter;
 
 	@Column(name="USVAC_VACCINATION_DATETIME", nullable=false)
-	private Timestamp usvacVaccinationDatetime;
+	private Date usvacVaccinationDatetime;
 
 	//bi-directional many-to-one association to AdverseEventReported
 	@OneToMany(mappedBy="userVaccine")
@@ -90,11 +90,11 @@ public class UserVaccine implements Serializable {
 		this.usvacVaccinationCenter = usvacVaccinationCenter;
 	}
 
-	public Timestamp getUsvacVaccinationDatetime() {
+	public Date getUsvacVaccinationDatetime() {
 		return this.usvacVaccinationDatetime;
 	}
 
-	public void setUsvacVaccinationDatetime(Timestamp usvacVaccinationDatetime) {
+	public void setUsvacVaccinationDatetime(Date usvacVaccinationDatetime) {
 		this.usvacVaccinationDatetime = usvacVaccinationDatetime;
 	}
 

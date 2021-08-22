@@ -1,6 +1,7 @@
 package com.ibm.cfc.vaers.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.ibm.cfc.vaers.dto.out.ValidateAadhaarObjOut;
 import com.ibm.cfc.vaers.dto.out.ValidateBeneficiaryRefIDObjOut;
@@ -14,6 +15,7 @@ import com.ibm.cfc.vaers.repository.VaccineDoseMasterRepository;
 import com.ibm.cfc.vaers.repository.VaccineMasterRepository;
 import com.ibm.cfc.vaers.service.ValidationService;
 
+@Service
 public class ValidationServiceImpl implements ValidationService {
 
 	@Autowired

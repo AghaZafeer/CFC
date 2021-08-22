@@ -4,6 +4,9 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 import javax.print.attribute.standard.DateTimeAtCompleted;
@@ -87,6 +90,20 @@ public class VaersUtilities {
 	
 	public static String replaceOTP(String orgString, String strToFind, String strToReplace) {
 		return orgString.replace(strToFind, strToReplace);
+	}
+	
+	public static long getDateDifferenceInDays(LocalDate startDate, LocalDate endDate) {
+		long difference = 0l;
+		difference = ChronoUnit.DAYS.between(endDate,startDate);
+		return difference;
+	}
+	
+	public static LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
+		java.util.Date safeDate = new Date(dateToConvert.getTime());
+		
+		return safeDate.toInstant()
+	      .atZone(ZoneId.systemDefault())
+	      .toLocalDate();
 	}
 	
 }
