@@ -8,11 +8,14 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.ibm.cfc.vaers.dto.out.GenerateOTPObjOut;
+import com.ibm.cfc.vaers.dto.out.UserMasterOut;
 import com.ibm.cfc.vaers.dto.out.ValidateOTPObjOut;
 import com.ibm.cfc.vaers.model.MailDetail;
 import com.ibm.cfc.vaers.model.OtpCode;
+import com.ibm.cfc.vaers.model.User;
 import com.ibm.cfc.vaers.repository.MailDetailRepository;
 import com.ibm.cfc.vaers.repository.OtpCodeRepository;
+import com.ibm.cfc.vaers.repository.UserMasterRepository;
 import com.ibm.cfc.vaers.service.EmailService;
 import com.ibm.cfc.vaers.service.OTPManagementService;
 import com.ibm.cfc.vaers.utils.MailDetailDTO;
@@ -33,6 +36,9 @@ public class OTPManagementServiceImpl implements OTPManagementService {
 	
 	@Autowired
 	EmailService emailService;
+	
+	@Autowired
+	UserMasterRepository userMasterRepository;
 	
 	@Override
 	public GenerateOTPObjOut getOTP(String emailID){
@@ -90,6 +96,14 @@ public class OTPManagementServiceImpl implements OTPManagementService {
 		if(otpCode.getOtpId() > 0) {
 			if(otpCode.isOtpActive()) {
 				returnObj.setValid(true);
+				
+				// Set the User
+				User thisUser = userMasterRepository.findByUserEmailId(otpEmailID);
+				if(thisUser != null && thisUser.getUserId() > 0) {
+					UserMasterOut userMasterOut = new UserMasterOut();
+					userMasterOut.setUser(thisUser);
+					returnObj.setUserMasterOut(userMasterOut);
+				}
 			}
 		}
 		

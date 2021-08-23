@@ -18,4 +18,6 @@ public interface UserMasterRepository extends JpaRepository <User, Integer>{
 	User findByUserAadhaarNo(String userAadhaarNo);
 	
 	User findByUserBeneficiaryRefId(String userBeneficiaryRefId);
+	
+	User findByUserEmailId(String userEmailId);
 }
