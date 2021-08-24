@@ -24,7 +24,15 @@ public class VaersUtilities {
 			} 
 		}
 	    return dateFromString;
-	}  
+	} 
+	
+	public static String getStringFromDate(Date stringAsDate) {  
+	    String stringFromDate = null;
+		if(stringAsDate != null) {
+		    stringFromDate = new SimpleDateFormat("yyyy-MM-dd").format(stringAsDate); 
+		}
+	    return stringFromDate;
+	} 
 	
 	public static boolean getBooleanFromString(String booleanAsString) {
 		if(booleanAsString != null) {
@@ -35,6 +43,14 @@ public class VaersUtilities {
 			}
 		}else {
 			return false;
+		}
+	}
+	
+	public static String getStringFromBoolean(boolean booleanAsString) {
+		if(booleanAsString) {
+			return "TRUE";
+		}else {
+			return "FALSE";
 		}
 	}
 	

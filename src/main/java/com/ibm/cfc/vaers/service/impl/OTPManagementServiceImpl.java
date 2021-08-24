@@ -1,6 +1,9 @@
 package com.ibm.cfc.vaers.service.impl;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,11 +11,16 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.ibm.cfc.vaers.dto.out.GenerateOTPObjOut;
+import com.ibm.cfc.vaers.dto.out.UserAllergiesOut;
+import com.ibm.cfc.vaers.dto.out.UserIllnessOut;
 import com.ibm.cfc.vaers.dto.out.UserMasterOut;
 import com.ibm.cfc.vaers.dto.out.ValidateOTPObjOut;
+import com.ibm.cfc.vaers.model.AllergicConditionsMaster;
 import com.ibm.cfc.vaers.model.MailDetail;
 import com.ibm.cfc.vaers.model.OtpCode;
 import com.ibm.cfc.vaers.model.User;
+import com.ibm.cfc.vaers.model.UserAllergicCondition;
+import com.ibm.cfc.vaers.model.UserIllness;
 import com.ibm.cfc.vaers.repository.MailDetailRepository;
 import com.ibm.cfc.vaers.repository.OtpCodeRepository;
 import com.ibm.cfc.vaers.repository.UserMasterRepository;
@@ -101,7 +109,41 @@ public class OTPManagementServiceImpl implements OTPManagementService {
 				User thisUser = userMasterRepository.findByUserEmailId(otpEmailID);
 				if(thisUser != null && thisUser.getUserId() > 0) {
 					UserMasterOut userMasterOut = new UserMasterOut();
-					userMasterOut.setUser(thisUser);
+					userMasterOut.setUserTitle(thisUser.getUserTitleMaster2().getUserTitleName());
+					userMasterOut.setFirstName(thisUser.getUserFirstName());
+					userMasterOut.setMiddleName(thisUser.getUserMiddleName());
+					userMasterOut.setLastName(thisUser.getUserLastName());
+					userMasterOut.setEmailID(thisUser.getUserEmailId());
+					userMasterOut.setAddress(thisUser.getUserAddress());
+					userMasterOut.setContactNumber(thisUser.getUserMobile());
+					userMasterOut.setAlternateContactNumber(thisUser.getUserAlternateNumber());
+					userMasterOut.setAadhaarNumber(thisUser.getUserAadhaarNo());
+					userMasterOut.setBeneficiaryReferenceID(thisUser.getUserBeneficiaryRefId());
+					userMasterOut.setAge(String.valueOf(thisUser.getUserAge()));
+					userMasterOut.setDateOfBirth(VaersUtilities.getStringFromDate(thisUser.getUserDob()));
+					userMasterOut.setGender(thisUser.getUserSex());
+					userMasterOut.setIsPregnant(VaersUtilities.getStringFromBoolean(thisUser.isUserIsPregnant()));
+					
+					List<UserIllnessOut> userIllnessOuts = new ArrayList<UserIllnessOut>(); 
+					if(thisUser.getUserIllnesses() != null && thisUser.getUserIllnesses().size() > 0) {
+						for(UserIllness userIllness : thisUser.getUserIllnesses()) {
+							UserIllnessOut userIllnessOut = new UserIllnessOut();
+							userIllnessOut.setIllnessName(userIllness.getIllnessMaster().getIllnessName());
+							userIllnessOuts.add(userIllnessOut);
+						}
+					}
+					userMasterOut.setUserIllnessOuts(userIllnessOuts);
+					
+					List<UserAllergiesOut> userAllergiesOuts = new ArrayList<UserAllergiesOut>(); 
+					if(thisUser.getUserAllergicConditions() != null && thisUser.getUserAllergicConditions().size() > 0) {
+						for(UserAllergicCondition userAllergicCondition : thisUser.getUserAllergicConditions()) {
+							UserAllergiesOut userAllergiesOut = new UserAllergiesOut();
+							userAllergiesOut.setAllergyName(userAllergicCondition.getAllergicConditionsMaster().getAllgcondName());
+							userAllergiesOuts.add(userAllergiesOut);
+						}
+					}
+					userMasterOut.setUserAllergiesOut(userAllergiesOuts);
+					
 					returnObj.setUserMasterOut(userMasterOut);
 				}
 			}
