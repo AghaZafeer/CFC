@@ -218,7 +218,7 @@ public class ReportAdverseEventServiceImpl implements ReportAdverseEventService 
 		user.setUserMiddleName(reportAdverseEventsForUserIn.getUserMiddleName());
 		user.setUserLastName(reportAdverseEventsForUserIn.getUserLastName());
 		user.setUserAadhaarNo(reportAdverseEventsForUserIn.getUserAadhaarNumber());
-		user.setUserAadhaarNo(reportAdverseEventsForUserIn.getUserBeneficiaryRefID());
+		user.setUserBeneficiaryRefId(reportAdverseEventsForUserIn.getUserBeneficiaryRefID());
 		user.setUserMobile(reportAdverseEventsForUserIn.getUserMobile());
 		user.setUserAlternateNumber(reportAdverseEventsForUserIn.getUserAlternateMobile());
 		user.setUserEmailId(reportAdverseEventsForUserIn.getUserEmail());
