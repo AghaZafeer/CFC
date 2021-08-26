@@ -27,6 +27,7 @@ class CustomizeTable extends React.Component {
     const { items } = this.state;
     items.splice(i, 1);
     this.setState({ items });
+    this.props.parentCallback(items);
   }
 
   render() {

@@ -22,6 +22,12 @@ export default function formValidation(name, value, schema) {
     case "number":
       if (!isNumber.test(value)) error = "This field accept numbers only.";
       break;
+    
+    case "aadhar":
+      if (!isNumber.test(value)) {
+        error = "This field accept numbers only.";
+      }
+      break;
 
     case "email":
       if (!isEmail.test(value)) error = "Please enter a valid email";

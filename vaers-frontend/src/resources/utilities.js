@@ -28,8 +28,17 @@ export function convertArraytoJsonObject(arrayData,parameter) {
         });
     }
   return jsonarray;
-
 }
+
+export function eleContainsInArray(arr,element){
+    if(arr != null && arr.length >0){
+        for(var i=0;i<arr.length;i++){
+            if(arr[i].adverseEffectID == element)
+                return true;
+        }
+    }
+    return false;
+ }
 
 export function checkDateValidation(firstDate,secondDate) {
     if(firstDate ===null ||  firstDate === undefined){

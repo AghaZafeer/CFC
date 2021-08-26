@@ -10,7 +10,8 @@ const ReporterInformationComponent = ({
     handleNext,
     handleBack,
     handleChange,
-    values: {relationToUser,reporterTitle , reporterFirstName,reporterMiddleName,reporterLastName,reporterContactNo,reporterAltContactNo,reporterAddress,reporterEmail},
+    values: {relationToUser,reporterTitle , 
+      reporterFirstName,reporterMiddleName,reporterLastName,reporterContactNo,reporterAltContactNo,reporterAddress,reporterEmail},
     formErrors
   }) => {
     const [titles, setTitles] = React.useState([]);
@@ -19,14 +20,14 @@ const ReporterInformationComponent = ({
        !formErrors.relationToUser;
        const [selectedValue, setSelectedValue] = React.useState(false);
 
-  useEffect(() => {
+React.useEffect(() => {
     if(relationToUser === 'SELF'){
       setSelectedValue(true);
     }
     axios.get('/getListOfUserTitles').then(res => {
       setTitles(res.data);
     }).catch(err => console.log(err))
-  });
+  },[]);
     
   const handleAutoFill = (value) => {
        if(value === 'SELF'){
@@ -43,13 +44,13 @@ const ReporterInformationComponent = ({
                 <FormLabel component="legend">Relation to User:</FormLabel>
                 <RadioGroup aria-label="relationToUser" name="relationToUser" value={relationToUser || ""} onChange={handleChange}>
                     <FormControlLabel value="HEALTHCARE_PROFESSIONAL" control={<Radio onClick = 
-                            {(e) => {handleAutoFill(e.target.value)}} color="primary"/>} label="HEALTHCARE_PROFESSIONAL" />
+                            {(e) => {handleAutoFill(e.target.value)}} color="primary"/>} label="Healthcare Professional" />
                     <FormControlLabel value="SELF" control={<Radio onClick = 
-                            {(e) => {handleAutoFill(e.target.value)}} color="primary"/>} label="SELF" />
+                            {(e) => {handleAutoFill(e.target.value)}} color="primary"/>} label="Self" />
                     <FormControlLabel value="RELATIVE" control={<Radio onClick = 
-                            {(e) => {handleAutoFill(e.target.value)}} color="primary"/>} label="RELATIVE" />
+                            {(e) => {handleAutoFill(e.target.value)}} color="primary"/>} label="Relative" />
                      <FormControlLabel value="OTHERS" control={<Radio onClick = 
-                            {(e) => {handleAutoFill(e.target.value)}} color="primary"/>} label="OTHERS" />
+                            {(e) => {handleAutoFill(e.target.value)}} color="primary"/>} label="Others" />
                 </RadioGroup>
             </FormControl>
         </Grid>

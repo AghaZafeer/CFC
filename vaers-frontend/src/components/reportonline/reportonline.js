@@ -58,11 +58,12 @@ const initialValues = {
   reporterAltContactNo :"",
   reporterAddress :"",
   reporterEmail :"",
+  userBeneficiaryRefID:"",
   vaccinename:"",
   dosages:"",
   instituteName:"",
   dateVaccination:"",
-  symptom:[{}],
+  symptom:[],
   existingIllness:[],
   existingallergy:[],
   severity:"",
@@ -70,7 +71,9 @@ const initialValues = {
   isfatal:"",
   isrecovered:"",
   recoveryDate:"",
-  dateOfDeath:""
+  dateOfDeath:"",
+  isValidForm:false,
+  isdefaultvalue:false
 };
 
 const fieldsValidation = {
@@ -113,7 +116,7 @@ const fieldsValidation = {
 
   aadharnumber: {
     error: "",
-    validate: "aadharnumber",
+    validate: "aadhar",
     minLength: 12,
     maxLength: 12
 },
@@ -135,6 +138,7 @@ const fieldsValidation = {
   reporterAltContactNo:{},
   reporterAddress :{},
   reporterEmail :{},
+  userBeneficiaryRefID:{},
   vaccinename :{},
   dosages :{},
   instituteName :{},
@@ -144,7 +148,7 @@ const fieldsValidation = {
   gender:{},
   title:{},
   ispregnant:{},
-  symptom:[{}],
+  symptom:[],
   severity:{},
   dateStartedAdvEvt:{},
   isfatal:{},
@@ -180,6 +184,13 @@ export default function ReportOnlineComponent() {
         "dateOfRecovery": nextState.dateOfRecovery }]
     }));
   };
+
+  const handleUserChange = (name , value) => {
+    setFormValues((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -228,6 +239,7 @@ export default function ReportOnlineComponent() {
           <PatientinformationComponent
             handleNext={handleNext}
             handleChange={handleChange}
+            handleUserChange = {handleUserChange}
             values={formValues}
             formErrors={formErrors}
           />

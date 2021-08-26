@@ -6,7 +6,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import CustomizeTable from 'resources/customizeTable';
 import  { CustomizeDialog } from 'resources/customizeDialog';
 import axios from 'axios';
-import { checkDateValidation } from 'resources/utilities';
+import { checkDateValidation, eleContainsInArray } from 'resources/utilities';
 import { CustomAlertDialog } from 'resources/customAlertDialog';
 
 const VaccineInformationComponent = ({
@@ -14,7 +14,7 @@ const VaccineInformationComponent = ({
     handleBack,
     handleChange,
     handleState,
-    values: {vaccinename,dosages,instituteName,dateVaccination},
+    values: {vaccinename,dosages,instituteName,dateVaccination,userBeneficiaryRefID, symptom},
     formErrors
   }) => {
     const [radioValue, setRadioValue] = React.useState();
@@ -22,9 +22,24 @@ const VaccineInformationComponent = ({
     const [selectedValue, setSelectedValue] = React.useState(false);
     const [alertError, setAlertError] = React.useState(false);
     const [noOfVaccines, setNoOfVaccines] = React.useState([]);
+    const [isRefIdExist, setIsRefIdExist] = React.useState(false);
+    const [refIdMessage, setRefIdMessage] = React.useState("");
+    const [isAdverseEventExist, setIsAdverseEventExist] = React.useState(false);
     React.useEffect(() => {
       axios.get('/getVaccineList').then(res => {
         setNoOfVaccines(res.data)
+        console.log("Sysmtoms", symptom);
+        if(symptom.length >0) {
+          for (var d =0 ;d<symptom.length;d++) {
+            if(symptom[d].adverseEffectID !==undefined) {
+             setState(prevState => [...prevState, {"adverseEffectID":symptom[d].adverseEffectID, "severityID" : symptom[d].severityID, 
+            "adverseEffectReportingDate": symptom[d].adverseEffectReportingDate,
+          }] );
+        }
+          setRadioValue(true);
+          setSelectedValue(true);
+        }
+      }
       }).catch(err => console.log(err))
      }, [])
 
@@ -50,7 +65,29 @@ const VaccineInformationComponent = ({
     const handleClickOpen = () => {
       setOpen(true);
     }; 
+    const validateReferenceId = (event) => {
+      const form = {'beneficiaryRefID': userBeneficiaryRefID,
+    'vaccineName' : vaccinename , 'vaccineDose' : dosages}
+      axios.post('/validateBeneficiaryRefID', form)
+      .then(response => {
+        if (!response.data.isValid) {
+          setIsRefIdExist(true);
+          setRefIdMessage(response.data.message);
+          return null;
+        } else {
+          handleNext();
+        }
+      }).catch(err => {   setIsRefIdExist(true);return null;});
+    }; 
 
+    const handleCallback =(items) => {
+      console.log(items);
+      if(items.length ==0 )
+        setSelectedValue(false);
+       if(items.length >0) {
+        handleState(prevState,{items});
+       }
+    }
   const handleClose = (symptom,severity,dateStartedAdvEvt,isfatal,dateOfDeath,
     isrecovered, recoveryDate) => {
     if(checkDateValidation(dateVaccination,dateStartedAdvEvt)){
@@ -58,12 +95,16 @@ const VaccineInformationComponent = ({
        if(checkDateValidation(dateStartedAdvEvt,dateOfDeath)) {
         setOpen(false);
         if (symptom !== undefined) {
+            if(!eleContainsInArray(prevState,symptom)) {
             setState(prevState => [...prevState, {"adverseEffectID":symptom, "severityID" : severity, "adverseEffectReportingDate": dateStartedAdvEvt,
             "adverseEffectIsFatal" : isfatal ,"dateOfDeath" : dateOfDeath,
             "adverseEffectIsRecovered": isrecovered, "dateOfRecovery": recoveryDate}] );
             setSelectedValue(true);
             handleState(prevState,{"adverseEffectID":symptom,"severityID":severity,"adverseEffectReportingDate":dateStartedAdvEvt,
               "adverseEffectIsFatal" : isfatal ,"dateOfDeath" : dateOfDeath, "adverseEffectIsRecovered": isrecovered, "dateOfRecovery": recoveryDate});
+            } else {
+              setIsAdverseEventExist(true);
+            }
         }
     } else {
       setAlertError(true);
@@ -76,8 +117,9 @@ const VaccineInformationComponent = ({
 
  const handleCloseDialog = () => {
     setAlertError(false);
+    setIsRefIdExist(false);
+    setIsAdverseEventExist(false);
    };
-
     return (
       <>
         <Grid container spacing={2}>
@@ -99,7 +141,8 @@ const VaccineInformationComponent = ({
                   {vaccine.vaccineDoses.map((vaccinedose) => {
                       return(
                               <FormControlLabel value={vaccinedose.vaccineDoseName.toString()} control={<Radio onClick = 
-                                {(e) => {setRadioValue(e.target.value)}} color="primary"/>} label={vaccinedose.vaccineDoseName} />
+                                {(e) => { setRadioValue(e.target.value);
+                                }} color="primary"/>} label={vaccinedose.vaccineDoseName} />
                       ) 
                       })}
                       </RadioGroup>
@@ -146,13 +189,19 @@ const VaccineInformationComponent = ({
           </Button>
          <CustomizeDialog open={open} onClose={handleClose} onChange={handleChange}/>
          {selectedValue ? (
-           <StyledCustomizeTableApp prevState = {prevState}/> 
+           <StyledCustomizeTableApp prevState = {prevState} parentCallback = {handleCallback}/> 
           ) :null }
             </Grid>
             { alertError ? (
             <CustomAlertDialog  onClose = {handleCloseDialog} title = {"Date Validation Failed"} message ={"1)Date of Vaccination should be greater than Adverse event start date.  2)Adverse event Started date should be greater than recovery Date or Date of Death."} />
             ) :null}
         </Grid>
+        { isRefIdExist ? (
+                <CustomAlertDialog  onClose = {handleCloseDialog} title = {"Error"} message ={refIdMessage} />
+        ) :null}
+        { isAdverseEventExist ? (
+                <CustomAlertDialog  onClose = {handleCloseDialog} title = {"Error"} message ={"Adverse Event already Added"} />
+        ) :null}
         <div
           style={{ display: "flex", marginTop: 50, justifyContent: "flex-end" }}
         >
@@ -166,9 +215,9 @@ const VaccineInformationComponent = ({
           </Button>
           <Button
             variant="contained"
-            disabled={!isValid}
+            disabled={!selectedValue}
             color="primary"
-            onClick={isValid ? handleNext : null}
+            onClick={validateReferenceId}
           >
             Next
           </Button>
