@@ -56,6 +56,7 @@ const PatientInformationComponent = ({
     const [defaultBeneficiaryReferenceID, setDefaultBeneficiaryReferenceID] = React.useState("");
     const [defaultGender, setDefaultGender] = React.useState("");
     const [defaultDob, setDefaultDob] = React.useState("");
+    const [defaultPregnant, setDefaultPregnant] = React.useState("");
     const [isAadharExist, setIsAadharExist] = React.useState(false);
     const handleChangeMultipleIllness = (event) => {
       console.log(event.target.value);
@@ -142,6 +143,8 @@ const PatientInformationComponent = ({
             setDefaultGender(response.data.userMasterOut.gender);
             handleUserChange("gender",response.data.userMasterOut.gender);
             setDefaultDob(response.data.userMasterOut.dateOfBirth);
+            handleUserChange("ispregnant",response.data.userMasterOut.isPregnant);
+            setDefaultPregnant(response.data.userMasterOut.isPregnant);
             handleUserChange("date",response.data.userMasterOut.dateOfBirth);
             var illness="";
             var alergy = "";
@@ -503,9 +506,9 @@ const PatientInformationComponent = ({
               <Grid item xs={12} sm={6}>
                   <FormControl component="fieldset" fullWidth  margin="normal">
                       <FormLabel component="legend">Are you pregnant ?</FormLabel>
-                      <RadioGroup aria-label="ispregnant" name="ispregnant" value={ispregnant || ""} onChange={handleChange}>
-                          <FormControlLabel value="Non Pregnant" control={<Radio color="primary"/>} label="No" />
-                          <FormControlLabel value="Pregnant" control={<Radio color="primary"/>} label="Yes" />
+                      <RadioGroup aria-label="ispregnant" name="ispregnant" value={ispregnant || (ispregnant = isdefaultvalue ? defaultPregnant :"")} onChange={handleChange}>
+                          <FormControlLabel disabled={isdefaultvalue} value="Non Pregnant" control={<Radio color="primary"/>} label="No" />
+                          <FormControlLabel disabled={isdefaultvalue} value="Pregnant" control={<Radio color="primary"/>} label="Yes" />
                       </RadioGroup>
                   </FormControl>
               </Grid>) :null}
@@ -514,7 +517,7 @@ const PatientInformationComponent = ({
                 <CustomAlertDialog  onClose = {handleCloseDialog} title = {"Note"} message ={"The record already exist for Aadhar Number :- "+ defaultAadhaarNumber} />
               ) :null}
               { isAadharExist ? (
-                <CustomAlertDialog  onClose = {handleCloseDialog} title = {"Alert"} message ={"Aadhaar card is associated with another email id in our records"} />
+                <CustomAlertDialog  onClose = {handleCloseDialog} title = {"Error"} message ={"Aadhaar card is associated with another email id in our records"} />
               ) :null}
               
               {(isValidForm) ? (

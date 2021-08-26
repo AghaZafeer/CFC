@@ -361,7 +361,7 @@ function TodayTrendsComponent(props) {
                 for (var d =0 ;d<b.data.length;d++) {
                   var z = b.data[d];
                   if(z !== undefined) {
-                    arr.push({x:useridcount,y:z.recoverydurationdays});
+                    arr.push({x:useridcount,y:z.recoveryDurationInDays});
                     useridcount= useridcount+1;
                   }
                 }
@@ -431,29 +431,30 @@ useEffect(() => {
                       setTotalSymptoms(optiondatas);
                   }
               })
-              recoveryDataItems.map((item) => { 
+              recoveryDataItems.map((item) =>  
+              { 
                   if(selectedVaccine === item.vaccineName) {
-                    item.listofadverseevent.map((lstItem) => {
-                      lstItem.symtoms.map((it) => {
+                    item.vaccineAndAdverseEventReportObjOuts.map((lstItem) => {
+                      lstItem.adverseEventReportObjOuts.map((it) => {
                           if(recoverydatas !== undefined) {
-                            recoverydatas.push({name:it.name,data:it.data});
+                            recoverydatas.push({name:it.adverseEventName,data:it.userAndRecoveryDataReportObjOuts});
                           } 
+                         })
                       })
-                      })
-                    }
-                    setRecoveryAdverseEvent(groupBy(recoverydatas,'name'))
-                    item.listofadverseevent.map((lstItem) => {
-                      if(selectedDosage === lstItem.vaccineDoseName) {
-                        recoverydatas.splice(0,recoverydatas.length);
-                        lstItem.symtoms.map((it) => {
-                          if(recoverydatas !== undefined) {
-                            recoverydatas.push({name:it.name,data:it.data});
-                          }
-                        })
-                        setRecoveryAdverseEvent(groupBy(recoverydatas,'name'))
-                      }
-                  })
-                });
+                      setRecoveryAdverseEvent(groupBy(recoverydatas,'name'))
+                      item.vaccineAndAdverseEventReportObjOuts.map((lstItem) => {
+                        if(selectedDosage === lstItem.vaccineDoseName) {
+                          recoverydatas.splice(0,recoverydatas.length);
+                          lstItem.adverseEventReportObjOuts.map((it) => {
+                            if(recoverydatas !== undefined) {
+                              console.log(lstItem.vaccineDoseName);
+                              recoverydatas.push({name:it.adverseEventName,data:it.userAndRecoveryDataReportObjOuts});
+                            }
+                          })
+                          setRecoveryAdverseEvent(groupBy(recoverydatas,'name'))
+                        }
+                    })
+              }});
             }
         })
         }, [selectedVaccine,selectedDosage]);

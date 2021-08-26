@@ -51,6 +51,7 @@ function DashboardComponent() {
     const [vaccinename, setVaccinename] = React.useState("Covaxin"); // Default Values
     const [dosages, setDosages] = React.useState("Dose 1"); // Default Values
     const [graphrecord, setGraphRecord]= React.useState({totalUser:"", data: []});
+    const [recoveryDataRecord, setRecoveryDataRecord]= React.useState([]);
     const recoveryData = getNoofRecordsForRecovery();
     const onComplete = (vaccinename, dosages) => {
         setVaccinename(vaccinename);
@@ -63,6 +64,12 @@ function DashboardComponent() {
       }).catch(err => console.log(err))
       axios.get('/getReportAndGraphData').then(res => {
         setGraphRecord({totalUser:res.data.totalNoOfUsers,data:res.data.listOfVaccineDataOuts});
+      }).catch(err => console.log(err))
+      axios.get('/getRecoveryReportAndGraphData').then(res => {
+        for(var i =0 ; i<res.data.length;i++) {
+            recoveryDataRecord.push(res.data[i]); 
+        }
+      console.log("Recovery Data",recoveryDataRecord);
       }).catch(err => console.log(err))
      }, [])
     return (
@@ -100,7 +107,7 @@ function DashboardComponent() {
             </Row>
             <div className={classes.todayTrends}>
                 { graphrecord.totalUser !== "" ? (
-                <TodayTrendsComponent items={graphrecord.data} recoveryDataItems = {recoveryData.listofvaccines} selectedVaccine ={vaccinename} selectedDosage= {dosages} />
+                <TodayTrendsComponent items={graphrecord.data} recoveryDataItems = {recoveryDataRecord} selectedVaccine ={vaccinename} selectedDosage= {dosages} />
                 ) :null }
             </div>
         </Column>
