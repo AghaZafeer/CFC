@@ -16,4 +16,10 @@ public class VaersConstants {
 	
 	public static final String MAIL_REPORTING_STRING_TO_FIND_2 = "<USERLASTNAME>";
 	
+	public static final String BEN_REF_ID_MESSAGE_ERROR_RECORD_EXIST = "Beneficiary Reference ID exist of user for the vaccine and dosage provided.";
+	
+	public static final String BEN_REF_ID_MESSAGE_ERROR_VACCINE_MISMATCH = "Beneficiary Reference ID exist of user for another Vaccine.";
+	
+	public static final String BEN_REF_ID_MESSAGE_VALIDATION_OK = "SUCCESS";
+	
 }
