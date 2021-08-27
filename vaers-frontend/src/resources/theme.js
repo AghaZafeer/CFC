@@ -1,16 +1,17 @@
 const color = {
-    brightBlue: '#3498db',
-    darkGrayishBlue: '#8b8d94',
-    darkRed: '#a90000',
-    grayishBlue: '#A4A6B3',
-    grayishBlue2: '#9fa2b4',
-    grayishBlue3: '#bdc3c7',
-    lightBlue: '#3751FF',
-    lightGrayishBlue: '#F7F8FC', // background color
-    lightGrayishBlue2: '#DFE0EB',
-    paleBlue: '#DDE2FF',
-    paleBlueTransparent: 'rgba(221, 226, 255, 0.08)',
-    veryDarkGrayishBlue: '#373a47'
+		brightBlue: '#07A9E0',
+	    darkGrayishBlue: '#8b8d94',
+	    darkRed: '#a90000',
+	    grayishBlue: '#A4A6B3',
+	    grayishBlue2: '#9fa2b4',
+	    grayishBlue3: '#bdc3c7',
+	    lightBlue: '#07A9E0',
+	    lightGrayishBlue: '#F7F8FC', // background color
+	    lightGrayishBlue2: '#DFE0EB',
+	    paleBlue: 'rgb(6, 212, 242)',
+	    paleBlueTransparent: 'rgba(6, 212, 242, 0.5)',
+	    veryDarkGrayishBlue: '#041D46',
+	    white: '#FFFFFF'
 };
 
 const typography = {
@@ -35,7 +36,7 @@ const typography = {
         cursor: 'pointer',
         textDecoration: 'underline',
         '&:hover': {
-            color: color.grayishBlue
+            color: color.paleBlue
         }
     },
     itemTitle: {
@@ -47,6 +48,7 @@ const typography = {
     title: {
         fontWeight: 'bold',
         fontSize: 24,
+        color: color.brightBlue, 
         lineHeight: '30px',
         letterSpacing: 0.3
     }

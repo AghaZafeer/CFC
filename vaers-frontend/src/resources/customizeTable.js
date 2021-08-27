@@ -9,8 +9,8 @@ import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core";
 const CustomTableCell = withStyles(theme => ({
     head: {
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.common.white,
+    	backgroundColor: 'rgba(6, 212, 242, 0.5)',
+        color: theme.palette.common.gray,
       fontSize:16
     },
     body: {

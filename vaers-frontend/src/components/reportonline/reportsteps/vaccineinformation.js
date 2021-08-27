@@ -181,7 +181,7 @@ const VaccineInformationComponent = ({
           />
             </Grid>
             <Grid item xs={12}>
-            <Button disabled={!isValid}
+            <Button style={{ background: '#07A9E0' }} disabled={!isValid}
               variant="contained"
               color="primary" onClick={handleClickOpen}
             >
@@ -214,6 +214,7 @@ const VaccineInformationComponent = ({
             Back
           </Button>
           <Button
+          	style={{ background: '#07A9E0',marginLeft: 20 }}
             variant="contained"
             disabled={!selectedValue}
             color="primary"

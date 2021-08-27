@@ -85,6 +85,7 @@ const PatientInformationComponent = ({
           setLoading(false);
         }
       }).catch(err => {setLoading(false);});
+      setIsValidOtp(true);
     };
 
     const reset = (event) => {
@@ -192,7 +193,7 @@ const PatientInformationComponent = ({
           setLoading(false);
         }
       }).catch(err => {setErrorMessage("Not Valid Code");setLoading(false);});
-     
+      handleUserChange('isValidForm', true);
     };
 
     React.useEffect(() => {
@@ -260,9 +261,9 @@ const PatientInformationComponent = ({
               </Grid>
               <ClipLoader color={color} loading={loading} css={override} size={150} />
               <div style={{ display: "flex", marginTop:10, justifyContent: "flex-end" }}>
-                <Button  style={{marginRight:15 }} disabled = {isValidOtp} variant="contained" color="primary" onClick={sendOTP} >Send OTP</Button>
-                <Button  style={{marginRight:15 }} disabled = {!isValidOtp} variant="contained" color="primary" onClick={validateOTP} >Validate OTP</Button>
-                <Button variant="contained" color="primary" onClick={reset} >Resend</Button>
+                <Button  style={{background: '#07A9E0', marginRight:15 }} disabled = {isValidOtp} variant="contained" color="primary" onClick={sendOTP} >Send OTP</Button>
+                <Button  style={{background: '#07A9E0', marginRight:15 }} disabled = {!isValidOtp} variant="contained" color="primary" onClick={validateOTP} >Validate OTP</Button>
+                <Button style={{background: '#07A9E0', marginRight:15 }} variant="contained" color="primary" onClick={reset} >Resend</Button>
               </div>
               { errorMessage &&
               <h3 style={{ color: 'red' }}> {errorMessage } </h3> }
@@ -509,6 +510,7 @@ const PatientInformationComponent = ({
                     >
                       { !isdefaultvalue ? (
                         <Button
+                          style={{background: '#07A9E0'}}
                           variant="contained"
                           disabled={!isValid}
                           color="primary"
@@ -516,6 +518,7 @@ const PatientInformationComponent = ({
                         >
                           Next
                         </Button> ): (<Button
+                          style={{background: '#07A9E0'}}
                           variant="contained"
                           color="primary"
                           onClick={handleNext}

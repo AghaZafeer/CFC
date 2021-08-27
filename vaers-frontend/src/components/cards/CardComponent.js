@@ -6,12 +6,19 @@ import _ from "lodash";
 import { ordinal } from 'resources/utilities';
 
 const useStyles = createUseStyles((theme) => ({
-    container: {
+	container: {
         backgroundColor: '#FFFFFF',
         border: `1px solid ${theme.color.lightGrayishBlue2}`,
         borderRadius: 4,
         padding: '24px 32px 0px 32px',
-        height: '100%'
+        height: '100%',
+        '&:hover': {
+            borderColor: theme.color.paleBlue,
+            color: theme.color.veryDarkGrayishBlue,
+            '&:nth-child(n) > span': {
+                color: theme.color.veryDarkGrayishBlue
+            }
+        }
     },
     containerMobile: {
         padding: '12px 16px 6px 16px !important'
@@ -47,8 +54,9 @@ const useStyles = createUseStyles((theme) => ({
     },
     title: {
         ...theme.typography.cardTitle,
-        color: theme.color.veryDarkGrayishBlue
+        color: theme.color.darkGrayishBlue
     }
+    
 }));
 
 function CardComponent(props) {

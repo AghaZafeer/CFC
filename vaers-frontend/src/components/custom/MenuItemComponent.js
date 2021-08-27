@@ -6,30 +6,30 @@ import CollapsibleContent from 'components/collapsible/CollapsibleContent';
 import { useSidebar } from 'hooks/useSidebar';
 
 const useStyles = createUseStyles({
-    activeContainer: {
-        backgroundColor: ({ theme }) => theme.color.paleBlueTransparent
-    },
-    container: {
-        display: 'flex',
-        height: 56,
-        cursor: 'pointer',
-        '&:hover': {
-            backgroundColor: ({ theme }) => theme.color.paleBlueTransparent
-        },
-        paddingLeft: ({ level }) => 32 * level,
-        transition: 'all 0.2s ease-in-out'
-    },
-    leftBar: {
-        borderLeft: ({ theme, level }) =>
-            level > 1 ? 'none' : `3px solid ${theme.color.darkGrayishBlue}`
-    },
-    title: {
-        fontSize: 16,
-        lineHeight: '20px',
-        letterSpacing: '0.2px',
-        color: ({ theme, isActive }) => (isActive ? theme.color.paleBlue : theme.color.grayishBlue),
-        marginLeft: 24
-    }
+	 activeContainer: {
+	        backgroundColor: ({ theme }) => theme.color.brightBlue
+	    },
+	    container: {
+	        display: 'flex',
+	        height: 56,
+	        cursor: 'pointer',
+	        '&:hover': {
+	            backgroundColor: ({ theme }) => theme.color.paleBlueTransparent
+	        },
+	        paddingLeft: ({ level }) => 32 * level,
+	        transition: 'all 0.2s ease-in-out'
+	    },
+	    leftBar: {
+	        borderLeft: ({ theme, level }) =>
+	            level > 1 ? 'none' : `3px solid ${theme.color.darkGrayishBlue}`
+	    },
+	    title: {
+	        fontSize: 16,
+	        lineHeight: '20px',
+	        letterSpacing: '0.2px',
+	        color: ({ theme, isActive }) => (isActive ? theme.color.white : theme.color.darkGrayishBlue),
+	        marginLeft: 24
+	    }
 });
 
 function MenuItemComponent({ children, icon: Icon, id, items = [], level = 1, onClick, title }) {

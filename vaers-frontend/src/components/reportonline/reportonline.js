@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
   resetContainer: {
     padding: theme.spacing(3),
   },
+  icon: {
+	    color:  "rgb(6, 212, 242) !important",
+  }
 }));
 
 function getSteps() {
@@ -282,7 +285,11 @@ export default function ReportOnlineComponent() {
         <Stepper activeStep={activeStep}>
           {steps.map((label, index) => (
             <Step key={label}>
-              <StepLabel>{label}</StepLabel>
+            <StepLabel StepIconProps={{
+                classes: {
+              	  active: classes.icon,
+                    completed:classes.icon
+              }}}>{label}</StepLabel>
             </Step>
           ))}
         </Stepper>

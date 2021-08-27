@@ -39,9 +39,9 @@ function SidebarComponent() {
 
     return (
         <Menu isMobile={isMobile}>
-            <div style={{ paddingTop: 30, paddingBottom: 30 }}>
-                <LogoComponent />
-            </div>
+        <div style={{ paddingTop: 10, paddingBottom: 10 }}>
+        	<LogoComponent />
+        </div>
             <MenuItem
                 id={SLUGS.dashboard}
                 title='Dashboard'

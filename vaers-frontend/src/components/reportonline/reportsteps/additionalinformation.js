@@ -224,7 +224,7 @@ const Confirm = ({
         </Button>
         
         <Button
-          style={{ marginLeft: 20 }}
+          style={{ background: '#07A9E0',marginLeft: 20 }}
           disabled={!termEvt1.term ? true : (!termEvt2.term)}
           variant="contained"
           color="primary"

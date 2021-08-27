@@ -3,7 +3,7 @@ import { Column } from 'simple-flexbox';
 import { createUseStyles, useTheme } from 'react-jss';
 
 const useStyles = createUseStyles((theme) => ({
-    container: {
+	container: {
         backgroundColor: '#FFFFFF',
         border: `1px solid ${theme.color.lightGrayishBlue2}`,
         borderRadius: 4,
@@ -11,21 +11,21 @@ const useStyles = createUseStyles((theme) => ({
         maxWidth: 350,
         padding: '16px 32px 16px 32px',
         '&:hover': {
-            borderColor: theme.color.lightBlue,
+            borderColor: theme.color.paleBlue,
             '&:nth-child(n) > span': {
-                color: theme.color.lightBlue
+                color: theme.color.veryDarkGrayishBlue
             }
         }
     },
     title: {
         ...theme.typography.cardTitle,
-        color: theme.color.grayishBlue2,
+        color: theme.color.darkGrayishBlue,
         marginBottom: 12,
         minWidth: 102,
         textAlign: 'center'
     },
     value: {
-        color: theme.color.veryDarkGrayishBlue,
+        color: theme.color.darkGrayishBlue,
         fontWeight: 'bold',
         fontSize: 40,
         letterSpacing: '1px',
