@@ -20,7 +20,7 @@ import { css } from "@emotion/react";
 const Confirm = ({
   handleNext,
   handleBack,
-  values: { title,firstName,middleName, lastName, email ,address, contactNo,altcontactNo, aadharnumber,userBeneficiaryRefID,age,date,gender,ispregnant,
+  values: { title,firstName,middleName, lastName, email ,address, contactNo,altcontactNo, aadharnumber,userBeneficiaryRefID,date,gender,ispregnant,
     relationToUser,reporterTitle,reporterFirstName,reporterMiddleName,reporterLastName,reporterContactNo,reporterAltContactNo,
     reporterAddress,reporterEmail,
     vaccinename,dosages,instituteName,dateVaccination,symptom, existingIllness,existingallergy
@@ -55,7 +55,6 @@ const Confirm = ({
     'userAlternateMobile': altcontactNo, 
     'userAadhaarNumber':aadharnumber,
     'userBeneficiaryRefID':userBeneficiaryRefID,
-    'userAge':age,
     'dateOfBirth':date,
     'userSex': gender,
     'userIsPregnant' : ispregnant, 
@@ -93,12 +92,6 @@ const Confirm = ({
            <ListItem disablePadding>
             <ListItemText primary="First Name" secondary={firstName} />
             <ListItemText primary="Last Name" secondary={lastName} />
-        </ListItem>
-           </Grid>
-           <Grid item xs={12} sm={6}>
-           <ListItem>
-           <ListItemText primary="Age" secondary={age} />
-            <ListItemText primary="Date of birth" secondary={date} />
         </ListItem>
            </Grid>
            <Grid item xs={12} sm={6}>

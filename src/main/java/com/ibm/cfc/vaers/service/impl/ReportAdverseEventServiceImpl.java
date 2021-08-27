@@ -1,5 +1,7 @@
 package com.ibm.cfc.vaers.service.impl;
 
+import java.time.LocalDate;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -223,7 +225,17 @@ public class ReportAdverseEventServiceImpl implements ReportAdverseEventService 
 		user.setUserAlternateNumber(reportAdverseEventsForUserIn.getUserAlternateMobile());
 		user.setUserEmailId(reportAdverseEventsForUserIn.getUserEmail());
 		user.setUserAddress(reportAdverseEventsForUserIn.getUserAddress());
-		user.setUserAge(Short.parseShort(reportAdverseEventsForUserIn.getUserAge()));
+		
+		user.setUserAge(
+				(short) VaersUtilities.calculateAge(
+					VaersUtilities.convertToLocalDateViaInstant(
+						VaersUtilities.getDateFromString(
+							reportAdverseEventsForUserIn.getDateOfBirth()
+						)
+					), 
+					LocalDate.now()
+				));
+		
 		user.setUserDob(VaersUtilities.getDateFromString(reportAdverseEventsForUserIn.getDateOfBirth()));
 		user.setUserSex(reportAdverseEventsForUserIn.getUserSex());
 		user.setUserIsPregnant(VaersUtilities.getBooleanFromString(reportAdverseEventsForUserIn.getUserIsPregnant()));
@@ -249,7 +261,17 @@ public class ReportAdverseEventServiceImpl implements ReportAdverseEventService 
 		user.setUserMobile(reportAdverseEventsForUserIn.getUserMobile());
 		user.setUserAlternateNumber(reportAdverseEventsForUserIn.getUserAlternateMobile());
 		user.setUserAddress(reportAdverseEventsForUserIn.getUserAddress());
-		user.setUserAge(Short.parseShort(reportAdverseEventsForUserIn.getUserAge()));
+		
+		user.setUserAge(
+				(short) VaersUtilities.calculateAge(
+					VaersUtilities.convertToLocalDateViaInstant(
+						VaersUtilities.getDateFromString(
+							reportAdverseEventsForUserIn.getDateOfBirth()
+						)
+					), 
+					LocalDate.now()
+				));
+		
 		user.setUserDob(VaersUtilities.getDateFromString(reportAdverseEventsForUserIn.getDateOfBirth()));
 		user.setUserSex(reportAdverseEventsForUserIn.getUserSex());
 		user.setUserIsPregnant(VaersUtilities.getBooleanFromString(reportAdverseEventsForUserIn.getUserIsPregnant()));

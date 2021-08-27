@@ -1,5 +1,4 @@
 import React , { Fragment } from 'react';
-import ReactDOM from 'react-dom';
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import FormControl from "@material-ui/core/FormControl";
@@ -15,6 +14,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ClipLoader from "react-spinners/ClipLoader";
 import { css } from "@emotion/react";
 import { CustomAlertDialog } from "resources/customAlertDialog";
+import moment from 'moment';
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -30,7 +30,7 @@ const PatientInformationComponent = ({
     handleChange,
     handleUserChange,
     values: {title, firstName,middleName, lastName, email ,address, userBeneficiaryRefID,
-       contactNo,altcontactNo, aadharnumber,age,date,gender,ispregnant,existingIllness,existingallergy,isValidForm, isdefaultvalue},
+       contactNo,altcontactNo, aadharnumber,date,gender,ispregnant,existingIllness,existingallergy,isValidForm, isdefaultvalue},
     formErrors
   }) => {
     const [illness, setIllness] = React.useState([]);
@@ -43,6 +43,7 @@ const PatientInformationComponent = ({
     const [errorMessage, setErrorMessage] = React.useState("");
     let [loading, setLoading] = React.useState(false);
     let [color, setColor] = React.useState("#ffffff");
+    const [todayDate, setTodayDate] = React.useState(new Date());
     const override = css`display: block;margin: 0 auto;border-color: blue;`;
     const [defaultFirstName, setDefaultFirstName] = React.useState("");
     const [defaultMiddleName, setDefaultMiddleName] = React.useState("");
@@ -113,6 +114,7 @@ const PatientInformationComponent = ({
 
     const validateOTP = (event) => {
       setLoading(true);
+      console.log(moment().format("yyyy-MM-DD"));
       const form = {'otpEmailID' : email, 'otpValue' : otp
     }
       axios.post('/validateOTP', form)
@@ -128,8 +130,6 @@ const PatientInformationComponent = ({
             handleUserChange("aadharnumber",response.data.userMasterOut.aadhaarNumber);
             setDefaultAddress(response.data.userMasterOut.address);
             handleUserChange("address",response.data.userMasterOut.address);
-            setDefaultAge(response.data.userMasterOut.age);
-            handleUserChange("age",response.data.userMasterOut.age);
             setDefaultBeneficiaryReferenceID(response.data.userMasterOut.beneficiaryReferenceID);
             handleUserChange("userBeneficiaryRefID",response.data.userMasterOut.beneficiaryReferenceID);
             setDefaultMiddleName(response.data.userMasterOut.middleName);
@@ -176,7 +176,6 @@ const PatientInformationComponent = ({
             setDefaultLastName("");
             setDefaultAadhaarNumber("");
             setDefaultAddress("");
-            setDefaultAge("");
             setDefaultBeneficiaryReferenceID("");
             setDefaultMiddleName("");
             setDefaultContactNumber("");
@@ -220,8 +219,6 @@ const PatientInformationComponent = ({
     !formErrors.aadharnumber &&
     address.length > 0 &&
     !formErrors.address && 
-    age.length > 0 &&
-    !formErrors.age &&
     date.length > 0 &&
     gender.length > 0 &&
     title.length >0 &&
@@ -302,7 +299,7 @@ const PatientInformationComponent = ({
                     fullWidth
                     disabled={isdefaultvalue}
                     label="Middle Name"
-                    name="MiddleName"
+                    name="middleName"
                     placeholder="Your Middle name"
                     margin="normal"
                     value={middleName || (middleName = isdefaultvalue ? defaultMiddleName :"")}
@@ -331,7 +328,7 @@ const PatientInformationComponent = ({
                     disabled={isdefaultvalue}
                     fullWidth 
                     label="Email"
-                    name="Email"
+                    name="email"
                     placeholder="Email"
                     margin="normal"
                     value={email || ""}
@@ -414,24 +411,10 @@ const PatientInformationComponent = ({
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    disabled={isdefaultvalue}
-                    label="Age"
-                    name="age"
-                    placeholder="Enter Age"
-                    margin="normal"
-                    value={age || (age  = isdefaultvalue ? defaultAge :"")}
-                    onChange={handleChange}
-                    error={!!formErrors.age}
-                    helperText={formErrors.age}
-                    required
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
                   disabled={isdefaultvalue}
+                  InputProps={{ inputProps: { max: moment().format("yyyy-MM-DD") } }}
                   InputLabelProps={{
                     shrink: true
                   }}

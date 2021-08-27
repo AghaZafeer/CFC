@@ -42,7 +42,6 @@ const initialValues = {
   city: "",
   phone: "",
   aadharnumber:"",
-  age:"",
   date:"",
   gender:"",
   ispregnant:"",
@@ -143,7 +142,6 @@ const fieldsValidation = {
   dosages :{},
   instituteName :{},
   dateVaccination :{},
-  age:{},
   date:{},
   gender:{},
   title:{},
@@ -155,7 +153,6 @@ const fieldsValidation = {
   isrecovered:{},
   recoveryDate:{},
   dateOfDeath:{},
-  
 };
 
 export default function ReportOnlineComponent() {

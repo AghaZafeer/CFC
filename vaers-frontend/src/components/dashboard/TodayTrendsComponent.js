@@ -435,22 +435,23 @@ useEffect(() => {
               { 
                   if(selectedVaccine === item.vaccineName) {
                     item.vaccineAndAdverseEventReportObjOuts.map((lstItem) => {
-                      lstItem.adverseEventReportObjOuts.map((it) => {
-                          if(recoverydatas !== undefined) {
-                            recoverydatas.push({name:it.adverseEventName,data:it.userAndRecoveryDataReportObjOuts});
-                          } 
-                         })
+                      if (lstItem.adverseEventReportObjOuts !== null) {
+                         lstItem.adverseEventReportObjOuts.map((it) => {
+                            if(recoverydatas !== undefined) {
+                              recoverydatas.push({name:it.adverseEventName,data:it.userAndRecoveryDataReportObjOuts});
+                            } 
+                          })}
                       })
                       setRecoveryAdverseEvent(groupBy(recoverydatas,'name'))
                       item.vaccineAndAdverseEventReportObjOuts.map((lstItem) => {
                         if(selectedDosage === lstItem.vaccineDoseName) {
                           recoverydatas.splice(0,recoverydatas.length);
+                          if (lstItem.adverseEventReportObjOuts !== null) {
                           lstItem.adverseEventReportObjOuts.map((it) => {
                             if(recoverydatas !== undefined) {
-                              console.log(lstItem.vaccineDoseName);
                               recoverydatas.push({name:it.adverseEventName,data:it.userAndRecoveryDataReportObjOuts});
                             }
-                          })
+                          })}
                           setRecoveryAdverseEvent(groupBy(recoverydatas,'name'))
                         }
                     })
