@@ -111,16 +111,16 @@ public class ReportAndGraphDataServiceImpl implements ReportAndGraphDataService 
 			for(VaccineDoseMaster vaccineDoseMaster : vaccineDoseMasters) {
 				
 				VaccineAndAdverseEventReportObjOut vaccineAndAdverseEventReportObjOut = new VaccineAndAdverseEventReportObjOut();
+				vaccineAndAdverseEventReportObjOut.setVaccineDoseId(String.valueOf(vaccineDoseMaster.getVaccineDoseId()));
+				vaccineAndAdverseEventReportObjOut.setVaccineDoseName(vaccineDoseMaster.getVaccineDoseName());
+				
 				List<AdverseEventReportObjOut> adverseEventReportObjOuts = new ArrayList<AdverseEventReportObjOut>();
 				adverseEventReportObjOuts = getAdverseEventReportObjOuts(vaccineMaster, vaccineDoseMaster);
 				
 				if(adverseEventReportObjOuts != null && adverseEventReportObjOuts.size() > 0) {
-					vaccineAndAdverseEventReportObjOut.setVaccineDoseId(String.valueOf(vaccineDoseMaster.getVaccineDoseId()));
-					vaccineAndAdverseEventReportObjOut.setVaccineDoseName(vaccineDoseMaster.getVaccineDoseName());
-					
 					vaccineAndAdverseEventReportObjOut.setAdverseEventReportObjOuts(adverseEventReportObjOuts);
-					vaccineAndAdverseEventReportObjOuts.add(vaccineAndAdverseEventReportObjOut);
 				}
+				vaccineAndAdverseEventReportObjOuts.add(vaccineAndAdverseEventReportObjOut);
 			}
 		}
 		

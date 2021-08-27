@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
@@ -120,6 +121,10 @@ public class VaersUtilities {
 		return safeDate.toInstant()
 	      .atZone(ZoneId.systemDefault())
 	      .toLocalDate();
+	}
+	
+	public static int calculateAge(LocalDate birthDate, LocalDate currentDate) {
+	    return Period.between(birthDate, currentDate).getYears();
 	}
 	
 }
