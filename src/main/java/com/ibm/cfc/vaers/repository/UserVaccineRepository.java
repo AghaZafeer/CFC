@@ -23,4 +23,6 @@ public interface UserVaccineRepository extends JpaRepository <UserVaccine, Integ
 	List<UserVaccine> findAllByVaccineMasterAndVaccineDoseMaster(VaccineMaster vaccineMaster, VaccineDoseMaster vaccineDoseMaster);
 	
 	UserVaccine findByUserAndVaccineMasterAndVaccineDoseMaster(User user, VaccineMaster vaccineMaster, VaccineDoseMaster vaccineDoseMaster);
+	
+	List<UserVaccine> findAllByUser(User user);
 }

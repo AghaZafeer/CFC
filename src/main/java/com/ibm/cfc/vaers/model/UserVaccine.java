@@ -55,6 +55,10 @@ public class UserVaccine implements Serializable {
 	@JoinColumn(name="USVAC_VACCINE_ID", nullable=false)
 	private VaccineMaster vaccineMaster;
 
+	//bi-directional many-to-one association to CaseReporter
+	@OneToOne(mappedBy="userVaccine")
+	private CaseReporter caseReporter;
+	
 	public UserVaccine() {
 	}
 
@@ -142,6 +146,14 @@ public class UserVaccine implements Serializable {
 
 	public void setVaccineMaster(VaccineMaster vaccineMaster) {
 		this.vaccineMaster = vaccineMaster;
+	}
+
+	public CaseReporter getCaseReporter() {
+		return this.caseReporter;
+	}
+
+	public void setCaseReporter(CaseReporter caseReporter) {
+		this.caseReporter = caseReporter;
 	}
 
 }

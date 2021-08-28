@@ -90,11 +90,6 @@ public class User implements Serializable {
 	@OneToMany(mappedBy="user")
 	private List<UserVaccine> userVaccines;
 	
-	//bi-directional many-to-one association to CaseReporter
-	@OneToMany(mappedBy="user")
-	private List<CaseReporter> caseReporters;
-
-
 	public User() {
 	}
 
@@ -307,27 +302,5 @@ public class User implements Serializable {
 		userVaccine.setUser(null);
 
 		return userVaccine;
-	}
-	
-	public List<CaseReporter> getCaseReporters() {
-		return this.caseReporters;
-	}
-
-	public void setCaseReporters(List<CaseReporter> caseReporters) {
-		this.caseReporters = caseReporters;
-	}
-
-	public CaseReporter addCaseReporter(CaseReporter caseReporter) {
-		getCaseReporters().add(caseReporter);
-		caseReporter.setUser(this);
-
-		return caseReporter;
-	}
-
-	public CaseReporter removeCaseReporter(CaseReporter caseReporter) {
-		getCaseReporters().remove(caseReporter);
-		caseReporter.setUser(null);
-
-		return caseReporter;
 	}
 }

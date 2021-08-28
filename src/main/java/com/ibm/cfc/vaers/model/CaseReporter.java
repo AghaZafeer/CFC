@@ -58,10 +58,10 @@ public class CaseReporter implements Serializable {
 	@JoinColumn(name="CASE_REPORTER_TITLE_ID")
 	private UserTitleMaster caseReporterTitleId;
 	
-	//bi-directional many-to-one association to User
-	@ManyToOne
-	@JoinColumn(name="CASE_REPORTER_USER_ID")
-	private User user;
+	//bi-directional one-to-one association to User
+	@OneToOne
+	@JoinColumn(name="CASE_REPORTER_USVAC_ID", referencedColumnName = "USVAC_ID")
+	private UserVaccine userVaccine;
 
 	public CaseReporter() {
 	}
@@ -162,12 +162,12 @@ public class CaseReporter implements Serializable {
 		this.dateModified = dateModified;
 	}
 
-	public User getUser() {
-		return this.user;
+	public UserVaccine getUserVaccine() {
+		return this.userVaccine;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserVaccine(UserVaccine userVaccine) {
+		this.userVaccine = userVaccine;
 	}
 
 }

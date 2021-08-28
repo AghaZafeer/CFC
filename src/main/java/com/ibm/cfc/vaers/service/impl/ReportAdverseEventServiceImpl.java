@@ -109,16 +109,16 @@ public class ReportAdverseEventServiceImpl implements ReportAdverseEventService 
 				//persist the Case Reporter data
 				User updateUser = updateUserInfo(reportAdverseEventsForUserIn, userInScope);
 				
-				String caseID = persistCaseReporterInfo(reportAdverseEventsForUserIn, userInScope);
+				// persist user vaccine
+				UserVaccine newUserVaccine = persistUserVaccineInfo(reportAdverseEventsForUserIn, userInScope);
+				
+				String caseID = persistCaseReporterInfo(reportAdverseEventsForUserIn, newUserVaccine);
 				
 				//persist user allergies
 				persistUserAllergiesInfo(reportAdverseEventsForUserIn, userInScope);
 				
 				// persist user illness
 				persistUserIllnessInfo(reportAdverseEventsForUserIn, userInScope);
-				
-				// persist user vaccine
-				UserVaccine newUserVaccine = persistUserVaccineInfo(reportAdverseEventsForUserIn, userInScope);
 				
 				// persist adverse reported table
 				persistAdverseEventReportedInfo(reportAdverseEventsForUserIn, newUserVaccine);
@@ -149,17 +149,18 @@ public class ReportAdverseEventServiceImpl implements ReportAdverseEventService 
 			User newUser = persistUserInfo(reportAdverseEventsForUserIn);
 			if(newUser.getUserId() > 0) {
 				logger.debug("New User Added with User ID >>>> " + newUser.getUserId());
+				
+				// persist user vaccine
+				UserVaccine newUserVaccine = persistUserVaccineInfo(reportAdverseEventsForUserIn, newUser);
+				
 				//persist the Case Reporter data
-				String caseID = persistCaseReporterInfo(reportAdverseEventsForUserIn, newUser);
+				String caseID = persistCaseReporterInfo(reportAdverseEventsForUserIn, newUserVaccine);
 				
 				//persist user allergies
 				persistUserAllergiesInfo(reportAdverseEventsForUserIn, newUser);
 				
 				// persist user illness
 				persistUserIllnessInfo(reportAdverseEventsForUserIn, newUser);
-				
-				// persist user vaccine
-				UserVaccine newUserVaccine = persistUserVaccineInfo(reportAdverseEventsForUserIn, newUser);
 				
 				// persist adverse reported table
 				persistAdverseEventReportedInfo(reportAdverseEventsForUserIn, newUserVaccine);
@@ -381,7 +382,7 @@ public class ReportAdverseEventServiceImpl implements ReportAdverseEventService 
 		
 	}
 
-	public String persistCaseReporterInfo(ReportAdverseEventsForUserIn reportAdverseEventsForUserIn, User newUser) {
+	public String persistCaseReporterInfo(ReportAdverseEventsForUserIn reportAdverseEventsForUserIn, UserVaccine newUserVaccine) {
 		
 		String caseID = "";
 		caseID = getUniqueCaseID(VaersUtilities.generateCaseID());
@@ -389,7 +390,7 @@ public class ReportAdverseEventServiceImpl implements ReportAdverseEventService 
 		CaseReporter caseReporter = new CaseReporter();
 		
 		caseReporter.setCaseReporterCaseId(caseID);
-		caseReporter.setUser(newUser);
+		caseReporter.setUserVaccine(newUserVaccine);
 		caseReporter.setCaseInfoAddedBy(reportAdverseEventsForUserIn.getReportedBy());
 			
 		UserTitleMaster reporterTitleMaster = new UserTitleMaster();
