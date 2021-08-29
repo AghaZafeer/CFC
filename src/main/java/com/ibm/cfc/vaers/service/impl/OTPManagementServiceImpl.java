@@ -2,6 +2,8 @@ package com.ibm.cfc.vaers.service.impl;
 
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -152,7 +154,23 @@ public class OTPManagementServiceImpl implements OTPManagementService {
 		return returnObj;
 	}
 		
-	//@Scheduled()
+	@Scheduled(fixedDelayString = "${fixedDelay.in.milliseconds}")
+	public void inActivateOTP() {
+		Calendar cal = Calendar.getInstance();
+		Date today = cal.getTime();
+		cal.add(Calendar.SECOND, -120);
+		Date expiryDate = cal.getTime();
+		
+		List<OtpCode> otpCodes = otpCodeRepository.findAllByDateCreatedBeforeAndOtpActiveTrue(expiryDate);
+		
+		if(otpCodes != null && otpCodes.size() > 0) {
+			//System.out.println("otpCodes.size >>>>> " + otpCodes.size());
+			for(OtpCode otpCode : otpCodes) {
+				otpCode.setOtpActive(false);
+				otpCodeRepository.saveAndFlush(otpCode);
+			}
+		}
+	}
 
 	
 }
