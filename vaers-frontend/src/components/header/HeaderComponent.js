@@ -6,6 +6,7 @@ import { createUseStyles, useTheme } from 'react-jss';
 import { SidebarContext } from 'hooks/useSidebar';
 import SLUGS from 'resources/slugs';
 import { IconBell, IconSearch } from 'assets/icons';
+import theme from 'resources/theme';
 import DropdownComponent from 'components/dropdown';
 
 const useStyles = createUseStyles((theme) => ({
@@ -45,6 +46,7 @@ const useStyles = createUseStyles((theme) => ({
         ...theme.typography.title,
         '@media (max-width: 1080px)': {
             marginLeft: 50
+           
         },
         '@media (max-width: 468px)': {
             fontSize: 20
@@ -65,6 +67,7 @@ function HeaderComponent() {
     const theme = useTheme();
     const classes = useStyles({ theme });
     let title = 'Vaccine Adverse Event Reporting System' ;
+    
    
 
     function onSettingsClick() {
@@ -73,7 +76,7 @@ function HeaderComponent() {
 
     return (
         <Row className={classes.container} vertical='center' horizontal='space-between'>
-            <span className={classes.title}>{title}</span>
+            <span style={{color: theme.color.brightBlue}} className={classes.title}>{title}</span>
         </Row>
     );
 }
