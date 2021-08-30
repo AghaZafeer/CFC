@@ -7,5 +7,6 @@ export default {
     contacts: '/contacts',
     vaccenter:'/vaccenter',
     about:'/about',
-    login:'/login'
+    login:'/login',
+    search:'/search'
 };

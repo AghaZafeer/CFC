@@ -6,6 +6,7 @@ import ReportOnlineComponent from 'components/reportonline/reportonline';
 import Loginscreen from 'components/login/Loginscreen';
 import FaqComponent from 'components/Faq/FaqComponent';
 import ContactUsComponent from 'components/contactUs/ContactUsComponent';
+import SearchComponent from 'components/search/SearchComponent';
 const DashboardComponent = lazy(() => import('components/dashboard'));
 
 function PrivateRoutes() {
@@ -13,6 +14,7 @@ function PrivateRoutes() {
         <Suspense fallback={<LoadingComponent loading />}>
             <Switch>
                 <Route exact path={SLUGS.about} render={() => <div>About</div>} />
+                <Route exact path={SLUGS.search} component={SearchComponent}  />
                 <Route exact path={SLUGS.dashboard} component={DashboardComponent} />
                 <Route exact path={SLUGS.reportonline} component={ReportOnlineComponent} />
                 <Route exact path={SLUGS.faq} component={FaqComponent} />

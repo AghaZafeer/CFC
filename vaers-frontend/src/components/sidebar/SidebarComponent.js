@@ -78,6 +78,12 @@ function SidebarComponent() {
                 icon={IconArticles}
                 onClick={() => onClick(SLUGS.contacts)}
             />
+            <MenuItem
+                id={SLUGS.search}
+                title='Search'
+                icon={IconArticles}
+                onClick={() => onClick(SLUGS.search)}
+            />
             <div className={classes.separator}></div>
         </Menu>
     );

@@ -53,7 +53,6 @@ const PatientInformationComponent = ({
     const [defaultLastName, setDefaultLastName] = React.useState("");
     const [defaultAadhaarNumber, setDefaultAadhaarNumber] = React.useState("");
     const [defaultAddress, setDefaultAddress] = React.useState("");
-    const [defaultAge, setDefaultAge] = React.useState("");
     const [defaultBeneficiaryReferenceID, setDefaultBeneficiaryReferenceID] = React.useState("");
     const [defaultGender, setDefaultGender] = React.useState("");
     const [defaultDob, setDefaultDob] = React.useState("");
