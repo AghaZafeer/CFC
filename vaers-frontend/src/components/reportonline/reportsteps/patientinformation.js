@@ -421,7 +421,7 @@ const PatientInformationComponent = ({
                   label="Date of birth"
                   name="date"
                   type="date"
-                  defaultValue={date || (date = isdefaultvalue ? defaultDob :"")}
+                  value={date || (date = isdefaultvalue ? defaultDob :"")}
                   onChange={handleChange}
                   margin="normal"
                   required

@@ -78,13 +78,17 @@ export default function SearchComponent() {
     const classes = useStyles();
     const [modalStyle] = React.useState(getModalStyle);
     const [open, setOpen] = React.useState(false);
-
-    const handleOpen = () => {
+    const [caseId, setCaseId] = React.useState("");
+    const handleOpen = (caseId) => {
+        setCaseId(caseId);
         setOpen(true);
+        console.log(caseId);
+       
     };
 
     const handleClose = () => {
         setOpen(false);
+        setCaseId("");
     };
     const search = (event) => {
         setLoading(true);
@@ -128,10 +132,12 @@ export default function SearchComponent() {
                 if(response.data.searchUserRecordOut.userVaccineReporterAdverseEffectRecordOuts.length >0) {
                     for (var d =0 ;d<response.data.searchUserRecordOut.userVaccineReporterAdverseEffectRecordOuts.length;d++) {
                         var z = response.data.searchUserRecordOut.userVaccineReporterAdverseEffectRecordOuts[d];
+                        var caseId = response.data.searchUserRecordOut.userVaccineReporterAdverseEffectRecordOuts[d].caseID;
                         for (var i =0 ;i<z.reportedAdverseEffectRecordOuts.length;i++){
-                            reportedAdverseEffectRecordOuts.push(z.reportedAdverseEffectRecordOuts[i]);
+                            reportedAdverseEffectRecordOuts.push({"caseId":caseId,"reportedAdverseEffectRecordOuts":z.reportedAdverseEffectRecordOuts[i]});
                         }
                     }
+                    console.log(reportedAdverseEffectRecordOuts);
                 }
                 setIsValidOtp(true);
                 setIsCheckOtp(false);
@@ -277,7 +283,7 @@ export default function SearchComponent() {
                                         <TableCell align="right">{row.vaccinnationDate}</TableCell>
                                         <TableCell align="right">{row.vaccinationCenter}</TableCell>
                                         <TableCell align="center">
-                                        <Button style={{background: '#07A9E0', marginRight:15 }} variant="contained" color="primary" onClick={handleOpen}>
+                                        <Button style={{background: '#07A9E0', marginRight:15 }} variant="contained" color="primary" onClick={() => handleOpen(row.caseID)}>
                                             Show Adverse event
                                         </Button>
                                         </TableCell>
@@ -299,25 +305,22 @@ export default function SearchComponent() {
                         <TableContainer component={Paper}>
                                 <Table  aria-label="simple table">
                                 <TableHead>
-                                    <TableRow>
-                                    <TableCell>AdverseEffectName</TableCell>
-                                    <TableCell align="right">SeverityName</TableCell>
-                                    <TableCell align="right">StartDate</TableCell>
-                                    <TableCell align="right">Date-Of-Death</TableCell> 
-                                    <TableCell align="right">Date-Of-Recovery</TableCell>
-                                    </TableRow>
                                 </TableHead>
                                 <TableBody> 
                                     {reportedAdverseEffectRecordOuts.map((row) => (
-                                    <TableRow key={row.adverseEffectName}>
-                                        <TableCell component="th" scope="row">
-                                        {row.adverseEffectName}
-                                        </TableCell>
-                                        <TableCell align="right">{row.severityName}</TableCell>
-                                        <TableCell align="right">{row.startDate}</TableCell>
-                                        <TableCell align="right">{row.dateOfDeath}</TableCell>
-                                        <TableCell align="right">{row.recoveryDate}</TableCell>
-                                    </TableRow>
+                                       (row.caseId === caseId) ? (
+                                        Object.entries(row.reportedAdverseEffectRecordOuts).map((t,k) =>
+                                        <TableRow key={k}>
+                                             <TableCell component="th" scope="row">
+                                                 {t[0]}
+                                             </TableCell>
+                                             <TableCell align="right">{t[1]}</TableCell>
+                                             <TableCell align="right">{t[3]}</TableCell>
+                                             <TableCell align="right">{t[5]}</TableCell>
+                                             <TableCell align="right">{t[9]}</TableCell>
+                                            </TableRow>
+                                        )
+                                       ):null
                                     ))}
                                 </TableBody>
                                 </Table>
