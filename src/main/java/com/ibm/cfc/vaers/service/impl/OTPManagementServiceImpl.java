@@ -103,7 +103,7 @@ public class OTPManagementServiceImpl implements OTPManagementService {
 		
 		OtpCode otpCode = otpCodeRepository.findByOtpEmailIdAndOtpValue(otpEmailID, otpValue);
 		
-		if(otpCode.getOtpId() > 0) {
+		if(otpCode != null && otpCode.getOtpId() > 0) {
 			if(otpCode.isOtpActive()) {
 				returnObj.setValid(true);
 				
