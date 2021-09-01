@@ -84,7 +84,7 @@ function DashboardComponent() {
                 <Row
                     className={classes.cardRow}
                     wrap
-                    flexGrow={1}
+                    //flexGrow={1}
                     horizontal='space-between'
                     breakpoints={{ 384: 'column' }}
                 >

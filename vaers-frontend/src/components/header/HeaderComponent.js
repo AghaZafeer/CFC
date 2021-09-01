@@ -5,9 +5,6 @@ import { Row } from 'simple-flexbox';
 import { createUseStyles, useTheme } from 'react-jss';
 import { SidebarContext } from 'hooks/useSidebar';
 import SLUGS from 'resources/slugs';
-import { IconBell, IconSearch } from 'assets/icons';
-import theme from 'resources/theme';
-import DropdownComponent from 'components/dropdown';
 
 const useStyles = createUseStyles((theme) => ({
     avatar: {
