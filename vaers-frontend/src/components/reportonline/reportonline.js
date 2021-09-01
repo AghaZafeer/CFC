@@ -136,11 +136,27 @@ const fieldsValidation = {
   reporterFirstName:{},
   reporterMiddleName:{},
   reporterLastName :{},
-  reporterContactNo :{},
-  reporterAltContactNo:{},
+  reporterContactNo :{
+    error: "",
+    validate: "phone",
+    maxLength: 15
+  },
+  reporterAltContactNo:{
+    error: "",
+    validate: "phone",
+    maxLength: 15
+  },
   reporterAddress :{},
-  reporterEmail :{},
-  userBeneficiaryRefID:{},
+  reporterEmail :{
+    error: "",
+    validate: "email"
+  },
+  userBeneficiaryRefID:{
+    error: "",
+    validate: "number",
+    minLength: 4,
+    maxLength: 12
+  },
   vaccinename :{},
   dosages :{},
   instituteName :{},

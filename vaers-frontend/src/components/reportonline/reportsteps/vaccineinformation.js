@@ -8,6 +8,7 @@ import  { CustomizeDialog } from 'resources/customizeDialog';
 import axios from 'axios';
 import { checkDateValidation, eleContainsInArray } from 'resources/utilities';
 import { CustomAlertDialog } from 'resources/customAlertDialog';
+import moment from 'moment';
 
 const VaccineInformationComponent = ({
     handleNext,
@@ -171,6 +172,7 @@ const VaccineInformationComponent = ({
             InputLabelProps={{
               shrink: true
             }}
+            InputProps={{ inputProps: { max: moment().format("yyyy-MM-DD") } }}
             label="Date of Vaccination"
             name="dateVaccination"
             type="date"

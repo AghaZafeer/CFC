@@ -212,7 +212,7 @@ const Confirm = ({
       <Grid item xs={12} sm={6}>
       <FormControlLabel 
        control={<Checkbox checked ={termEvt2.term} value ={!termEvt1.term} name="term" onChange =  {changeTerm2} color="primary"/>}
-       label="I hereby provide my consent allowing IBM to use my personal information"
+       label="I hereby provide my consent allowing CVAERA to use my personal information"
        />
       </Grid>
       { caseNumber !== '' ? (

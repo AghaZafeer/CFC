@@ -490,8 +490,8 @@ const PatientInformationComponent = ({
                   <FormControl component="fieldset" fullWidth  margin="normal">
                       <FormLabel component="legend">Are you pregnant ?</FormLabel>
                       <RadioGroup aria-label="ispregnant" name="ispregnant" value={ispregnant || (ispregnant = isdefaultvalue ? defaultPregnant :"")} onChange={handleChange}>
-                          <FormControlLabel disabled={isdefaultvalue} value="Non Pregnant" control={<Radio color="primary"/>} label="No" />
-                          <FormControlLabel disabled={isdefaultvalue} value="Pregnant" control={<Radio color="primary"/>} label="Yes" />
+                          <FormControlLabel disabled={isdefaultvalue} value="false" control={<Radio color="primary"/>} label="No" />
+                          <FormControlLabel disabled={isdefaultvalue} value="true" control={<Radio color="primary"/>} label="Yes" />
                       </RadioGroup>
                   </FormControl>
               </Grid>) :null}

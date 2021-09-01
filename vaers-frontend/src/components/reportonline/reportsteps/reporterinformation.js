@@ -159,6 +159,7 @@ React.useEffect(() => {
               name="reporterEmail"
               placeholder="reporterEmail"
               margin="normal"
+              type="email"
               value={reporterEmail || ""}
               onChange={handleChange}
               error={!!formErrors.reporterEmail}

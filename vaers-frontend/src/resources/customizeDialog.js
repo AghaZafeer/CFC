@@ -6,6 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { getSeverity, getSymptoms, getTemparatures } from './dataService';
 import axios from 'axios';
+import moment from 'moment';
 
 export function CustomizeDialog(props) {
     const {onClose,open,onChange} = props;
@@ -94,6 +95,7 @@ export function CustomizeDialog(props) {
                    <TextField
                     fullWidth
                     required
+                    InputProps={{ inputProps: { max: moment().format("yyyy-MM-DD") } }}
                     InputLabelProps={{
                         shrink: true
                       }}
@@ -127,6 +129,7 @@ export function CustomizeDialog(props) {
                <FormControl fullWidth required margin="normal">
                 <TextField
                 fullWidth
+                InputProps={{ inputProps: { max: moment().format("yyyy-MM-DD") } }}
                 InputLabelProps={{
                   shrink: true
                 }}
@@ -146,6 +149,7 @@ export function CustomizeDialog(props) {
                 InputLabelProps={{
                   shrink: true
                 }}
+                InputProps={{ inputProps: { max: moment().format("yyyy-MM-DD") } }}
                 label="Date of Recovery"
                 name="recoveryDate"
                 type='date'

@@ -13,7 +13,7 @@ spec:
         app: cfc-backend
     spec:
       containers:
-      - name: mysqldb
+      - name: cfc-backend
         image: docker.io/rikkimaster/cfc-backend:latest
         imagePullPolicy: Always
         ports:
