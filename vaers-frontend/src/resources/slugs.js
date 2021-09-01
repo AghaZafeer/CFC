@@ -5,8 +5,10 @@ export default {
     reportoffline: '/reportoffline',
     faq: '/faq',
     contacts: '/contacts',
+    integrate:'/dataintegrate',
     // vaccenter:'/vaccenter',
     about:'/about',
     login:'/login',
-    search:'/search'
+    search:'/search',
+    consult:'/consult'
 };

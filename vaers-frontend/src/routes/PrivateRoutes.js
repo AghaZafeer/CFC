@@ -8,6 +8,7 @@ import FaqComponent from 'components/Faq/FaqComponent';
 import ContactUsComponent from 'components/contactUs/ContactUsComponent';
 import SearchComponent from 'components/search/SearchComponent';
 import AboutComponent from 'components/about';
+import theme from 'resources/theme';
 const DashboardComponent = lazy(() => import('components/dashboard'));
 
 function PrivateRoutes() {
@@ -20,7 +21,19 @@ function PrivateRoutes() {
                 <Route exact path={SLUGS.reportonline} component={ReportOnlineComponent} />
                 <Route exact path={SLUGS.faq} component={FaqComponent} />
                 <Route exact path={SLUGS.contacts} component={ContactUsComponent} />
-                {/* <Route exact path={SLUGS.vaccenter} render={() => <div>Covid 19 Vaccination Centre</div>} /> */}
+                <Route exact path={SLUGS.integrate} render={
+                    () =>  <div >
+                    <h1 style={{color: theme.color.brightBlue}} >Integration Channel</h1><br />
+                    <b style={{color: theme.color.veryDarkGrayishBlue}}> 
+                             Pharma companies, Govt authorities can use this data through Integration channels for analysis and report generation and to predict trend. This feature is yet to be developed  based on agreement with other parties.
+                     </b>
+                        </div>} />
+                <Route exact path={SLUGS.consult} render={
+                    () =>  <div >
+                    <b style={{color: theme.color.veryDarkGrayishBlue}}> 
+                           This page is under maintainance
+                     </b>
+                        </div>} />
                 <Route exact path={SLUGS.login} component={Loginscreen} />
                 <Redirect to={SLUGS.dashboard} component={DashboardComponent} />
             </Switch>

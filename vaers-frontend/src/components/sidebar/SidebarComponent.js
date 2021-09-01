@@ -54,12 +54,12 @@ function SidebarComponent() {
                 icon={IconTickets}
                 onClick={() => onClick(SLUGS.reportonline)}
             />
-            {/* <MenuItem
+             <MenuItem
                 id={SLUGS.vaccenter}
-                title='Covid-19 Vaccination'
+                title='Integration Channel'
                 icon={IconArticles}
-                onClick={() => onClick(SLUGS.vaccenter)}
-            /> */}
+                onClick={() => onClick(SLUGS.integrate)}
+            />
              <MenuItem
                 id={SLUGS.about}
                 title='About'
@@ -83,6 +83,12 @@ function SidebarComponent() {
                 title='Search'
                 icon={IconArticles}
                 onClick={() => onClick(SLUGS.search)}
+            />
+             <MenuItem
+                id={SLUGS.consult}
+                title='Talk to Doctor'
+                icon={IconSubscription}
+                onClick={() => onClick(SLUGS.consult)}
             />
             <div className={classes.separator}></div>
         </Menu>
