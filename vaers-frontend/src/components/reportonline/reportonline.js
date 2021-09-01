@@ -124,12 +124,12 @@ const fieldsValidation = {
 },
   contactNo: {
     error: "",
-    validate: "contactNo",
+    validate: "phone",
     maxLength: 15
   },
   altcontactNo: {
     error: "",
-    validate: "contactNo",
+    validate: "phone",
     maxLength: 15
   },
   reporterTitle:{},

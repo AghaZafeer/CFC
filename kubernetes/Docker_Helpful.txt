@@ -5,7 +5,7 @@ docker container run --name mysqldb --network cfc-mysql -e MYSQL_ROOT_PASSWORD=P
 docker container ls
 docker container logs <Container-id>
 
-docker container exec -it Container-id> bash 
+docker container exec -it mysqldb bash 
 Container-id = mysqldb
 mysql -uroot -pPassw0rd
 
@@ -16,8 +16,6 @@ docker cp c:/react/cfc.sql e548ab0eac95:/cfc.sql
 source /cfc.sql
 kubectl apply -f deployment-cfc-frontend.yaml
 kubectl apply -f deployment-cfc-backend.yaml
-
 docker tag cfc-backend rikkimaster/cfc-backend
 docker push rikkimaster/cfc-backend
-
 ibmcloud ks cluster config --cluster CFC-Cluster
