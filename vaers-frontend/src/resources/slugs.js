@@ -5,7 +5,7 @@ export default {
     reportoffline: '/reportoffline',
     faq: '/faq',
     contacts: '/contacts',
-    vaccenter:'/vaccenter',
+    // vaccenter:'/vaccenter',
     about:'/about',
     login:'/login',
     search:'/search'

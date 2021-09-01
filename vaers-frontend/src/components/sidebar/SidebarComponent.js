@@ -54,12 +54,12 @@ function SidebarComponent() {
                 icon={IconTickets}
                 onClick={() => onClick(SLUGS.reportonline)}
             />
-            <MenuItem
+            {/* <MenuItem
                 id={SLUGS.vaccenter}
                 title='Covid-19 Vaccination'
                 icon={IconArticles}
                 onClick={() => onClick(SLUGS.vaccenter)}
-            />
+            /> */}
              <MenuItem
                 id={SLUGS.about}
                 title='About'
