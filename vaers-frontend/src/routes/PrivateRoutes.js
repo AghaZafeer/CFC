@@ -31,7 +31,7 @@ function PrivateRoutes() {
                 <Route exact path={SLUGS.consult} render={
                     () =>  <div >
                     <b style={{color: theme.color.veryDarkGrayishBlue}}> 
-                           This page is under maintainance
+                    This is upcoming feature where registered Doctors with this portal can be reached out for adverse event related queries.
                      </b>
                         </div>} />
                 <Route exact path={SLUGS.login} component={Loginscreen} />

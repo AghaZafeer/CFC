@@ -75,7 +75,7 @@ function CardComponent(props) {
     }
     return (
         <Column
-            flexGrow={1}
+            //flexGrow={1}
             className={[classes.container, containerStyles].join(' ')}
             breakpoints={{ 426: classes.containerMobile }}
         >

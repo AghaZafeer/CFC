@@ -77,18 +77,19 @@ function DashboardComponent() {
             <Row
                 className={classes.cardsContainer}
                 wrap
-                flexGrow={1}
+                //flexGrow={1}
                 horizontal='space-between'
                 breakpoints={{ 768: 'column' }}
             >
                 <Row
                     className={classes.cardRow}
                     wrap
-                    //flexGrow={1}
-                    horizontal='space-between'
+                    flexGrow={1}
+                    //horizontal='space-between'
                     breakpoints={{ 384: 'column' }}
                 >
                     <MiniCardComponent
+                        
                         className={classes.miniCardContainer}
                         title='Number of Registered Users'
                         value={graphrecord.totalUser}
