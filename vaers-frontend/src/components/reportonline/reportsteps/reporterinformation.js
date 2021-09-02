@@ -11,7 +11,7 @@ const ReporterInformationComponent = ({
     handleBack,
     handleChange,
     values: {relationToUser,reporterTitle , 
-      reporterFirstName,reporterMiddleName,reporterLastName,reporterContactNo,reporterAltContactNo,reporterAddress,reporterEmail},
+      reporterFirstName,reporterMiddleName,reporterLastName,reporterContactNo,reporterAltContactNo,reporterEmail},
     formErrors
   }) => {
     const [titles, setTitles] = React.useState([]);
@@ -137,20 +137,6 @@ React.useEffect(() => {
               helperText={formErrors.reporterAltContactNo}
             />
          </Grid> ) :null }
-         {!selectedValue ? ( 
-          <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              label="Address"
-              name="reporterAddress"
-              placeholder="reporterAddress"
-              margin="normal"
-              value={reporterAddress || ""}
-              onChange={handleChange}
-              error={!!formErrors.reporterAddress}
-              helperText={formErrors.reporterAddress}
-            />
-           </Grid> ) :null }
           {!selectedValue ? (
           <Grid item xs={12} sm={6}>
             <TextField

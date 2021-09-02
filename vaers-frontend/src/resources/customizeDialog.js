@@ -45,6 +45,10 @@ export function CustomizeDialog(props) {
         setSymptom(value); 
         setSeverity();
         setDateStartedAdvEvt();
+        setRecoveryDate();
+        setDateOfDeath();
+        setRecoveredEvt({isrecovered: false});
+        setFatalEvt({isfatal: false});
         setShowFeverField(true);
         setShowValidSeverity(false);
         setShowValidDate(false);

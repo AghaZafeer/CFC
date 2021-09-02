@@ -21,8 +21,7 @@ const Confirm = ({
   handleNext,
   handleBack,
   values: { title,firstName,middleName, lastName, email ,address, contactNo,altcontactNo, aadharnumber,userBeneficiaryRefID,date,gender,ispregnant,
-    relationToUser,reporterTitle,reporterFirstName,reporterMiddleName,reporterLastName,reporterContactNo,reporterAltContactNo,
-    reporterAddress,reporterEmail,
+    relationToUser,reporterTitle,reporterFirstName,reporterMiddleName,reporterLastName,reporterContactNo,reporterAltContactNo,reporterEmail,
     vaccinename,dosages,instituteName,dateVaccination,symptom, existingIllness,existingallergy
     }
 }) => {
@@ -64,7 +63,6 @@ const Confirm = ({
     'reporterLastName':reporterLastName,
     'reporterMobile': reporterContactNo,
     'reporterAlternateMobile': reporterAltContactNo,
-    'reporterAddress':reporterAddress,
     'reporterEmail' : reporterEmail,
     'vaccineID': vaccinename,
     'vaccineDoseID' : dosages,
@@ -144,7 +142,6 @@ const Confirm = ({
            </Grid>
            <Grid item xs={12} sm={6}>
            <ListItem>
-           <ListItemText primary="ReporterAddress" secondary={reporterAddress} />
            <ListItemText primary="ReporterContactNo" secondary={reporterContactNo} />
            </ListItem>
            </Grid>

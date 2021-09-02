@@ -58,7 +58,6 @@ const initialValues = {
   reporterLastName :"",
   reporterContactNo :"",
   reporterAltContactNo :"",
-  reporterAddress :"",
   reporterEmail :"",
   userBeneficiaryRefID:"",
   vaccinename:"",
@@ -146,7 +145,6 @@ const fieldsValidation = {
     validate: "phone",
     maxLength: 15
   },
-  reporterAddress :{},
   reporterEmail :{
     error: "",
     validate: "email"
